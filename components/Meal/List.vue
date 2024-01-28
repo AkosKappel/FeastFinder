@@ -1,6 +1,6 @@
 <template>
   <LoadingSpinner v-if="meals === null" :title="`Loading ${title.toLowerCase()}...`" />
-  <section v-else class="container mx-auto px-4 py-8">
+  <section v-else class="container mx-auto px-4 my-8">
     <h2 v-if="title" class="text-3xl font-semibold mb-4">
       {{ title }}
     </h2>

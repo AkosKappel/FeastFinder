@@ -7,6 +7,7 @@
       :alt="meal.strMeal"
       :title="meal.strMeal"
       class="w-full h-48 object-cover object-center"
+      loading="lazy"
       placeholder="/meal-placeholder.png"
     />
     <div class="flex flex-col justify-between p-4">

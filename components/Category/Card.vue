@@ -8,6 +8,7 @@
         :src="category.strCategoryThumb"
         :alt="category.strCategory"
         :title="category.strCategory"
+        loading="lazy"
         class="w-full h-48 object-cover object-center"
         placeholder="/meal-placeholder.png"
       />

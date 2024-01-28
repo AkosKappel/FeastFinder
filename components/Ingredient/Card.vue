@@ -8,6 +8,7 @@
         :src="ingredient.strIngredientThumb"
         :alt="ingredient.strIngredient"
         :title="ingredient.strIngredient"
+        loading="lazy"
         class="w-full h-48 object-cover object-center"
         placeholder="/meal-placeholder.png"
       />

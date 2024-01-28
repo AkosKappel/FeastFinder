@@ -9,17 +9,19 @@ export const useIngredients = () => {
 
   const URL = 'https://www.themealdb.com/api/json/v1/1/list.php?i=list';
 
-  const getIngredients = async () => {
+  const getIngredients = async (limit: number = 0) => {
     loading.value = true;
     error.value = null;
 
     try {
       const response = await axios.get(URL);
-      // add strIngredientThumb to each ingredient
-      ingredients.value = (response.data.meals ?? []).map((ingredient: Ingredient) => ({
-        ...ingredient,
-        strIngredientThumb: `https://www.themealdb.com/images/ingredients/${ingredient.strIngredient}.png`,
-      }));
+      const results = (response.data.meals ?? [])
+        // add strIngredientThumb to each ingredient because it's not included in the API
+        .map((ingredient: Ingredient) => ({
+          ...ingredient,
+          strIngredientThumb: `https://www.themealdb.com/images/ingredients/${ingredient.strIngredient}.png`,
+        }));
+      ingredients.value = limit > 0 ? results.sort(() => Math.random() - 0.5).slice(0, limit) : results;
     } catch (err: any) {
       error.value = err.message;
       ingredients.value = null;

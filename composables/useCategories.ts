@@ -9,13 +9,14 @@ export const useCategories = () => {
 
   const URL = 'https://www.themealdb.com/api/json/v1/1/categories.php';
 
-  const getCategories = async () => {
+  const getCategories = async (limit: number = 0) => {
     loading.value = true;
     error.value = null;
 
     try {
       const response = await axios.get(URL);
-      categories.value = response.data.categories ?? [];
+      const results = response.data.categories ?? [];
+      categories.value = limit > 0 ? results.sort(() => Math.random() - 0.5).slice(0, limit) : results;
     } catch (err: any) {
       error.value = err.message;
       categories.value = null;

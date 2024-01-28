@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col items-center justify-center gap-4 m-8">
+  <div class="flex flex-col items-center justify-center gap-4 m-8 min-h-60">
     <h2 v-if="title" class="text-3xl font-semibold mb-4">{{ title }}</h2>
     <svg
       class="animate-spin h-10 w-10 text-gray-900 mx-auto"

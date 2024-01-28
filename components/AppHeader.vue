@@ -18,7 +18,9 @@
 </template>
 
 <script setup lang="ts">
+const router = useRouter();
+
 const search = (input: string) => {
-  console.log('Searching for', input);
+  router.push({ path: '/meals', query: { q: input } });
 };
 </script>

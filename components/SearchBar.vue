@@ -9,10 +9,11 @@
         placeholder="Search for a meal..."
         required
         v-model="input"
+        @keyup.enter.prevent="search(input)"
       />
     </div>
     <button
-      @click.prevent="emits('search', input)"
+      @click.prevent="search(input)"
       class="p-2.5 ms-2 text-sm font-medium text-white bg-orange-700 rounded-lg border border-orange-700 hover:bg-orange-800 focus:ring-4 focus:outline-none focus:ring-orange-300 dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800"
     >
       <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
@@ -32,6 +33,11 @@
 <script setup lang="ts">
 const input = ref<string>('');
 const emits = defineEmits(['search']);
+
+const search = (query: string) => {
+  emits('search', query.trim());
+  input.value = '';
+};
 </script>
 
 <style scoped>

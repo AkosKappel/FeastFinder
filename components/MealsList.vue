@@ -1,5 +1,6 @@
 <template>
-  <section v-if="meals.length" class="container mx-auto px-4 py-8">
+  <LoadingSpinner v-if="meals === null" :title="`Loading ${title.toLowerCase()}...`" />
+  <section v-else-if="meals.length" class="container mx-auto px-4 py-8">
     <h2 v-if="title" class="text-3xl font-semibold mb-4">
       {{ title }}
     </h2>
@@ -7,7 +8,12 @@
       <MealCard v-for="meal in meals" :key="meal.idMeal" :meal="meal" />
     </div>
   </section>
-  <LoadingSpinner v-else :title="`Loading ${title.toLowerCase()}...`" />
+  <section v-else class="container mx-auto px-4 py-8">
+    <h2 class="text-3xl font-semibold mb-4">
+      {{ title }}
+    </h2>
+    <p class="text-lg text-gray-500">No meals found.</p>
+  </section>
 </template>
 
 <script setup lang="ts">
@@ -19,8 +25,8 @@ defineProps({
     default: '',
   },
   meals: {
-    type: Array as PropType<Meal[]>,
-    default: [],
+    type: Array as PropType<Meal[] | null>,
+    default: null,
   },
 });
 </script>

@@ -7,13 +7,13 @@
 <script setup lang="ts">
 // const { meals: recommendedMeals, getMeals: getRecommendedMeals } = useRandomMeals();
 
-// onMounted(() => {
-//   getRecommendedMeals(2);
+// onMounted(async () => {
+//   await getRecommendedMeals(2);
 // });
 
 import type { Meal } from '@/types/Meal';
 
-const recommendedMeals = ref<Meal[]>([]);
+const recommendedMeals = ref<Meal[] | null>(null);
 
 onMounted(() => {
   const emptyMeal: Meal = {

@@ -4,7 +4,7 @@ import type { Meal } from '~/types/Meal';
 
 export const useFetchMeals = () => {
   const meals = ref<Meal[] | null>(null);
-  const loading = ref<boolean>(false);
+  const loading = ref<boolean>(true);
   const error = ref<string | null>(null);
 
   const URL = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
@@ -30,7 +30,7 @@ export const useFetchMeals = () => {
 
 export const useRandomMeals = () => {
   const meals = ref<Meal[] | null>(null);
-  const loading = ref<boolean>(false);
+  const loading = ref<boolean>(true);
   const error = ref<string | null>(null);
 
   const URL = 'https://www.themealdb.com/api/json/v1/1/random.php';
@@ -51,4 +51,29 @@ export const useRandomMeals = () => {
   };
 
   return { meals, loading, error, getMeals };
+};
+
+export const useMealById = () => {
+  const meal = ref<Meal | null>(null);
+  const loading = ref<boolean>(true);
+  const error = ref<string | null>(null);
+
+  const URL = 'https://www.themealdb.com/api/json/v1/1/lookup.php?i=';
+
+  const getMeal = async (id: string) => {
+    loading.value = true;
+    error.value = null;
+
+    try {
+      const response = await axios.get(URL + id);
+      meal.value = response.data.meals[0];
+    } catch (err: any) {
+      error.value = err.message;
+      meal.value = null;
+    } finally {
+      loading.value = false;
+    }
+  };
+
+  return { meal, loading, error, getMeal };
 };

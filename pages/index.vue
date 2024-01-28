@@ -1,7 +1,7 @@
 <template>
-  <main class="container mx-auto px-4 min-h-screen">
+  <div class="container mx-auto px-4 min-h-screen">
     <MealsList title="Recommended Meals" :meals="recommendedMeals" />
-  </main>
+  </div>
 </template>
 
 <script setup lang="ts">

@@ -1,6 +1,6 @@
 <template>
   <main class="container mx-auto px-4 min-h-screen">
-    <IngredientList title="Ingredients" :ingredients="ingredients" />
+    <IngredientList title="Ingredients" :ingredients="ingredients" :allow-filter="true" />
   </main>
 </template>
 

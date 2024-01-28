@@ -77,3 +77,28 @@ export const useMealById = () => {
 
   return { meal, loading, error, getMeal };
 };
+
+export const useMealsByCategory = () => {
+  const meals = ref<Meal[] | null>(null);
+  const loading = ref<boolean>(true);
+  const error = ref<string | null>(null);
+
+  const URL = 'https://www.themealdb.com/api/json/v1/1/filter.php?c=';
+
+  const getMeals = async (category: string) => {
+    loading.value = true;
+    error.value = null;
+
+    try {
+      const response = await axios.get(URL + category);
+      meals.value = response.data.meals ?? [];
+    } catch (err: any) {
+      error.value = err.message;
+      meals.value = null;
+    } finally {
+      loading.value = false;
+    }
+  };
+
+  return { meals, loading, error, getMeals };
+};

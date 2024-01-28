@@ -14,7 +14,7 @@
     </div>
     <div class="p-4 flex flex-col justify-between">
       <nuxt-link
-        :to="{ path: '/meals', query: { category: category.strCategory } }"
+        :to="`/categories/${category.strCategory}`"
         class="block text-center bg-orange-500 text-white font-bold py-2 px-4 rounded hover:bg-orange-600 transition-all duration-300 ease-in-out"
       >
         Show Meals

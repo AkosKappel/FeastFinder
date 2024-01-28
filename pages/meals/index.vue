@@ -11,12 +11,13 @@ const route = useRoute();
 const { meals, getMeals } = useMeals();
 
 const query = computed(() => route.query.q as string);
-const category = computed(() => route.query.category as string); // TODO
 const title = computed(() => (query.value ? `Results for ${query.value}` : 'Meals'));
 
 watch(
   () => query.value,
-  async newQuery => await getMeals(newQuery as string),
+  async newQuery => {
+    await getMeals(newQuery as string);
+  },
   { immediate: true },
 );
 </script>

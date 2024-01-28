@@ -1,6 +1,6 @@
 import { ref } from 'vue';
 import axios from 'axios';
-import type { Category } from '~/types/Category';
+import type { Category } from '@/types/Category';
 
 export const useCategories = () => {
   const categories = ref<Category[] | null>(null);

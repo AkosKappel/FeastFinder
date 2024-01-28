@@ -9,7 +9,7 @@
       class="w-full h-48 object-cover object-center"
       placeholder="/meal-placeholder.png"
     />
-    <div class="p-4 flex flex-col justify-between">
+    <div class="flex flex-col justify-between p-4">
       <div class="mb-1">
         <h2 class="text-xl font-semibold mb-2">{{ meal.strMeal }}</h2>
         <p v-if="meal.strCategory" class="text-gray-600 mb-2">Category: {{ meal.strCategory }}</p>

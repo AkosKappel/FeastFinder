@@ -1,6 +1,6 @@
 <template>
   <main class="container mx-auto px-4 min-h-screen">
-    <CategoryList title="Meal Categories" :categories="categories" />
+    <CategoryList title="Categories" :categories="categories" />
   </main>
 </template>
 

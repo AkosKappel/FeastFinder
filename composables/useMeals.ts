@@ -2,7 +2,7 @@ import { ref } from 'vue';
 import axios from 'axios';
 import type { Meal } from '~/types/Meal';
 
-export const useFetchMeals = () => {
+export const useMeals = () => {
   const meals = ref<Meal[] | null>(null);
   const loading = ref<boolean>(true);
   const error = ref<string | null>(null);

@@ -5,9 +5,13 @@
 </template>
 
 <script setup lang="ts">
+import { useMeals } from '@/composables/useMeals';
+
 const route = useRoute();
-const { meals, getMeals } = useFetchMeals();
+const { meals, getMeals } = useMeals();
+
 const query = computed(() => route.query.q as string);
+const category = computed(() => route.query.category as string); // TODO
 const title = computed(() => (query.value ? `Results for ${query.value}` : 'Meals'));
 
 watch(

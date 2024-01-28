@@ -5,6 +5,7 @@
     <nuxt-img
       :src="meal.strMealThumb"
       :alt="meal.strMeal"
+      :title="meal.strMeal"
       class="w-full h-48 object-cover object-center"
       placeholder="/meal-placeholder.png"
     />
@@ -16,8 +17,7 @@
       </div>
       <nuxt-link
         :to="'/meals/' + meal.idMeal"
-        class="block text-center bg-orange-500 text-white font-bold py-2 px-4 rounded hover:bg-orange-600"
-        :meal="meal"
+        class="block text-center bg-orange-500 text-white font-bold py-2 px-4 rounded hover:bg-orange-600 transition-all duration-300 ease-in-out"
       >
         View Details
       </nuxt-link>

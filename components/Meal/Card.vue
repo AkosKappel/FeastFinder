@@ -28,12 +28,10 @@
 <script setup lang="ts">
 import type { Meal } from '@/types/Meal';
 
-const props = defineProps({
+defineProps({
   meal: {
     type: Object as PropType<Meal>,
     required: true,
   },
 });
-
-const meal = ref(props.meal);
 </script>

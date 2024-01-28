@@ -1,6 +1,6 @@
 <template>
   <main class="container mx-auto px-4 min-h-screen">
-    <MealsList :title="title" :meals="meals" />
+    <MealList :title="title" :meals="meals" />
   </main>
 </template>
 

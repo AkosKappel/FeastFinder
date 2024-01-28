@@ -11,6 +11,12 @@
         <nuxt-link to="/meals" class="text-lg font-inter text-gray-400 hover:text-orange-500"> Meals </nuxt-link>
       </li>
       <li class="mx-1 hidden md:block">
+        <nuxt-link to="/ingredients" class="text-lg font-inter text-gray-400 hover:text-orange-500"> Ingredients </nuxt-link>
+      </li>
+      <li class="mx-1 hidden md:block">
+        <nuxt-link to="/categories" class="text-lg font-inter text-gray-400 hover:text-orange-500"> Categories </nuxt-link>
+      </li>
+      <li class="mx-1 hidden md:block">
         <nuxt-link to="/about" class="text-lg font-inter text-gray-400 hover:text-orange-500"> About </nuxt-link>
       </li>
     </ul>

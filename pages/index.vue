@@ -1,6 +1,6 @@
 <template>
   <div class="container mx-auto px-4 min-h-screen">
-    <MealsList title="Recommended Meals" :meals="recommendedMeals" />
+    <MealList title="Recommended Meals" :meals="recommendedMeals" />
   </div>
 </template>
 

@@ -1,18 +1,13 @@
 <template>
   <LoadingSpinner v-if="meals === null" :title="`Loading ${title.toLowerCase()}...`" />
-  <section v-else-if="meals.length" class="container mx-auto px-4 py-8">
+  <section v-else class="container mx-auto px-4 py-8">
     <h2 v-if="title" class="text-3xl font-semibold mb-4">
       {{ title }}
     </h2>
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    <div v-if="meals.length" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
       <MealCard v-for="meal in meals" :key="meal.idMeal" :meal="meal" />
     </div>
-  </section>
-  <section v-else class="container mx-auto px-4 py-8">
-    <h2 class="text-3xl font-semibold mb-4">
-      {{ title }}
-    </h2>
-    <p class="text-lg text-gray-500">No meals found.</p>
+    <p v-else class="text-lg text-gray-500">No meals found.</p>
   </section>
 </template>
 

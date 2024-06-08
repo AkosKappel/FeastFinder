@@ -1,75 +1,36 @@
-# Nuxt 3 Minimal Starter
+# Feast Finder
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+Feast Finder is a web application that allows users to search for meals based on their ingredients and food categories. Users can also view details about a specific meal, including its ingredients and instructions on how to prepare it. The application uses the [MealDB API](https://www.themealdb.com/api.php) to fetch meal data.
+
+## Features
+
+- Search for meals based on ingredients and food categories
+- View details about a specific meal, including its ingredients and instructions
+- Filter results by search query or first letter of meal name
+<!-- - Save meals to a favorites list -->
+
+## Examples
+
+### Home Page
+
+![Home Page](./screenshots/homepage.jpg)
+
+### Search by Ingredient
+
+![Search by Ingredient](./screenshots/choco.png)
+
+## Meal Details
+
+![Meal Details](./screenshots/bigmac.png)
+
+## Technologies
+
+- Nuxt.js
+- Tailwind CSS
+- Axios
 
 ## Setup
 
-Make sure to install the dependencies:
-
-```bash
-# npm
-npm install
-
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
-```
-
-## Development Server
-
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm run dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm run build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+1. Clone the repository
+2. Install dependencies with `npm install`
+3. Run the application with `npm run dev`

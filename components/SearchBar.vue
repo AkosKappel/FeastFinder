@@ -1,5 +1,5 @@
 <template>
-  <div class="search-bar flex items-center">
+  <div class="search-bar flex items-center mx-3">
     <label for="simple-search" class="sr-only">Search</label>
     <div class="relative w-full">
       <input

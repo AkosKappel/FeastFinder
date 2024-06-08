@@ -8,16 +8,16 @@
     <SearchBar @search="search" />
     <ul class="flex space-x-4 mr-4 my-1">
       <li class="mx-1 hidden md:block">
-        <nuxt-link to="/meals" class="text-lg font-inter text-gray-400 hover:text-orange-500"> Meals </nuxt-link>
+        <nuxt-link to="/meals" :class="activeLinkClass('/meals')"> Meals </nuxt-link>
       </li>
       <li class="mx-1 hidden md:block">
-        <nuxt-link to="/ingredients" class="text-lg font-inter text-gray-400 hover:text-orange-500"> Ingredients </nuxt-link>
+        <nuxt-link to="/ingredients" :class="activeLinkClass('/ingredients')"> Ingredients </nuxt-link>
       </li>
       <li class="mx-1 hidden md:block">
-        <nuxt-link to="/categories" class="text-lg font-inter text-gray-400 hover:text-orange-500"> Categories </nuxt-link>
+        <nuxt-link to="/categories" :class="activeLinkClass('/categories')"> Categories </nuxt-link>
       </li>
       <li class="mx-1 hidden md:block">
-        <nuxt-link to="/about" class="text-lg font-inter text-gray-400 hover:text-orange-500"> About </nuxt-link>
+        <nuxt-link to="/about" :class="activeLinkClass('/about')"> About </nuxt-link>
       </li>
     </ul>
   </header>
@@ -25,6 +25,13 @@
 
 <script setup lang="ts">
 const router = useRouter();
+
+const activeLinkClass = (path: string) => {
+  return (
+    'text-lg font-inter text-gray-400 hover:text-orange-500' +
+    (router.currentRoute.value.path === path ? ' text-orange-500' : '')
+  );
+};
 
 const search = (input: string) => {
   router.push({ path: '/meals', query: { q: input } });

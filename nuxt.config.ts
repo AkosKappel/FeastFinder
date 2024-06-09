@@ -2,4 +2,8 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: ['@nuxtjs/tailwindcss', '@nuxt/image'],
+  app: {
+    baseURL: '/FeastFinder/',
+    buildAssetsDir: 'assets',
+  },
 });

@@ -45,7 +45,7 @@ const search = (query: string) => {
   width: 400px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 600px) {
   .search-bar {
     display: none;
   }

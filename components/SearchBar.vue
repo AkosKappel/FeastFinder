@@ -1,9 +1,9 @@
 <template>
-  <div class="search-bar flex items-center mx-3">
+  <div class="flex items-center md:mx-3">
     <label for="simple-search" class="sr-only">Search</label>
     <div class="relative w-full">
       <input
-        type="text"
+        type="search"
         id="simple-search"
         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-orange-500 dark:focus:border-orange-500"
         placeholder="E.g. Chicken, Pasta, Vegan..."
@@ -13,6 +13,7 @@
       />
     </div>
     <button
+      type="button"
       @click.prevent="search(input)"
       class="p-2.5 ms-2 text-sm font-medium text-white bg-orange-700 rounded-lg border border-orange-700 hover:bg-orange-800 focus:ring-4 focus:outline-none focus:ring-orange-300 dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800"
     >
@@ -39,15 +40,3 @@ const search = (query: string) => {
   input.value = '';
 };
 </script>
-
-<style scoped>
-.search-bar {
-  width: 400px;
-}
-
-@media (max-width: 600px) {
-  .search-bar {
-    display: none;
-  }
-}
-</style>

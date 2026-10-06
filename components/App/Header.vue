@@ -1,65 +1,73 @@
 <template>
-  <header class="flex justify-between items-center p-4 bg-white dark:bg-gray-900">
+  <header class="flex flex-wrap justify-between items-center gap-y-3 p-4 bg-white dark:bg-gray-900">
     <div class="flex space-x-4 ml-4 my-1">
       <nuxt-link to="/" class="flex items-center">
         <h1 class="text-2xl font-bold whitespace-nowrap dark:text-orange-500">Feast Finder</h1>
       </nuxt-link>
     </div>
-    <SearchBar @search="search" />
+    <SearchBar class="order-last w-full md:order-none md:w-auto md:flex-1 md:max-w-md" @search="search" />
 
-    <div class="md:hidden">
+    <div class="relative md:hidden" @keydown.esc="showDropdown = false">
       <button
         class="flex items-center px-3 py-2 border rounded text-gray-500 hover:text-orange-500"
+        aria-controls="mobile-menu"
+        :aria-expanded="showDropdown"
         @click="showDropdown = !showDropdown"
       >
         <span class="mr-1">Menu</span>
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-5 w-5"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          aria-hidden="true"
+        >
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
         </svg>
       </button>
-      <ul v-show="showDropdown" class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1">
-        <li class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-          <nuxt-link to="/meals" :class="activeLinkClass('/meals')"> Meals </nuxt-link>
-        </li>
-        <li class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-          <nuxt-link to="/ingredients" :class="activeLinkClass('/ingredients')"> Ingredients </nuxt-link>
-        </li>
-        <li class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-          <nuxt-link to="/categories" :class="activeLinkClass('/categories')"> Categories </nuxt-link>
-        </li>
-        <li class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-          <nuxt-link to="/about" :class="activeLinkClass('/about')"> About </nuxt-link>
+      <ul
+        v-show="showDropdown"
+        id="mobile-menu"
+        class="absolute right-0 z-40 mt-2 w-48 bg-white rounded-md shadow-lg py-1"
+      >
+        <li v-for="link in links" :key="link.to">
+          <nuxt-link :to="link.to" class="block px-4 py-2 hover:bg-gray-100" :class="linkClass(link.to)">
+            {{ link.label }}
+          </nuxt-link>
         </li>
       </ul>
     </div>
 
-    <ul class="hidden md:flex space-x-4 mr-4 my-1">
-      <li class="mx-1">
-        <nuxt-link to="/meals" :class="activeLinkClass('/meals')"> Meals </nuxt-link>
-      </li>
-      <li class="mx-1">
-        <nuxt-link to="/ingredients" :class="activeLinkClass('/ingredients')"> Ingredients </nuxt-link>
-      </li>
-      <li class="mx-1">
-        <nuxt-link to="/categories" :class="activeLinkClass('/categories')"> Categories </nuxt-link>
-      </li>
-      <li class="mx-1">
-        <nuxt-link to="/about" :class="activeLinkClass('/about')"> About </nuxt-link>
-      </li>
-    </ul>
+    <nav class="hidden md:block mr-4 my-1" aria-label="Main">
+      <ul class="flex space-x-4">
+        <li v-for="link in links" :key="link.to" class="mx-1">
+          <nuxt-link :to="link.to" :class="linkClass(link.to)">{{ link.label }}</nuxt-link>
+        </li>
+      </ul>
+    </nav>
   </header>
 </template>
 
 <script setup lang="ts">
+const route = useRoute();
 const router = useRouter();
 const showDropdown = ref(false);
 
-const activeLinkClass = (path: string) => {
-  return (
-    'text-lg font-inter text-gray-400 hover:text-orange-500' +
-    (router.currentRoute.value.path === path ? ' text-orange-500' : '')
-  );
-};
+const links = [
+  { to: '/meals', label: 'Meals' },
+  { to: '/ingredients', label: 'Ingredients' },
+  { to: '/categories', label: 'Categories' },
+  { to: '/about', label: 'About' },
+];
+
+watch(
+  () => route.fullPath,
+  () => (showDropdown.value = false),
+);
+
+const linkClass = (path: string) =>
+  route.path.startsWith(path) ? 'text-lg text-orange-600' : 'text-lg text-gray-600 hover:text-orange-600';
 
 const search = (input: string) => {
   router.push({ path: '/meals', query: { q: input } });

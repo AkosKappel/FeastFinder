@@ -30,16 +30,6 @@
             Tailwind CSS
           </a>
         </li>
-        <li>
-          <a
-            href="https://axios-http.com/"
-            class="text-blue-500 hover:underline"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Axios
-          </a>
-        </li>
       </ul>
     </div>
   </div>

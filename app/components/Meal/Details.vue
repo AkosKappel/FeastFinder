@@ -6,7 +6,14 @@
 
     <div class="flex flex-col md:flex-row md:mx-8 gap-4">
       <div class="flex-1 md:w-2/3 w-full">
-        <img :src="meal.strMealThumb" :alt="meal.strMeal" class="rounded-lg" />
+        <img
+          :src="meal.strMealThumb"
+          :alt="meal.strMeal"
+          width="700"
+          height="700"
+          fetchpriority="high"
+          class="w-full h-auto rounded-lg bg-gray-300"
+        />
       </div>
       <div class="flex-1 md:ml-8 md:w-1/3 w-full">
         <p v-if="meal.strCategory" class="mb-2 font-semibold">

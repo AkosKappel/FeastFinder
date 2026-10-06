@@ -39,3 +39,10 @@ export const pickRandom = <T>(items: readonly T[], count: number) => {
   }
   return shuffled.slice(0, count);
 };
+
+// TheMealDB serves meal photos at 350, 500 and 700 px (the original), and ingredient images
+// with -small and -medium suffixes, which saves most of the bandwidth on card grids.
+export const mealImageSrcset = (thumbUrl: string) => `${thumbUrl}/medium 350w, ${thumbUrl}/large 500w, ${thumbUrl} 700w`;
+
+export const ingredientImageUrl = (thumbUrl: string, size: 'small' | 'medium') =>
+  thumbUrl.replace(/\.png$/, `-${size}.png`);

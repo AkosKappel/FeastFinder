@@ -4,14 +4,15 @@
   >
     <div @click="showModal = true" class="cursor-pointer">
       <h2 class="text-xl font-semibold text-center my-2">{{ ingredient.strIngredient }}</h2>
-      <nuxt-img
-        :src="ingredient.strThumb ?? undefined"
+      <img
+        v-if="ingredient.strThumb"
+        :src="ingredientImageUrl(ingredient.strThumb, 'medium')"
         :alt="ingredient.strIngredient"
         :title="ingredient.strIngredient"
         loading="lazy"
         class="w-full h-48 object-cover object-center"
-        placeholder="/meal-placeholder.png"
       />
+      <img v-else src="/meal-placeholder.png" alt="" class="w-full h-48 object-cover object-center bg-gray-300" />
     </div>
     <div class="flex flex-col w-max mx-auto p-4">
       <nuxt-link

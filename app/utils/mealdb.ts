@@ -3,7 +3,6 @@ import type { Ingredient } from '@/types/Ingredient';
 import type { Meal, MealPreview } from '@/types/Meal';
 
 const API_BASE_URL = 'https://www.themealdb.com/api/json/v1/1/';
-const IMAGE_BASE_URL = 'https://www.themealdb.com/images/';
 
 // TheMealDB sends no cache headers and its data rarely changes, so responses are kept in memory
 // for the whole visit. Storing the promise also merges concurrent requests for the same URL.
@@ -63,11 +62,7 @@ export const mealDb = {
 
   async getIngredients() {
     const { meals } = await fetchMealDb<MealsResponse<Ingredient>>('list.php?i=list');
-    return (meals ?? []).map(ingredient => ({
-      ...ingredient,
-      // A few ingredients come without a thumbnail URL; the image path follows the name.
-      strThumb: ingredient.strThumb || `${IMAGE_BASE_URL}ingredients/${encodeURIComponent(ingredient.strIngredient)}.png`,
-    }));
+    return meals ?? [];
   },
 
   mealsByCategory: (category: string) => filterMeals('c', category),

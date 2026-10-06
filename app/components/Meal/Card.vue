@@ -2,13 +2,14 @@
   <div
     class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg hover:scale-105 transition-all duration-300 ease-in-out"
   >
-    <nuxt-img
-      :src="meal.strMealThumb"
+    <img
+      :src="`${meal.strMealThumb}/medium`"
+      :srcset="mealImageSrcset(meal.strMealThumb)"
+      sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
       :alt="meal.strMeal"
       :title="meal.strMeal"
-      class="w-full h-48 object-cover object-center"
+      class="w-full h-48 object-cover object-center bg-gray-300"
       loading="lazy"
-      placeholder="/meal-placeholder.png"
     />
     <div class="flex flex-col justify-between p-4">
       <div class="mb-1">

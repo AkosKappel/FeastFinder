@@ -4,13 +4,12 @@
   >
     <div @click="showModal = true" class="cursor-pointer">
       <h2 class="text-xl font-semibold text-center my-2">{{ category.strCategory }}</h2>
-      <nuxt-img
+      <img
         :src="category.strCategoryThumb"
         :alt="category.strCategory"
         :title="category.strCategory"
         loading="lazy"
         class="w-full h-48 object-cover object-center"
-        placeholder="/meal-placeholder.png"
       />
     </div>
     <div class="flex flex-col w-max mx-auto p-4">

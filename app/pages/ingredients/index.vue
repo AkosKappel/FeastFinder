@@ -1,6 +1,6 @@
 <template>
   <div class="container mx-auto px-4">
-    <IngredientList
+    <IngredientList heading-tag="h1"
       title="Ingredients"
       :ingredients="ingredients"
       :loading="pending"

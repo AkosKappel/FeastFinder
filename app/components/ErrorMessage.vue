@@ -3,7 +3,7 @@
     <p class="text-2xl font-semibold">{{ title }}</p>
     <p class="text-lg text-gray-600">{{ message }}</p>
     <button
-      class="px-4 py-2 bg-orange-500 text-white font-bold rounded hover:bg-orange-600 transition-all duration-300 ease-in-out"
+      class="px-4 py-2 bg-orange-700 text-white font-bold rounded hover:bg-orange-800 transition-all duration-300 ease-in-out"
       @click="$emit('retry')"
     >
       Try again

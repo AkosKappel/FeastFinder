@@ -2,14 +2,14 @@
   <header class="flex flex-wrap justify-between items-center gap-y-3 p-4 bg-white dark:bg-gray-900">
     <div class="flex space-x-4 ml-4 my-1">
       <nuxt-link to="/" class="flex items-center">
-        <h1 class="text-2xl font-bold whitespace-nowrap dark:text-orange-500">Feast Finder</h1>
+        <component :is="route.path === '/' ? 'h1' : 'span'" class="text-2xl font-bold whitespace-nowrap">Feast Finder</component>
       </nuxt-link>
     </div>
     <SearchBar class="order-last w-full md:order-none md:w-auto md:flex-1 md:max-w-md" @search="search" />
 
-    <div class="relative md:hidden" @keydown.esc="showDropdown = false">
+    <div class="relative lg:hidden" @keydown.esc="showDropdown = false">
       <button
-        class="flex items-center px-3 py-2 border rounded text-gray-500 hover:text-orange-500"
+        class="flex items-center px-3 py-2 border rounded text-gray-500 hover:text-orange-700"
         aria-controls="mobile-menu"
         :aria-expanded="showDropdown"
         @click="showDropdown = !showDropdown"
@@ -39,7 +39,7 @@
       </ul>
     </div>
 
-    <nav class="hidden md:block mr-4 my-1" aria-label="Main">
+    <nav class="hidden lg:block mr-4 my-1" aria-label="Main">
       <ul class="flex space-x-4">
         <li v-for="link in links" :key="link.to" class="mx-1">
           <nuxt-link :to="link.to" :class="linkClass(link.to)">{{ link.label }}</nuxt-link>
@@ -58,6 +58,7 @@ const links = [
   { to: '/meals', label: 'Meals' },
   { to: '/ingredients', label: 'Ingredients' },
   { to: '/categories', label: 'Categories' },
+  { to: '/random', label: 'Surprise me' },
   { to: '/favourites', label: 'Favourites' },
   { to: '/about', label: 'About' },
 ];

@@ -27,6 +27,8 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
       - run: npx nuxt generate
         env:
           NITRO_PRESET: github_pages

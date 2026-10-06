@@ -1,18 +1,24 @@
 <template>
-  <section class="container mx-auto px-4 py-8 motion-safe:animate-pulse" aria-hidden="true">
-    <div class="h-9 w-2/3 md:w-1/3 mx-auto mb-8 rounded bg-gray-300"></div>
-    <div class="flex flex-col md:flex-row md:mx-8 gap-4">
-      <div class="flex-1 md:w-2/3 aspect-square rounded-lg bg-gray-300"></div>
-      <div class="flex-1 md:ml-8 md:w-1/3 space-y-3">
-        <div v-for="n in 3" :key="n" class="h-5 w-1/2 rounded bg-gray-300"></div>
-        <div class="h-6 w-1/3 mt-6 rounded bg-gray-300"></div>
-        <div v-for="n in 8" :key="`ingredient-${n}`" class="h-4 w-2/3 rounded bg-gray-200"></div>
+  <div class="container mx-auto px-4 py-6 motion-safe:animate-pulse" aria-hidden="true">
+    <div class="mb-4 h-5 w-16 rounded bg-gray-300"></div>
+    <div class="h-10 w-2/3 rounded bg-gray-300 md:w-1/3"></div>
+    <div class="mt-4 flex gap-2">
+      <div v-for="n in 3" :key="`chip-${n}`" class="h-7 w-24 rounded-full bg-gray-300"></div>
+    </div>
+    <div class="mt-4 mb-6 flex gap-2">
+      <div v-for="n in 3" :key="`action-${n}`" class="h-10 w-20 rounded-lg bg-gray-300"></div>
+    </div>
+    <div class="grid gap-8 md:grid-cols-5">
+      <div class="aspect-square rounded-lg bg-gray-300 md:col-span-3"></div>
+      <div class="space-y-3 md:col-span-2">
+        <div class="h-7 w-40 rounded bg-gray-300"></div>
+        <div v-for="n in 8" :key="`ingredient-${n}`" class="h-12 rounded bg-gray-200"></div>
       </div>
     </div>
-    <div class="mt-8 md:m-8 space-y-3">
+    <div class="mt-10 space-y-3">
       <div class="h-7 w-40 rounded bg-gray-300"></div>
-      <div v-for="n in 6" :key="`line-${n}`" class="h-4 rounded bg-gray-200"></div>
+      <div v-for="n in 5" :key="`step-${n}`" class="h-16 rounded-lg bg-gray-200"></div>
     </div>
-  </section>
+  </div>
   <span class="sr-only">Loading meal details...</span>
 </template>

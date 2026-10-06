@@ -50,3 +50,34 @@ export const ingredientImageUrl = (thumbUrl: string, size: 'small' | 'medium') =
 // Keeps URLs clean: `?filter=&page=` becomes nothing.
 export const withoutEmptyValues = <T extends Record<string, unknown>>(query: T) =>
   Object.fromEntries(Object.entries(query).filter(([, value]) => value !== '' && value != null)) as Partial<T>;
+
+export const ingredientThumbUrl = (name: string, size: 'small' | 'medium') =>
+  `https://www.themealdb.com/images/ingredients/${encodeURIComponent(name)}-${size}.png`;
+
+// Instructions are free text: steps are separate lines, sometimes with "STEP 1" lines or "1." prefixes.
+export const splitInstructions = (instructions: string | null) =>
+  (instructions ?? '')
+    .split(/\r?\n/)
+    .map(line => line.trim())
+    .filter(line => line && !/^step\s*\d+[.:)]?$/i.test(line))
+    .map(line => line.replace(/^(step\s*)?\d+(\s*[.:)]|\s+-)\s*/i, ''))
+    .filter(Boolean);
+
+export const youtubeVideoId = (url: string | null) => {
+  if (!url) return null;
+  try {
+    const { hostname, pathname, searchParams } = new URL(url);
+    const id = hostname === 'youtu.be' ? pathname.slice(1) : searchParams.get('v');
+    return id && /^[\w-]{11}$/.test(id) ? id : null;
+  } catch {
+    return null;
+  }
+};
+
+export const hostnameOf = (url: string) => {
+  try {
+    return new URL(url).hostname.replace(/^www\./, '');
+  } catch {
+    return url;
+  }
+};

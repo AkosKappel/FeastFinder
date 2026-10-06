@@ -2,11 +2,14 @@ import { describe, expect, it } from 'vitest';
 import type { Meal } from '../../app/types/Meal';
 import {
   formatMealTags,
+  hostnameOf,
   getIngredientsFromMeal,
   ingredientImageUrl,
   mealImageSrcset,
   pickRandom,
+  splitInstructions,
   withoutEmptyValues,
+  youtubeVideoId,
 } from '../../app/utils/helpers';
 
 const meal = (fields: Record<string, string | null>) => fields as unknown as Meal;
@@ -86,5 +89,43 @@ describe('withoutEmptyValues', () => {
       letter: 'b',
       sort: '0',
     });
+  });
+});
+
+describe('splitInstructions', () => {
+  it('splits lines and removes step headings and numbering', () => {
+    expect(splitInstructions('STEP 1\r\nPreheat the oven.\r\n\r\nstep 2:\n2. Mix the flour.\n3) Bake.')).toEqual([
+      'Preheat the oven.',
+      'Mix the flour.',
+      'Bake.',
+    ]);
+  });
+
+  it('keeps numbers that are part of the text', () => {
+    expect(splitInstructions('350 grams of flour go in first.')).toEqual(['350 grams of flour go in first.']);
+    expect(splitInstructions('2-3 minutes per side.\nSTEP 4 - Serve.')).toEqual(['2-3 minutes per side.', 'Serve.']);
+  });
+
+  it('returns no steps without instructions', () => {
+    expect(splitInstructions(null)).toEqual([]);
+  });
+});
+
+describe('youtubeVideoId', () => {
+  it('reads watch and short links', () => {
+    expect(youtubeVideoId('https://www.youtube.com/watch?v=4aZr5hZXP_s')).toBe('4aZr5hZXP_s');
+    expect(youtubeVideoId('https://youtu.be/4aZr5hZXP_s')).toBe('4aZr5hZXP_s');
+  });
+
+  it('rejects anything else', () => {
+    expect(youtubeVideoId('https://www.youtube.com/watch?v=bad')).toBeNull();
+    expect(youtubeVideoId('not a url')).toBeNull();
+    expect(youtubeVideoId(null)).toBeNull();
+  });
+});
+
+describe('hostnameOf', () => {
+  it('shows the site name without www', () => {
+    expect(hostnameOf('https://www.bbcgoodfood.com/recipes/x')).toBe('bbcgoodfood.com');
   });
 });

@@ -1,71 +1,218 @@
 <template>
-  <section class="container mx-auto px-4 py-8">
-    <h1 class="text-3xl font-semibold mb-8 text-center text-orange-600">
-      {{ meal.strMeal }}
-    </h1>
+  <article class="container mx-auto px-4 py-6">
+    <button
+      type="button"
+      class="mb-4 inline-flex items-center gap-1 text-gray-700 hover:text-orange-700 print:hidden"
+      @click="goBack"
+    >
+      <ArrowLeft class="h-4 w-4" aria-hidden="true" />
+      Back
+    </button>
 
-    <div class="flex flex-col md:flex-row md:mx-8 gap-4">
-      <div class="flex-1 md:w-2/3 w-full">
+    <header class="mb-6">
+      <h1 class="text-3xl font-semibold text-orange-700 md:text-4xl">{{ meal.strMeal }}</h1>
+      <p v-if="meal.strMealAlternate" class="mt-1 text-gray-600">Also known as {{ meal.strMealAlternate }}</p>
+
+      <ul class="mt-4 flex flex-wrap gap-2" aria-label="Meal details">
+        <li v-if="meal.strCategory">
+          <nuxt-link :to="`/categories/${encodeURIComponent(meal.strCategory)}`" :class="chipClass">
+            <Tag class="h-4 w-4" aria-hidden="true" />
+            <span class="sr-only">Category:</span> {{ meal.strCategory }}
+          </nuxt-link>
+        </li>
+        <li v-if="meal.strArea">
+          <nuxt-link :to="`/areas/${encodeURIComponent(meal.strArea)}`" :class="chipClass">
+            <Globe class="h-4 w-4" aria-hidden="true" />
+            <span class="sr-only">Cuisine:</span> {{ meal.strArea }}
+          </nuxt-link>
+        </li>
+        <li v-for="tag in tags" :key="tag">
+          <span :class="tagClass">
+            <Hash class="h-4 w-4" aria-hidden="true" />
+            <span class="sr-only">Tag:</span> {{ tag }}
+          </span>
+        </li>
+      </ul>
+
+      <div class="mt-4 flex flex-wrap gap-2 print:hidden">
+        <FavouriteButton :meal="meal" with-label :class="actionClass" />
+        <button type="button" :class="actionClass" @click="share">
+          <component :is="copied ? Check : Share2" class="h-5 w-5" aria-hidden="true" />
+          {{ copied ? 'Link copied' : 'Share' }}
+        </button>
+        <button type="button" :class="actionClass" @click="print">
+          <Printer class="h-5 w-5" aria-hidden="true" />
+          Print
+        </button>
+      </div>
+    </header>
+
+    <div class="grid gap-8 md:grid-cols-5">
+      <div class="md:col-span-3">
         <img
           :src="meal.strMealThumb"
           :alt="meal.strMeal"
           width="700"
           height="700"
           fetchpriority="high"
-          class="w-full h-auto rounded-lg bg-gray-300"
+          class="h-auto w-full rounded-lg bg-gray-300"
         />
-      </div>
-      <div class="flex-1 md:ml-8 md:w-1/3 w-full">
-        <p v-if="meal.strCategory" class="mb-2 font-semibold">
-          Category:
-          <span class="text-gray-500 font-normal">{{ meal.strCategory }}</span>
-        </p>
-        <p v-if="meal.strArea" class="mb-2 font-semibold">
-          Area:
-          <span class="text-gray-500 font-normal">{{ meal.strArea }}</span>
-        </p>
-        <p v-if="meal.strTags" class="mb-2 font-semibold">
-          Tags:
-          <span class="text-gray-500 font-normal">{{ formatMealTags(meal) }}</span>
-        </p>
-        <p v-if="meal.strMealAlternate" class="mb-2 font-semibold">
-          Also known as:
-          <span class="text-gray-500 font-normal">{{ meal.strMealAlternate }}</span>
-        </p>
-        <p v-if="meal.strYoutube" class="mb-2 font-semibold">
-          Video:
-          <a :href="meal.strYoutube" target="_blank" rel="noopener noreferrer" class="text-gray-500 font-normal hover:underline">
-            {{ meal.strYoutube }}
+        <p v-if="meal.strImageSource" class="mt-1 text-sm text-gray-600">
+          Image:
+          <a :href="meal.strImageSource" target="_blank" rel="noopener noreferrer" class="underline hover:text-orange-700">
+            {{ hostnameOf(meal.strImageSource) }}
           </a>
         </p>
-        <p v-if="meal.strSource" class="mb-2 font-semibold">
-          Source:
-          <a :href="meal.strSource" target="_blank" rel="noopener noreferrer" class="text-gray-500 font-normal">{{ meal.strSource }}</a>
-        </p>
-        <h3 class="text-xl font-semibold mt-3 mb-2">Ingredients:</h3>
-        <ul class="list-disc list-inside ml-4">
-          <li v-for="ingredient in getIngredientsFromMeal(meal)" :key="ingredient.name" class="my-1">
-            {{ ingredient.name }}
-            <span v-if="ingredient.measure" class="italic text-gray-600 font-normal">({{ ingredient.measure }})</span>
+      </div>
+
+      <section class="md:col-span-2" aria-labelledby="ingredients-heading">
+        <h2 id="ingredients-heading" class="mb-3 text-2xl font-semibold">Ingredients</h2>
+        <ul class="divide-y divide-gray-300 rounded-lg bg-white shadow-sm">
+          <li v-for="ingredient in ingredients" :key="ingredient.name">
+            <nuxt-link
+              :to="`/ingredients/${encodeURIComponent(ingredient.name)}`"
+              class="flex items-center gap-3 px-3 py-2 hover:bg-orange-50"
+            >
+              <img
+                :src="ingredientThumbUrl(ingredient.name, 'small')"
+                alt=""
+                width="40"
+                height="40"
+                loading="lazy"
+                class="h-10 w-10 shrink-0 object-contain"
+              />
+              <span class="capitalize">{{ ingredient.name }}</span>
+              <span v-if="ingredient.measure" class="ml-auto text-right text-gray-600">{{ ingredient.measure }}</span>
+            </nuxt-link>
           </li>
         </ul>
+      </section>
+    </div>
+
+    <section v-if="steps.length" class="mt-10" aria-labelledby="instructions-heading">
+      <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
+        <h2 id="instructions-heading" class="text-2xl font-semibold">Instructions</h2>
+        <div v-if="readAloud.isSupported.value" class="flex gap-2 print:hidden">
+          <button v-if="readAloud.status.value === 'idle'" type="button" :class="actionClass" @click="readAloud.play()">
+            <Volume2 class="h-5 w-5" aria-hidden="true" />
+            Read aloud
+          </button>
+          <template v-else>
+            <button
+              v-if="readAloud.status.value === 'playing'"
+              type="button"
+              :class="actionClass"
+              @click="readAloud.pause()"
+            >
+              <Pause class="h-5 w-5" aria-hidden="true" />
+              Pause
+            </button>
+            <button v-else type="button" :class="actionClass" @click="readAloud.resume()">
+              <Play class="h-5 w-5" aria-hidden="true" />
+              Resume
+            </button>
+            <button type="button" :class="actionClass" @click="readAloud.stop()">
+              <Square class="h-5 w-5" aria-hidden="true" />
+              Stop
+            </button>
+          </template>
+        </div>
       </div>
-    </div>
-    <div v-if="meal.strInstructions" class="mt-2 md:m-8">
-      <h2 class="text-2xl font-semibold mb-2">Instructions</h2>
-      <p class="whitespace-pre-line">{{ meal.strInstructions }}</p>
-    </div>
-  </section>
+      <ol class="space-y-3">
+        <li
+          v-for="(step, index) in steps"
+          :key="index"
+          class="flex gap-4 rounded-lg p-3 transition-colors"
+          :class="readAloud.currentStep.value === index ? 'bg-orange-100' : 'bg-white'"
+          :aria-current="readAloud.currentStep.value === index ? 'step' : undefined"
+        >
+          <span
+            class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-orange-700 font-semibold text-white"
+            aria-hidden="true"
+          >
+            {{ index + 1 }}
+          </span>
+          <p class="pt-1">{{ step }}</p>
+        </li>
+      </ol>
+    </section>
+
+    <section v-if="videoId" class="mt-10 print:hidden" aria-labelledby="video-heading">
+      <h2 id="video-heading" class="mb-4 flex items-center gap-2 text-2xl font-semibold">
+        <CirclePlay class="h-6 w-6 text-orange-700" aria-hidden="true" />
+        Video
+      </h2>
+      <div class="aspect-video w-full max-w-3xl overflow-hidden rounded-lg bg-black">
+        <iframe
+          :src="`https://www.youtube-nocookie.com/embed/${videoId}`"
+          :title="`${meal.strMeal} video`"
+          class="h-full w-full"
+          loading="lazy"
+          allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+      </div>
+    </section>
+
+    <p v-if="meal.strSource" class="mt-8 flex items-center gap-2 text-gray-700">
+      <ExternalLink class="h-4 w-4" aria-hidden="true" />
+      Original recipe:
+      <a :href="meal.strSource" target="_blank" rel="noopener noreferrer" class="underline hover:text-orange-700">
+        {{ hostnameOf(meal.strSource) }}
+      </a>
+    </p>
+  </article>
 </template>
 
 <script setup lang="ts">
+import {
+  ArrowLeft,
+  Check,
+  CirclePlay,
+  ExternalLink,
+  Globe,
+  Hash,
+  Pause,
+  Play,
+  Printer,
+  Share2,
+  Square,
+  Tag,
+  Volume2,
+} from '@lucide/vue';
 import type { Meal } from '@/types/Meal';
-import { getIngredientsFromMeal, formatMealTags } from '@/utils/helpers';
 
-defineProps({
-  meal: {
-    type: Object as PropType<Meal>,
-    required: true,
-  },
-});
+const props = defineProps<{ meal: Meal }>();
+
+const chipClass =
+  'inline-flex items-center gap-1 rounded-full bg-white px-3 py-1 text-sm text-gray-800 shadow-sm hover:text-orange-700';
+const tagClass = 'inline-flex items-center gap-1 rounded-full bg-gray-100 px-3 py-1 text-sm text-gray-700';
+const actionClass =
+  'inline-flex items-center gap-2 rounded-lg bg-white px-3 py-2 font-medium text-gray-800 shadow-sm hover:bg-orange-50';
+
+const ingredients = computed(() => getIngredientsFromMeal(props.meal));
+const steps = computed(() => splitInstructions(props.meal.strInstructions));
+const tags = computed(() => formatMealTags(props.meal).split(', ').filter(Boolean));
+const videoId = computed(() => youtubeVideoId(props.meal.strYoutube));
+
+const readAloud = useReadAloud(steps);
+watch(() => props.meal.idMeal, readAloud.stop);
+
+const router = useRouter();
+const goBack = () => (window.history.state?.back ? router.back() : router.push('/meals'));
+
+// Native share sheet where available (mostly phones), otherwise copy the link.
+const { share: shareNatively, isSupported: canShare } = useShare();
+const { copy, copied } = useClipboard({ copiedDuring: 2000 });
+const share = async () => {
+  const url = window.location.href;
+  if (!canShare.value) return copy(url);
+  try {
+    await shareNatively({ title: props.meal.strMeal, url });
+  } catch {
+    // The user closed the share sheet.
+  }
+};
+
+const print = () => window.print();
 </script>

@@ -5,7 +5,7 @@
     <div @click="showModal = true" class="cursor-pointer">
       <h2 class="text-xl font-semibold text-center my-2">{{ ingredient.strIngredient }}</h2>
       <nuxt-img
-        :src="ingredient.strIngredientThumb"
+        :src="ingredient.strThumb ?? undefined"
         :alt="ingredient.strIngredient"
         :title="ingredient.strIngredient"
         loading="lazy"

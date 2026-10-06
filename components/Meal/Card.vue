@@ -27,11 +27,11 @@
 </template>
 
 <script setup lang="ts">
-import type { Meal } from '@/types/Meal';
+import type { MealPreview } from '@/types/Meal';
 
 defineProps({
   meal: {
-    type: Object as PropType<Meal>,
+    type: Object as PropType<MealPreview>,
     required: true,
   },
 });

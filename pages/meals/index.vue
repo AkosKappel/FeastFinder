@@ -1,25 +1,17 @@
 <template>
-  <main class="container mx-auto px-4 min-h-screen">
-    <MealList :title="title" :meals="meals" :error="error" @retry="getMeals(query)" />
-  </main>
+  <div class="container mx-auto px-4">
+    <MealList :title="title" :meals="meals" :loading="pending" :error="Boolean(error)" @retry="refresh()" />
+  </div>
 </template>
 
 <script setup lang="ts">
-import { useMeals } from '@/composables/useMeals';
-
 const route = useRoute();
-const { meals, error, getMeals } = useMeals();
-
-const query = computed(() => route.query.q as string);
+const query = computed(() => (route.query.q as string | undefined) ?? '');
 const title = computed(() => (query.value ? `Results for ${query.value}` : 'Meals'));
 
 useHead({ title });
 
-watch(
-  () => query.value,
-  async newQuery => {
-    await getMeals(newQuery as string);
-  },
-  { immediate: true },
-);
+const { data: meals, pending, error, refresh } = useAsyncData('search-meals', () => mealDb.searchMeals(query.value), {
+  watch: [query],
+});
 </script>

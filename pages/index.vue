@@ -1,29 +1,51 @@
 <template>
-  <div class="container mx-auto px-4 min-h-screen">
-    <MealList title="Recommended Meals" :meals="meals" :error="mealsError" @retry="getMeals(4)" />
+  <div class="container mx-auto px-4">
+    <MealList
+      title="Recommended Meals"
+      :meals="meals"
+      :loading="mealsPending"
+      :error="Boolean(mealsError)"
+      :skeleton-count="4"
+      @retry="refreshMeals()"
+    />
     <CategoryList
       title="Food Categories"
       :categories="categories"
-      :error="categoriesError"
-      @retry="getCategories(4)"
+      :loading="categoriesPending"
+      :error="Boolean(categoriesError)"
+      :skeleton-count="4"
+      @retry="refreshCategories()"
     />
     <IngredientList
       title="Best Ingredients"
       :ingredients="ingredients"
-      :error="ingredientsError"
-      @retry="getIngredients(4)"
+      :loading="ingredientsPending"
+      :error="Boolean(ingredientsError)"
+      :skeleton-count="4"
+      @retry="refreshIngredients()"
     />
   </div>
 </template>
 
 <script setup lang="ts">
-const { meals, error: mealsError, getMeals } = useRandomMeals();
-const { categories, error: categoriesError, getCategories } = useCategories();
-const { ingredients, error: ingredientsError, getIngredients } = useIngredients();
+const {
+  data: meals,
+  pending: mealsPending,
+  error: mealsError,
+  refresh: refreshMeals,
+} = useAsyncData('home-meals', () => mealDb.getRandomMeals(4));
 
-onMounted(async () => {
-  await getMeals(4);
-  await getCategories(4);
-  await getIngredients(4);
-});
+const {
+  data: categories,
+  pending: categoriesPending,
+  error: categoriesError,
+  refresh: refreshCategories,
+} = useAsyncData('home-categories', async () => pickRandom(await mealDb.getCategories(), 4));
+
+const {
+  data: ingredients,
+  pending: ingredientsPending,
+  error: ingredientsError,
+  refresh: refreshIngredients,
+} = useAsyncData('home-ingredients', async () => pickRandom(await mealDb.getIngredients(), 4));
 </script>

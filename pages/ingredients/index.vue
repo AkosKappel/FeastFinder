@@ -1,23 +1,18 @@
 <template>
-  <main class="container mx-auto px-4 min-h-screen">
+  <div class="container mx-auto px-4">
     <IngredientList
       title="Ingredients"
       :ingredients="ingredients"
-      :error="error"
+      :loading="pending"
+      :error="Boolean(error)"
       :allow-filter="true"
-      @retry="getIngredients()"
+      @retry="refresh()"
     />
-  </main>
+  </div>
 </template>
 
 <script setup lang="ts">
-import { useIngredients } from '@/composables/useIngredients';
-
-const { ingredients, error, getIngredients } = useIngredients();
-
 useHead({ title: 'Ingredients' });
 
-onMounted(async () => {
-  await getIngredients();
-});
+const { data: ingredients, pending, error, refresh } = useAsyncData('ingredients', () => mealDb.getIngredients());
 </script>

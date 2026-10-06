@@ -1,7 +1,5 @@
 <template>
-  <ErrorMessage v-if="props.error" @retry="$emit('retry')" />
-  <LoadingSpinner v-else-if="ingredients === null" :title="`Loading ${props.title.toLowerCase()}...`" />
-  <section v-else class="container mx-auto px-4 my-8">
+  <section class="container mx-auto px-4 my-8" :aria-busy="props.loading">
     <div class="flex justify-between flex-wrap">
       <h2 v-if="props.title" class="text-3xl font-semibold mb-4">
         {{ props.title }}
@@ -26,7 +24,9 @@
         />
       </div>
     </div>
-    <div v-if="paginatedIngredients.length" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    <ErrorMessage v-if="props.error" @retry="$emit('retry')" />
+    <CardGridSkeleton v-else-if="props.loading || !props.ingredients" :count="props.skeletonCount" />
+    <div v-else-if="paginatedIngredients.length" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
       <IngredientCard
         v-for="ingredient in paginatedIngredients"
         :key="ingredient.idIngredient"
@@ -34,7 +34,7 @@
       />
     </div>
     <p v-else class="text-lg text-gray-500">No ingredients found.</p>
-    <div v-if="filteredIngredients.length > itemsPerPage" class="flex justify-center mt-6">
+    <div v-if="!props.loading && filteredIngredients.length > itemsPerPage" class="flex justify-center mt-6">
       <button
         @click="currentPage--"
         :disabled="currentPage === 1"
@@ -72,9 +72,17 @@ const props = defineProps({
     type: Array as PropType<Ingredient[] | null>,
     default: null,
   },
+  loading: {
+    type: Boolean,
+    default: false,
+  },
   error: {
-    type: String as PropType<string | null>,
-    default: null,
+    type: Boolean,
+    default: false,
+  },
+  skeletonCount: {
+    type: Number,
+    default: 12,
   },
   allowFilter: {
     type: Boolean,

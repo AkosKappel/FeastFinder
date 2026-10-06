@@ -1,17 +1,17 @@
 <template>
-  <main class="container mx-auto px-4 min-h-screen">
-    <CategoryList title="Categories" :categories="categories" :error="error" @retry="getCategories()" />
-  </main>
+  <div class="container mx-auto px-4">
+    <CategoryList
+      title="Categories"
+      :categories="categories"
+      :loading="pending"
+      :error="Boolean(error)"
+      @retry="refresh()"
+    />
+  </div>
 </template>
 
 <script setup lang="ts">
-import { useCategories } from '@/composables/useCategories';
-
-const { categories, error, getCategories } = useCategories();
-
 useHead({ title: 'Categories' });
 
-onMounted(async () => {
-  await getCategories();
-});
+const { data: categories, pending, error, refresh } = useAsyncData('categories', () => mealDb.getCategories());
 </script>

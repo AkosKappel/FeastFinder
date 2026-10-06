@@ -1,9 +1,10 @@
 export interface Meal {
   idMeal: string;
   strMeal: string;
-  strDrinkAlternate: string | null;
+  strMealAlternate: string | null;
   strCategory: string | null;
   strArea: string | null;
+  strCountry: string | null;
   strInstructions: string | null;
   strMealThumb: string;
   strTags: string | null;
@@ -53,3 +54,7 @@ export interface Meal {
   strCreativeCommonsConfirmed: string | null;
   dateModified: string | null;
 }
+
+// filter.php returns only these fields (plus area and country for some meals)
+export type MealPreview = Pick<Meal, 'idMeal' | 'strMeal' | 'strMealThumb'> &
+  Partial<Pick<Meal, 'strCategory' | 'strArea' | 'strCountry'>>;

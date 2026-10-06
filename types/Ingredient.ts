@@ -3,5 +3,5 @@ export interface Ingredient {
   strIngredient: string;
   strDescription: string;
   strType: string | null;
-  strIngredientThumb: string; // not in API
+  strThumb: string | null;
 }

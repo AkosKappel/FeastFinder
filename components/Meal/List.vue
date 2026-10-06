@@ -1,11 +1,11 @@
 <template>
-  <ErrorMessage v-if="error" @retry="$emit('retry')" />
-  <LoadingSpinner v-else-if="meals === null" :title="`Loading ${title.toLowerCase()}...`" />
-  <section v-else class="container mx-auto px-4 my-8">
+  <section class="container mx-auto px-4 my-8" :aria-busy="loading">
     <h2 v-if="title" class="text-3xl font-semibold mb-4">
       {{ title }}
     </h2>
-    <div v-if="meals.length" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    <ErrorMessage v-if="error" @retry="$emit('retry')" />
+    <CardGridSkeleton v-else-if="loading || !meals" :count="skeletonCount" />
+    <div v-else-if="meals.length" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
       <MealCard v-for="meal in meals" :key="meal.idMeal" :meal="meal" />
     </div>
     <p v-else class="text-lg text-gray-500">No meals found.</p>
@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import type { Meal } from '@/types/Meal';
+import type { MealPreview } from '@/types/Meal';
 
 defineProps({
   title: {
@@ -21,12 +21,20 @@ defineProps({
     default: '',
   },
   meals: {
-    type: Array as PropType<Meal[] | null>,
+    type: Array as PropType<MealPreview[] | null>,
     default: null,
   },
+  loading: {
+    type: Boolean,
+    default: false,
+  },
   error: {
-    type: String as PropType<string | null>,
-    default: null,
+    type: Boolean,
+    default: false,
+  },
+  skeletonCount: {
+    type: Number,
+    default: 8,
   },
 });
 

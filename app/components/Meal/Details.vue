@@ -59,7 +59,12 @@
         />
         <p v-if="meal.strImageSource" class="mt-1 text-sm text-gray-600">
           Image:
-          <a :href="meal.strImageSource" target="_blank" rel="noopener noreferrer" class="underline hover:text-orange-700">
+          <a
+            :href="meal.strImageSource"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="underline hover:text-orange-700"
+          >
             {{ hostnameOf(meal.strImageSource) }}
           </a>
         </p>

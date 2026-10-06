@@ -1,5 +1,7 @@
 <template>
-  <article class="flex flex-col overflow-hidden rounded-lg bg-white shadow-md transition-shadow duration-300 hover:shadow-lg">
+  <article
+    class="flex flex-col overflow-hidden rounded-lg bg-white shadow-md transition-shadow duration-300 hover:shadow-lg"
+  >
     <h3 class="my-2 px-2 text-center text-xl font-semibold">{{ title }}</h3>
     <button
       v-if="description"

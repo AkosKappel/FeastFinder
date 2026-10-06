@@ -2,7 +2,10 @@
   <form role="search" class="flex items-center md:mx-3" @submit.prevent="submit">
     <label for="meal-search" class="sr-only">Search meals</label>
     <div class="relative w-full">
-      <Search class="pointer-events-none absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-500" aria-hidden="true" />
+      <Search
+        class="pointer-events-none absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-500"
+        aria-hidden="true"
+      />
       <input
         id="meal-search"
         ref="inputEl"

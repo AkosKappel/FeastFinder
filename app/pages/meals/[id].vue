@@ -14,7 +14,12 @@
 const route = useRoute();
 const mealId = computed(() => route.params.id as string);
 
-const { data: meal, pending, error, refresh } = useAsyncData('meal', () => mealDb.getMeal(mealId.value), {
+const {
+  data: meal,
+  pending,
+  error,
+  refresh,
+} = useAsyncData('meal', () => mealDb.getMeal(mealId.value), {
   watch: [mealId],
 });
 

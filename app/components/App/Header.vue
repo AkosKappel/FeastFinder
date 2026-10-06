@@ -2,7 +2,9 @@
   <header class="flex flex-wrap justify-between items-center gap-y-3 p-4 bg-white dark:bg-gray-900">
     <div class="flex space-x-4 ml-4 my-1">
       <nuxt-link to="/" class="flex items-center">
-        <component :is="route.path === '/' ? 'h1' : 'span'" class="text-2xl font-bold whitespace-nowrap">Feast Finder</component>
+        <component :is="route.path === '/' ? 'h1' : 'span'" class="text-2xl font-bold whitespace-nowrap"
+          >Feast Finder</component
+        >
       </nuxt-link>
     </div>
     <SearchBar class="order-last w-full md:order-none md:w-auto md:flex-1 md:max-w-md" @search="search" />

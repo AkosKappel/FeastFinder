@@ -1,6 +1,8 @@
 <template>
   <section class="container mx-auto px-4 my-8" :aria-busy="props.loading">
-    <component :is="props.headingTag" v-if="props.title" class="text-3xl font-semibold mb-4">{{ props.title }}</component>
+    <component :is="props.headingTag" v-if="props.title" class="text-3xl font-semibold mb-4">{{
+      props.title
+    }}</component>
     <div v-if="props.allowFilter" class="mb-6 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
       <div class="flex flex-wrap gap-1" role="group" aria-label="Filter by first letter">
         <button

@@ -1,6 +1,7 @@
 <template>
   <div class="container mx-auto px-4">
-    <CategoryList heading-tag="h1"
+    <CategoryList
+      heading-tag="h1"
       title="Categories"
       :categories="categories"
       :loading="pending"

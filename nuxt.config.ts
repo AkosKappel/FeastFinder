@@ -19,7 +19,8 @@ export default defineNuxtConfig({
       meta: [
         {
           name: 'description',
-          content: 'Find recipes by meal name, ingredient or food category, with ingredients and step-by-step instructions.',
+          content:
+            'Find recipes by meal name, ingredient or food category, with ingredients and step-by-step instructions.',
         },
         { name: 'theme-color', content: '#f97316' },
         { property: 'og:site_name', content: 'Feast Finder' },

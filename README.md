@@ -50,12 +50,12 @@ npm install
 npm run dev
 ```
 
-| Script | What it does |
-| --- | --- |
-| `npm run dev` | Start the development server on http://localhost:3000/FeastFinder/ |
-| `npm test` | Run the unit tests |
-| `npm run typecheck` | Type-check the project |
-| `npm run generate` | Build the static site into `.output/public` |
+| Script              | What it does                                                       |
+| ------------------- | ------------------------------------------------------------------ |
+| `npm run dev`       | Start the development server on http://localhost:3000/FeastFinder/ |
+| `npm test`          | Run the unit tests                                                 |
+| `npm run typecheck` | Type-check the project                                             |
+| `npm run generate`  | Build the static site into `.output/public`                        |
 
 ## Deployment
 

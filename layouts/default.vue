@@ -7,3 +7,9 @@
     <AppFooter />
   </div>
 </template>
+
+<script setup lang="ts">
+useHead({
+  titleTemplate: title => (title && title !== 'Feast Finder' ? `${title} · Feast Finder` : 'Feast Finder'),
+});
+</script>

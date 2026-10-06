@@ -1,42 +1,59 @@
 <template>
-  <div class="flex items-center md:mx-3">
-    <label for="simple-search" class="sr-only">Search</label>
+  <form role="search" class="flex items-center md:mx-3" @submit.prevent="submit">
+    <label for="meal-search" class="sr-only">Search meals</label>
     <div class="relative w-full">
+      <Search class="pointer-events-none absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-500" aria-hidden="true" />
       <input
-        type="search"
-        id="simple-search"
-        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-orange-500 dark:focus:border-orange-500"
-        placeholder="E.g. Chicken, Pasta, Vegan..."
-        required
+        id="meal-search"
+        ref="inputEl"
         v-model="input"
-        @keyup.enter.prevent="search(input)"
+        type="search"
+        enterkeyhint="search"
+        autocomplete="off"
+        placeholder="Search meals, e.g. pasta"
+        class="block w-full rounded-lg border border-gray-300 bg-gray-50 py-2 pl-8 pr-9 text-sm text-gray-900 focus:border-orange-600 focus:ring-orange-600 [&::-webkit-search-cancel-button]:hidden"
+        @keydown.esc="clear"
       />
+      <button
+        v-if="input"
+        type="button"
+        class="absolute right-1 top-1/2 -translate-y-1/2 rounded p-1.5 text-gray-500 hover:text-gray-900"
+        aria-label="Clear search"
+        @click="clear"
+      >
+        <X class="h-4 w-4" aria-hidden="true" />
+      </button>
     </div>
     <button
-      type="button"
-      @click.prevent="search(input)"
-      class="p-2.5 ms-2 text-sm font-medium text-white bg-orange-700 rounded-lg border border-orange-700 hover:bg-orange-800 focus:ring-4 focus:outline-none focus:ring-orange-300 dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800"
+      type="submit"
+      class="ms-2 rounded-lg border border-orange-700 bg-orange-700 p-2.5 text-white hover:bg-orange-800 focus:outline-none focus:ring-4 focus:ring-orange-300"
     >
-      <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-        <path
-          stroke="currentColor"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-        />
-      </svg>
+      <Search class="h-4 w-4" aria-hidden="true" />
       <span class="sr-only">Search</span>
     </button>
-  </div>
+  </form>
 </template>
 
 <script setup lang="ts">
-const input = ref<string>('');
-const emits = defineEmits(['search']);
+import { Search, X } from '@lucide/vue';
 
-const search = (query: string) => {
-  emits('search', query.trim());
+const emit = defineEmits<{ search: [query: string] }>();
+
+const route = useRoute();
+const input = ref('');
+const inputEl = useTemplateRef<HTMLInputElement>('inputEl');
+
+// The box always shows the search that is in the URL, and empties when leaving the results.
+watch(
+  () => route.query.q,
+  q => (input.value = typeof q === 'string' ? q : ''),
+  { immediate: true },
+);
+
+const submit = () => emit('search', input.value.trim());
+
+const clear = () => {
   input.value = '';
+  inputEl.value?.focus();
 };
 </script>

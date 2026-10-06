@@ -7,7 +7,7 @@ export default defineNuxtConfig({
   // GitHub Pages serves static files only: render in the browser so the generated 404.html
   // fallback can boot the app on any deep link, e.g. /meals/52772.
   ssr: false,
-  modules: ['@nuxtjs/tailwindcss'],
+  modules: ['@nuxtjs/tailwindcss', '@vueuse/nuxt'],
   // CSS nesting is unused; skipping its plugin avoids a resolve warning with Tailwind 3 on Nuxt 4.
   postcss: { plugins: { 'tailwindcss/nesting': false } },
   app: {

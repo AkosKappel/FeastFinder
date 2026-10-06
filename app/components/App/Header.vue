@@ -69,7 +69,7 @@ watch(
 const linkClass = (path: string) =>
   route.path.startsWith(path) ? 'text-lg text-orange-600' : 'text-lg text-gray-600 hover:text-orange-600';
 
-const search = (input: string) => {
-  router.push({ path: '/meals', query: { q: input } });
+const search = (query: string) => {
+  router.push(query ? { path: '/meals', query: { q: query } } : '/meals');
 };
 </script>

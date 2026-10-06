@@ -58,6 +58,7 @@ const links = [
   { to: '/meals', label: 'Meals' },
   { to: '/ingredients', label: 'Ingredients' },
   { to: '/categories', label: 'Categories' },
+  { to: '/favourites', label: 'Favourites' },
   { to: '/about', label: 'About' },
 ];
 
@@ -67,7 +68,7 @@ watch(
 );
 
 const linkClass = (path: string) =>
-  route.path.startsWith(path) ? 'text-lg text-orange-600' : 'text-lg text-gray-600 hover:text-orange-600';
+  route.path.startsWith(path) ? 'text-lg text-orange-700' : 'text-lg text-gray-600 hover:text-orange-700';
 
 const search = (query: string) => {
   router.push(query ? { path: '/meals', query: { q: query } } : '/meals');

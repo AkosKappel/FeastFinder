@@ -2,6 +2,8 @@
 
 Feast Finder is a web application that allows users to search for meals based on their ingredients and food categories. Users can also view details about a specific meal, including its ingredients and instructions on how to prepare it. The application uses the [MealDB API](https://www.themealdb.com/api.php) to fetch meal data.
 
+Live demo: https://akoskappel.github.io/FeastFinder/ (deployed to GitHub Pages on every push to `main`).
+
 ## Features
 
 - Search for meals based on ingredients and food categories

@@ -46,3 +46,7 @@ export const mealImageSrcset = (thumbUrl: string) => `${thumbUrl}/medium 350w, $
 
 export const ingredientImageUrl = (thumbUrl: string, size: 'small' | 'medium') =>
   thumbUrl.replace(/\.png$/, `-${size}.png`);
+
+// Keeps URLs clean: `?filter=&page=` becomes nothing.
+export const withoutEmptyValues = <T extends Record<string, unknown>>(query: T) =>
+  Object.fromEntries(Object.entries(query).filter(([, value]) => value !== '' && value != null)) as Partial<T>;

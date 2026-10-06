@@ -1,21 +1,29 @@
 <template>
-  <div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50" @click.self="$emit('close')">
-    <div class="bg-white p-6 rounded-lg shadow-md max-w-2xl w-full">
-      <h2 class="text-2xl font-bold mb-4">{{ title }}</h2>
-      <p class="text-gray-700">{{ description }}</p>
-      <div class="flex justify-end mt-4">
+  <!-- Native modal dialog: focus trap, Escape to close and focus return come from the browser. -->
+  <dialog
+    ref="dialog"
+    class="w-full max-w-2xl rounded-lg p-0 shadow-xl backdrop:bg-black/50"
+    :aria-labelledby="titleId"
+    @close="$emit('close')"
+    @click.self="dialog?.close()"
+  >
+    <div class="p-6">
+      <h2 :id="titleId" class="mb-4 text-2xl font-bold">{{ title }}</h2>
+      <p class="whitespace-pre-line text-gray-700">{{ description }}</p>
+      <div class="mt-4 flex justify-end">
         <button
-          class="px-4 py-2 bg-orange-500 text-white rounded-lg shadow-md hover:bg-orange-600 transition-all duration-300 ease-in-out"
-          @click="$emit('close')"
+          type="button"
+          class="rounded-lg bg-orange-700 px-4 py-2 font-semibold text-white shadow-md hover:bg-orange-800"
+          @click="dialog?.close()"
         >
           Close
         </button>
       </div>
     </div>
-  </div>
+  </dialog>
 </template>
 
-<script setup>
+<script setup lang="ts">
 defineProps({
   title: {
     type: String,
@@ -28,4 +36,9 @@ defineProps({
 });
 
 defineEmits(['close']);
+
+const dialog = useTemplateRef<HTMLDialogElement>('dialog');
+const titleId = useId();
+
+onMounted(() => dialog.value?.showModal());
 </script>

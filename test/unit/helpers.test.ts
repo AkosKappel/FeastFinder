@@ -6,6 +6,7 @@ import {
   ingredientImageUrl,
   mealImageSrcset,
   pickRandom,
+  withoutEmptyValues,
 } from '../../app/utils/helpers';
 
 const meal = (fields: Record<string, string | null>) => fields as unknown as Meal;
@@ -76,5 +77,14 @@ describe('image helpers', () => {
     expect(ingredientImageUrl('https://x.test/ingredients/chicken.png', 'medium')).toBe(
       'https://x.test/ingredients/chicken-medium.png',
     );
+  });
+});
+
+describe('withoutEmptyValues', () => {
+  it('drops empty strings and missing values but keeps the rest', () => {
+    expect(withoutEmptyValues({ filter: '', letter: 'b', page: undefined, q: null, sort: '0' })).toEqual({
+      letter: 'b',
+      sort: '0',
+    });
   });
 });

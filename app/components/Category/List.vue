@@ -6,9 +6,16 @@
     <ErrorMessage v-if="error" @retry="$emit('retry')" />
     <CardGridSkeleton v-else-if="loading || !categories" :count="skeletonCount" />
     <div v-else-if="categories.length" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-      <CategoryCard v-for="category in categories" :key="category.idCategory" :category="category" />
+      <BrowseCard
+        v-for="category in categories"
+        :key="category.idCategory"
+        :title="category.strCategory"
+        :image="category.strCategoryThumb"
+        :description="category.strCategoryDescription"
+        :to="`/categories/${encodeURIComponent(category.strCategory)}`"
+      />
     </div>
-    <p v-else class="text-lg text-gray-500">No categories found.</p>
+    <p v-else class="text-lg text-gray-600">No categories found.</p>
   </section>
 </template>
 

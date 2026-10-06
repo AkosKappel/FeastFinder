@@ -1,5 +1,6 @@
 <template>
-  <LoadingSpinner v-if="ingredients === null" :title="`Loading ${props.title.toLowerCase()}...`" />
+  <ErrorMessage v-if="props.error" @retry="$emit('retry')" />
+  <LoadingSpinner v-else-if="ingredients === null" :title="`Loading ${props.title.toLowerCase()}...`" />
   <section v-else class="container mx-auto px-4 my-8">
     <div class="flex justify-between flex-wrap">
       <h2 v-if="props.title" class="text-3xl font-semibold mb-4">
@@ -71,11 +72,17 @@ const props = defineProps({
     type: Array as PropType<Ingredient[] | null>,
     default: null,
   },
+  error: {
+    type: String as PropType<string | null>,
+    default: null,
+  },
   allowFilter: {
     type: Boolean,
     default: false,
   },
 });
+
+defineEmits(['retry']);
 
 const filteredIngredients = computed(() => {
   if (!props.ingredients) {

@@ -1,5 +1,6 @@
 <template>
-  <LoadingSpinner v-if="categories === null" :title="`Loading ${title.toLowerCase()}...`" />
+  <ErrorMessage v-if="error" @retry="$emit('retry')" />
+  <LoadingSpinner v-else-if="categories === null" :title="`Loading ${title.toLowerCase()}...`" />
   <section v-else class="container mx-auto px-4 my-8">
     <h2 v-if="title" class="text-3xl font-semibold mb-4">
       {{ title }}
@@ -23,5 +24,11 @@ defineProps({
     type: Array as PropType<Category[] | null>,
     default: null,
   },
+  error: {
+    type: String as PropType<string | null>,
+    default: null,
+  },
 });
+
+defineEmits(['retry']);
 </script>

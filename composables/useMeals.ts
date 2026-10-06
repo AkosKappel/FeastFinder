@@ -68,7 +68,7 @@ export const useMealById = () => {
 
     try {
       const response = await axios.get(URL + id);
-      meal.value = response.data.meals[0];
+      meal.value = response.data.meals?.[0] ?? null;
     } catch (err: any) {
       error.value = err.message;
       meal.value = null;

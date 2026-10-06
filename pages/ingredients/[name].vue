@@ -1,6 +1,6 @@
 <template>
   <main class="container mx-auto px-4 min-h-screen">
-    <MealList :title="`Meals including ${ingredient}`" :meals="meals" />
+    <MealList :title="`Meals including ${ingredient}`" :meals="meals" :error="error" @retry="getMeals(ingredient)" />
   </main>
 </template>
 
@@ -8,9 +8,11 @@
 import { useMealsByIngredient } from '@/composables/useMeals';
 
 const route = useRoute();
-const { meals, getMeals } = useMealsByIngredient();
+const { meals, error, getMeals } = useMealsByIngredient();
 
 const ingredient = computed(() => route.params.name as string);
+
+useHead({ title: () => `Meals including ${ingredient.value}` });
 
 watch(
   () => ingredient.value,

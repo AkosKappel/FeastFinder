@@ -9,7 +9,7 @@
     </div>
     <SearchBar class="order-last w-full md:order-none md:w-auto md:flex-1 md:max-w-md" @search="search" />
 
-    <div class="relative xl:hidden" @keydown.esc="showDropdown = false">
+    <div ref="menu" class="relative xl:hidden" @keydown.esc="showDropdown = false">
       <button
         class="flex items-center px-3 py-2 border rounded text-gray-500 hover:text-orange-700"
         aria-controls="mobile-menu"
@@ -55,6 +55,8 @@
 const route = useRoute();
 const router = useRouter();
 const showDropdown = ref(false);
+const menu = useTemplateRef<HTMLElement>('menu');
+onClickOutside(menu, () => (showDropdown.value = false));
 
 const links = [
   { to: '/meals', label: 'Meals' },

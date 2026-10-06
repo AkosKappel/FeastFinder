@@ -9,7 +9,7 @@
     </div>
     <SearchBar class="order-last w-full md:order-none md:w-auto md:flex-1 md:max-w-md" @search="search" />
 
-    <div class="relative lg:hidden" @keydown.esc="showDropdown = false">
+    <div class="relative xl:hidden" @keydown.esc="showDropdown = false">
       <button
         class="flex items-center px-3 py-2 border rounded text-gray-500 hover:text-orange-700"
         aria-controls="mobile-menu"
@@ -41,7 +41,7 @@
       </ul>
     </div>
 
-    <nav class="hidden lg:block mr-4 my-1" aria-label="Main">
+    <nav class="hidden xl:block mr-4 my-1" aria-label="Main">
       <ul class="flex space-x-4">
         <li v-for="link in links" :key="link.to" class="mx-1">
           <nuxt-link :to="link.to" :class="linkClass(link.to)">{{ link.label }}</nuxt-link>

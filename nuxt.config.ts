@@ -2,11 +2,14 @@
 const baseURL = '/FeastFinder/';
 
 export default defineNuxtConfig({
+  compatibilityDate: '2026-10-06',
   devtools: { enabled: true },
   // GitHub Pages serves static files only: render in the browser so the generated 404.html
   // fallback can boot the app on any deep link, e.g. /meals/52772.
   ssr: false,
   modules: ['@nuxtjs/tailwindcss', '@nuxt/image'],
+  // CSS nesting is unused; skipping its plugin avoids a resolve warning with Tailwind 3 on Nuxt 4.
+  postcss: { plugins: { 'tailwindcss/nesting': false } },
   app: {
     baseURL,
     buildAssetsDir: 'assets',

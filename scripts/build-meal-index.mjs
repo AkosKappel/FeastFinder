@@ -44,7 +44,7 @@ const fetchJson = async path => {
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       return await response.json();
     } catch (error) {
-      if (attempt === 3) throw new Error(`${path}: ${error.message}`);
+      if (attempt === 3) throw new Error(`${path}: ${error.message}`, { cause: error });
       await new Promise(resolve => setTimeout(resolve, 1000 * attempt));
     }
   }

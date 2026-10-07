@@ -93,6 +93,7 @@ import {
   Info,
   LayoutGrid,
   Refrigerator,
+  ShoppingBasket,
   Shuffle,
   UtensilsCrossed,
 } from '@lucide/vue';
@@ -125,6 +126,7 @@ const linkGroups = [
       { label: "What's in my fridge?", to: '/fridge', icon: Refrigerator },
       { label: 'Surprise me', to: '/random', icon: Shuffle },
       { label: 'Favourites', to: '/favourites', icon: Heart },
+      { label: 'Shopping list', to: '/shopping-list', icon: ShoppingBasket },
     ],
   },
   {

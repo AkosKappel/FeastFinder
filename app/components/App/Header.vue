@@ -59,6 +59,24 @@
               <span class="sr-only">Surprise me</span>
             </nuxt-link>
           </li>
+          <li>
+            <nuxt-link
+              to="/shopping-list"
+              title="Shopping list"
+              class="relative flex rounded-lg p-2 transition-colors hover:bg-bay-800 hover:text-white"
+              :class="isActive('/shopping-list') ? 'text-saffron' : 'text-bay-100'"
+            >
+              <ShoppingBasket class="h-5 w-5" aria-hidden="true" />
+              <span class="sr-only">Shopping list, {{ countLabel(toBuy, 'item') }} to buy</span>
+              <span
+                v-if="toBuy"
+                class="absolute -top-1 -right-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-saffron px-1 text-xs font-bold text-bay-950"
+                aria-hidden="true"
+              >
+                {{ toBuy }}
+              </span>
+            </nuxt-link>
+          </li>
         </ul>
       </nav>
     </div>
@@ -66,7 +84,17 @@
 </template>
 
 <script setup lang="ts">
-import { Carrot, Globe, Heart, Info, LayoutGrid, Menu as MenuIcon, Shuffle, UtensilsCrossed } from '@lucide/vue';
+import {
+  Carrot,
+  Globe,
+  Heart,
+  Info,
+  LayoutGrid,
+  Menu as MenuIcon,
+  ShoppingBasket,
+  Shuffle,
+  UtensilsCrossed,
+} from '@lucide/vue';
 
 const route = useRoute();
 const router = useRouter();
@@ -82,7 +110,14 @@ const links = [
   { to: '/favourites', label: 'Favourites', icon: Heart },
   { to: '/about', label: 'About', icon: Info },
 ];
-const allLinks = [...links.slice(0, 5), { to: '/random', label: 'Surprise me', icon: Shuffle }, links[5]!];
+const allLinks = [
+  ...links.slice(0, 5),
+  { to: '/shopping-list', label: 'Shopping list', icon: ShoppingBasket },
+  { to: '/random', label: 'Surprise me', icon: Shuffle },
+  links[5]!,
+];
+
+const { toBuy } = useShoppingList();
 
 watch(
   () => route.fullPath,

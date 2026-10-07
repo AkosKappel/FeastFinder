@@ -81,93 +81,33 @@
         </p>
       </div>
 
-      <section class="lg:col-span-2" aria-labelledby="ingredients-heading">
-        <h2 id="ingredients-heading" class="mb-3 text-2xl font-semibold">Ingredients</h2>
-        <ul class="divide-y divide-bay-50 overflow-hidden rounded-2xl bg-white shadow-xs ring-1 ring-bay-100">
-          <li v-for="ingredient in ingredients" :key="ingredient.name" class="flex items-center">
-            <label class="flex shrink-0 cursor-pointer self-stretch items-center pl-3 pr-1 print:hidden">
-              <input
-                v-model="gathered"
-                type="checkbox"
-                :value="ingredient.name"
-                class="h-5 w-5 accent-orange-700"
-                :aria-label="`Got ${ingredient.name}`"
-              />
-            </label>
-            <nuxt-link
-              :to="`/ingredients/${encodeURIComponent(ingredient.name)}`"
-              class="flex flex-1 items-center gap-3 px-3 py-2 hover:bg-orange-50"
-              :class="gathered.includes(ingredient.name) && 'text-gray-500 line-through'"
-            >
-              <img
-                :src="ingredientThumbUrl(ingredient.name, 'small')"
-                alt=""
-                width="40"
-                height="40"
-                loading="lazy"
-                class="h-10 w-10 shrink-0 object-contain"
-              />
-              <span class="capitalize">{{ ingredient.name }}</span>
-              <span v-if="ingredient.measure" class="ml-auto text-right text-gray-600">{{ ingredient.measure }}</span>
-            </nuxt-link>
-          </li>
-        </ul>
-      </section>
+      <MealIngredients
+        v-model:gathered="gathered"
+        :ingredients="ingredients"
+        :meal="meal.strMeal"
+        class="lg:col-span-2"
+      />
     </div>
 
-    <section v-if="steps.length" class="mt-10" aria-labelledby="instructions-heading">
-      <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
-        <h2 id="instructions-heading" class="text-2xl font-semibold">Instructions</h2>
-        <div v-if="readAloud.isSupported.value" class="flex gap-2 print:hidden">
-          <button v-if="readAloud.status.value === 'idle'" type="button" :class="actionClass" @click="readAloud.play()">
-            <Volume2 class="h-5 w-5" aria-hidden="true" />
-            Read aloud
-          </button>
-          <template v-else>
-            <button
-              v-if="readAloud.status.value === 'playing'"
-              type="button"
-              :class="actionClass"
-              @click="readAloud.pause()"
-            >
-              <Pause class="h-5 w-5" aria-hidden="true" />
-              Pause
-            </button>
-            <button v-else type="button" :class="actionClass" @click="readAloud.resume()">
-              <Play class="h-5 w-5" aria-hidden="true" />
-              Resume
-            </button>
-            <button type="button" :class="actionClass" @click="readAloud.stop()">
-              <Square class="h-5 w-5" aria-hidden="true" />
-              Stop
-            </button>
-          </template>
-        </div>
-      </div>
-      <ol class="space-y-3">
-        <li
-          v-for="(step, index) in steps"
-          :key="index"
-          class="rounded-2xl shadow-xs ring-1 ring-bay-100 transition-colors"
-          :class="readAloud.currentStep.value === index ? 'bg-orange-100' : 'bg-white'"
-          :aria-current="readAloud.currentStep.value === index ? 'step' : undefined"
-        >
-          <!-- The whole step ticks off; the number turns into a check mark. -->
-          <label class="flex cursor-pointer gap-4 p-3">
-            <input v-model="doneSteps" type="checkbox" :value="index" class="peer sr-only" />
-            <span
-              class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full font-semibold peer-focus-visible:ring-2 peer-focus-visible:ring-orange-600 peer-focus-visible:ring-offset-2"
-              :class="doneSteps.includes(index) ? 'bg-bay-100 text-bay-700' : 'bg-orange-700 text-white'"
-              aria-hidden="true"
-            >
-              <Check v-if="doneSteps.includes(index)" class="h-5 w-5" />
-              <template v-else>{{ index + 1 }}</template>
-            </span>
-            <span class="pt-1" :class="doneSteps.includes(index) && 'text-gray-500 line-through'">{{ step }}</span>
-          </label>
-        </li>
-      </ol>
-    </section>
+    <MealInstructions
+      v-if="steps.length"
+      v-model:done="doneSteps"
+      :meal="meal"
+      :steps="steps"
+      :read-aloud="readAloud"
+      class="mt-10"
+      @cook="cooking = true"
+    />
+    <MealCookingMode
+      v-if="steps.length"
+      v-model:open="cooking"
+      v-model:done="doneSteps"
+      v-model:gathered="gathered"
+      :meal="meal"
+      :steps="steps"
+      :ingredients="ingredients"
+      :read-aloud="readAloud"
+    />
 
     <section v-if="videoId" class="mt-10 print:hidden" aria-labelledby="video-heading">
       <h2 id="video-heading" class="mb-4 flex items-center gap-2 text-2xl font-semibold">
@@ -197,22 +137,7 @@
 </template>
 
 <script setup lang="ts">
-import {
-  ArrowLeft,
-  Check,
-  CirclePlay,
-  ExternalLink,
-  Globe,
-  Hash,
-  Pause,
-  Play,
-  Printer,
-  Share2,
-  Square,
-  Sun,
-  Tag,
-  Volume2,
-} from '@lucide/vue';
+import { ArrowLeft, Check, CirclePlay, ExternalLink, Globe, Hash, Printer, Share2, Sun, Tag } from '@lucide/vue';
 import type { Meal } from '@/types/Meal';
 
 const props = defineProps<{ meal: Meal }>();
@@ -234,6 +159,7 @@ const { onImageError } = usePlaceholderImage();
 // Cooking checklist: ingredients gathered and steps done, for this visit only.
 const gathered = ref<string[]>([]);
 const doneSteps = ref<number[]>([]);
+const cooking = ref(false);
 
 watch(
   () => props.meal.idMeal,

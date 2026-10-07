@@ -16,10 +16,12 @@ export const useReadAloud = (steps: MaybeRefOrGetter<string[]>) => {
   };
 
   const play = (fromStep = 0) => {
-    if (!isSupported.value) return;
+    const texts = toValue(steps);
+    if (!isSupported.value || fromStep < 0 || fromStep >= texts.length) return;
     stop();
     const thisRun = run;
-    const texts = toValue(steps);
+    // Highlight the step right away; onstart can come a moment later.
+    currentStep.value = fromStep;
 
     texts.slice(fromStep).forEach((text, offset) => {
       const index = fromStep + offset;
@@ -49,7 +51,11 @@ export const useReadAloud = (steps: MaybeRefOrGetter<string[]>) => {
     status.value = 'playing';
   };
 
+  // Jumping restarts speech at the start of that step, also from pause.
+  const next = () => play(currentStep.value + 1);
+  const previous = () => play(Math.max(0, currentStep.value - 1));
+
   tryOnScopeDispose(stop);
 
-  return { isSupported, status, currentStep, play, pause, resume, stop };
+  return { isSupported, status, currentStep, play, pause, resume, stop, next, previous };
 };

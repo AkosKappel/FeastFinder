@@ -3,7 +3,7 @@
     <button
       type="button"
       :disabled="page === 1"
-      class="inline-flex items-center gap-1 rounded-xl bg-white px-4 py-2 font-medium shadow-sm ring-1 ring-bay-100 hover:bg-bay-50 disabled:opacity-50"
+      class="inline-flex items-center gap-1 rounded-xl bg-white px-4 py-2 font-medium shadow-xs ring-1 ring-bay-100 hover:bg-bay-50 disabled:opacity-50"
       @click="page = page - 1"
     >
       <ChevronLeft class="h-4 w-4" aria-hidden="true" />
@@ -13,7 +13,7 @@
     <button
       type="button"
       :disabled="page === totalPages"
-      class="inline-flex items-center gap-1 rounded-xl bg-white px-4 py-2 font-medium shadow-sm ring-1 ring-bay-100 hover:bg-bay-50 disabled:opacity-50"
+      class="inline-flex items-center gap-1 rounded-xl bg-white px-4 py-2 font-medium shadow-xs ring-1 ring-bay-100 hover:bg-bay-50 disabled:opacity-50"
       @click="page = page + 1"
     >
       Next

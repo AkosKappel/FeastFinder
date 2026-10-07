@@ -18,7 +18,7 @@
           href="https://github.com/AkosKappel/FeastFinder"
           target="_blank"
           rel="noopener noreferrer"
-          class="inline-flex items-center gap-2 rounded-lg bg-white px-5 py-2.5 font-semibold text-gray-800 shadow-sm hover:bg-orange-50"
+          class="inline-flex items-center gap-2 rounded-lg bg-white px-5 py-2.5 font-semibold text-gray-800 shadow-xs hover:bg-orange-50"
         >
           <Code class="h-5 w-5" aria-hidden="true" />
           Source code
@@ -29,7 +29,7 @@
     <section class="mt-14" aria-labelledby="features-heading">
       <h2 id="features-heading" class="mb-6 text-2xl font-semibold">What it does</h2>
       <ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        <li v-for="feature in features" :key="feature.title" class="rounded-lg bg-white p-5 shadow-sm">
+        <li v-for="feature in features" :key="feature.title" class="rounded-lg bg-white p-5 shadow-xs">
           <component :is="feature.icon" class="h-7 w-7 text-orange-700" aria-hidden="true" />
           <h3 class="mt-3 text-lg font-semibold">{{ feature.title }}</h3>
           <p class="mt-1 text-gray-700">{{ feature.text }}</p>
@@ -55,7 +55,7 @@
               :href="tool.href"
               target="_blank"
               rel="noopener noreferrer"
-              class="inline-block rounded-full bg-white px-4 py-1.5 font-medium text-gray-800 shadow-sm hover:text-orange-700"
+              class="inline-block rounded-full bg-white px-4 py-1.5 font-medium text-gray-800 shadow-xs hover:text-orange-700"
             >
               {{ tool.name }}
             </a>
@@ -64,7 +64,7 @@
       </div>
     </section>
 
-    <section class="mt-14 rounded-lg bg-white p-6 shadow-sm md:p-8" aria-labelledby="author-heading">
+    <section class="mt-14 rounded-lg bg-white p-6 shadow-xs md:p-8" aria-labelledby="author-heading">
       <h2 id="author-heading" class="text-2xl font-semibold">Who made it</h2>
       <p class="mt-3 text-gray-700">
         Feast Finder is a portfolio project by Ákos Kappel. It started in January 2024 and was rebuilt in 2026 on Nuxt 4

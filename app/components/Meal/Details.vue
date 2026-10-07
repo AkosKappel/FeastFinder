@@ -83,7 +83,7 @@
 
       <section class="md:col-span-2" aria-labelledby="ingredients-heading">
         <h2 id="ingredients-heading" class="mb-3 text-2xl font-semibold">Ingredients</h2>
-        <ul class="divide-y divide-bay-50 rounded-lg bg-white shadow-sm">
+        <ul class="divide-y divide-bay-50 rounded-lg bg-white shadow-xs">
           <li v-for="ingredient in ingredients" :key="ingredient.name">
             <nuxt-link
               :to="`/ingredients/${encodeURIComponent(ingredient.name)}`"
@@ -202,10 +202,10 @@ import type { Meal } from '@/types/Meal';
 const props = defineProps<{ meal: Meal }>();
 
 const chipClass =
-  'inline-flex items-center gap-1 rounded-full bg-white px-3 py-1 text-sm text-gray-800 shadow-sm hover:text-orange-700';
+  'inline-flex items-center gap-1 rounded-full bg-white px-3 py-1 text-sm text-gray-800 shadow-xs hover:text-orange-700';
 const tagClass = 'inline-flex items-center gap-1 rounded-full bg-gray-100 px-3 py-1 text-sm text-gray-700';
 const actionClass =
-  'inline-flex items-center gap-2 rounded-lg bg-white px-3 py-2 font-medium text-gray-800 shadow-sm hover:bg-orange-50';
+  'inline-flex items-center gap-2 rounded-lg bg-white px-3 py-2 font-medium text-gray-800 shadow-xs hover:bg-orange-50';
 
 const ingredients = computed(() => getIngredientsFromMeal(props.meal));
 const steps = computed(() => splitInstructions(props.meal.strInstructions));

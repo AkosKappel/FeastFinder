@@ -16,7 +16,7 @@
       :aria-expanded="open"
       :aria-controls="listId"
       :aria-activedescendant="activeIndex >= 0 ? optionId(activeIndex) : undefined"
-      class="w-full rounded-xl border-0 bg-white py-3.5 pl-12 pr-4 text-lg text-ink shadow-sm ring-1 ring-bay-100 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-600"
+      class="w-full rounded-xl border-0 bg-white py-3.5 pl-12 pr-4 text-lg text-ink shadow-xs ring-1 ring-bay-100 placeholder:text-gray-500 focus:outline-hidden focus:ring-2 focus:ring-orange-600"
       @focus="open = true"
       @input="onInput"
       @keydown.down.prevent="move(1)"

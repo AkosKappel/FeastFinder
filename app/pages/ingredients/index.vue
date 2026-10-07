@@ -11,7 +11,7 @@
     />
     <nuxt-link
       to="/fridge"
-      class="mb-8 flex items-center gap-4 rounded-lg bg-white p-4 shadow-sm transition-shadow hover:shadow-md"
+      class="mb-8 flex items-center gap-4 rounded-lg bg-white p-4 shadow-xs transition-shadow hover:shadow-md"
     >
       <Refrigerator class="h-8 w-8 shrink-0 text-orange-700" aria-hidden="true" />
       <span>

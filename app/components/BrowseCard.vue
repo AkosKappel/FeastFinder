@@ -1,6 +1,6 @@
 <template>
   <article
-    class="group relative flex flex-col overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-bay-100 transition-shadow duration-300 focus-within:ring-2 focus-within:ring-orange-600 hover:shadow-lg"
+    class="group relative flex flex-col overflow-hidden rounded-2xl bg-white shadow-xs ring-1 ring-bay-100 transition-shadow duration-300 focus-within:ring-2 focus-within:ring-orange-600 hover:shadow-lg"
   >
     <img
       :src="image"
@@ -11,7 +11,7 @@
     />
     <div class="flex min-h-[3.5rem] items-center justify-between gap-2 border-t border-bay-50 px-4 py-3">
       <h3 class="text-lg font-semibold leading-snug">
-        <nuxt-link :to="to" class="after:absolute after:inset-0 focus:outline-none">{{ title }}</nuxt-link>
+        <nuxt-link :to="to" class="after:absolute after:inset-0 focus:outline-hidden">{{ title }}</nuxt-link>
       </h3>
       <button
         v-if="description"

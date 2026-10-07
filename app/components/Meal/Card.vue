@@ -1,6 +1,6 @@
 <template>
   <article
-    class="group relative flex flex-col overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-bay-100 transition-shadow duration-300 focus-within:ring-2 focus-within:ring-orange-600 hover:shadow-lg"
+    class="group relative flex flex-col overflow-hidden rounded-2xl bg-white shadow-xs ring-1 ring-bay-100 transition-shadow duration-300 focus-within:ring-2 focus-within:ring-orange-600 hover:shadow-lg"
   >
     <img
       :src="`${meal.strMealThumb}/medium`"
@@ -14,7 +14,7 @@
     <div class="flex flex-1 items-start justify-between gap-2 p-4">
       <div>
         <h3 class="mb-2 text-lg font-semibold leading-snug">
-          <nuxt-link :to="`/meals/${meal.idMeal}`" class="after:absolute after:inset-0 focus:outline-none">
+          <nuxt-link :to="`/meals/${meal.idMeal}`" class="after:absolute after:inset-0 focus:outline-hidden">
             {{ meal.strMeal }}
           </nuxt-link>
         </h3>

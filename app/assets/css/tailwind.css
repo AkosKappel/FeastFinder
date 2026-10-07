@@ -1,9 +1,28 @@
-@import '@fontsource-variable/figtree';
-@import '@fontsource-variable/bricolage-grotesque';
+@import '@fontsource-variable/figtree' layer(base);
+@import '@fontsource-variable/bricolage-grotesque' layer(base);
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+
+/* Kitchen palette: bay leaf (dark surfaces), paprika (actions, Tailwind orange), saffron (highlights
+   on dark), sage (page background). */
+@theme {
+  --color-bay-50: #f2f6f3;
+  --color-bay-100: #e1ebe5;
+  --color-bay-200: #c3d6ca;
+  --color-bay-300: #9bbaa7;
+  --color-bay-600: #3d6a5c;
+  --color-bay-700: #2b5248;
+  --color-bay-800: #1f4038;
+  --color-bay-900: #17332c;
+  --color-bay-950: #0f231e;
+
+  --color-sage: #eef2ef;
+  --color-ink: #1c2b27;
+  --color-saffron: #fcd34d;
+
+  --font-sans: 'Figtree Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Bricolage Grotesque Variable', ui-sans-serif, system-ui, sans-serif;
+}
 
 @layer base {
   body {
@@ -16,8 +35,14 @@
     @apply font-display tracking-tight;
   }
 
+  /* Tailwind 4 gives buttons the default cursor; keep the pointer the app had before. */
+  button:not(:disabled),
+  [role='button']:not(:disabled) {
+    cursor: pointer;
+  }
+
   /* One visible focus style everywhere, in the brand colour instead of the browser default. */
   :focus-visible {
-    @apply outline-none ring-2 ring-orange-600 ring-offset-2 ring-offset-sage;
+    @apply ring-2 ring-orange-600 ring-offset-2 ring-offset-sage outline-hidden;
   }
 }

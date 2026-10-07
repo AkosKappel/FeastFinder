@@ -14,13 +14,13 @@
         enterkeyhint="search"
         autocomplete="off"
         placeholder="Search meals, e.g. pasta"
-        class="block w-full rounded-xl border-0 bg-white py-2.5 pl-9 pr-9 text-ink placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-saffron focus:ring-offset-0 [&::-webkit-search-cancel-button]:hidden"
+        class="block w-full rounded-xl border-0 bg-white py-2.5 pl-9 pr-9 text-ink placeholder:text-gray-500 focus:outline-hidden focus:ring-2 focus:ring-saffron focus:ring-offset-0 [&::-webkit-search-cancel-button]:hidden"
         @keydown.esc="clear"
       />
       <button
         v-if="input"
         type="button"
-        class="absolute right-1 top-1/2 -translate-y-1/2 rounded p-1.5 text-gray-500 hover:text-gray-900"
+        class="absolute right-1 top-1/2 -translate-y-1/2 rounded-sm p-1.5 text-gray-500 hover:text-gray-900"
         aria-label="Clear search"
         @click="clear"
       >

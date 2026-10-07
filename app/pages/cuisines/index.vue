@@ -7,13 +7,13 @@
       </p>
       <ErrorMessage v-if="error" @retry="refresh()" />
       <div v-else-if="pending" class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5" aria-hidden="true">
-        <div v-for="n in 15" :key="n" class="h-16 rounded-lg bg-white shadow-sm motion-safe:animate-pulse"></div>
+        <div v-for="n in 15" :key="n" class="h-16 rounded-lg bg-white shadow-xs motion-safe:animate-pulse"></div>
       </div>
       <ul v-else class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
         <li v-for="cuisine in cuisines" :key="cuisine.country">
           <nuxt-link
             :to="`/cuisines/${encodeURIComponent(cuisine.country)}`"
-            class="flex h-full items-center gap-3 rounded-lg bg-white p-3 shadow-sm transition-shadow hover:shadow-md"
+            class="flex h-full items-center gap-3 rounded-lg bg-white p-3 shadow-xs transition-shadow hover:shadow-md"
           >
             <img
               v-if="cuisine.countryCode"

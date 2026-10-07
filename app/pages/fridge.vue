@@ -48,7 +48,7 @@
             <li v-for="name in suggestions" :key="name">
               <button
                 type="button"
-                class="inline-flex items-center gap-1.5 rounded-full bg-white py-1.5 pl-2.5 pr-4 font-medium capitalize text-ink shadow-sm ring-1 ring-bay-100 hover:bg-bay-50"
+                class="inline-flex items-center gap-1.5 rounded-full bg-white py-1.5 pl-2.5 pr-4 font-medium capitalize text-ink shadow-xs ring-1 ring-bay-100 hover:bg-bay-50"
                 @click="add(name)"
               >
                 <Plus class="h-4 w-4 text-orange-700" aria-hidden="true" />

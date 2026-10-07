@@ -1,7 +1,8 @@
 <template>
   <header class="flex flex-wrap justify-between items-center gap-y-3 p-4 bg-white dark:bg-gray-900">
     <div class="flex space-x-4 ml-4 my-1">
-      <nuxt-link to="/" class="flex items-center">
+      <nuxt-link to="/" class="flex items-center gap-2">
+        <img src="/favicon.svg" class="h-8 w-8" alt="" />
         <component :is="route.path === '/' ? 'h1' : 'span'" class="text-2xl font-bold whitespace-nowrap"
           >Feast Finder</component
         >

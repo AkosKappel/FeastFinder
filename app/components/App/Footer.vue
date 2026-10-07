@@ -4,7 +4,7 @@
       <div class="grid grid-cols-2 gap-10 md:grid-cols-[2fr_1fr_1fr]">
         <div class="col-span-2 md:col-span-1">
           <nuxt-link to="/" class="inline-flex items-center gap-3">
-            <img src="/meal-icon.png" class="h-9 w-9" alt="" />
+            <img src="/favicon.svg" class="h-9 w-9" alt="" />
             <span class="text-2xl font-semibold text-white">Feast Finder</span>
           </nuxt-link>
           <p class="mt-4 max-w-sm">

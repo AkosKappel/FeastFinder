@@ -22,11 +22,16 @@ export default defineNuxtConfig({
           content:
             'Find recipes by meal name, ingredient or food category, with ingredients and step-by-step instructions.',
         },
-        { name: 'theme-color', content: '#f97316' },
+        { name: 'theme-color', content: '#c2410c' },
         { property: 'og:site_name', content: 'Feast Finder' },
         { property: 'og:type', content: 'website' },
       ],
-      link: [{ rel: 'icon', type: 'image/x-icon', href: `${baseURL}favicon.ico` }],
+      link: [
+        { rel: 'icon', type: 'image/svg+xml', href: `${baseURL}favicon.svg` },
+        { rel: 'icon', href: `${baseURL}favicon.ico`, sizes: '32x32' },
+        { rel: 'apple-touch-icon', href: `${baseURL}apple-touch-icon.png` },
+        { rel: 'manifest', href: `${baseURL}site.webmanifest` },
+      ],
     },
   },
 });

@@ -1,11 +1,15 @@
 // Builds public/data/meals.json: a small index of every meal (name, image, category, country and
 // ingredient names). The free API cannot list meals by country reliably (many meals have no area)
 // or filter by several ingredients, so those features work on this index instead.
+// Also writes public/sitemap.xml with the main pages and every meal, category and cuisine.
 // Runs before `npm run dev` (only when the file is missing) and before `npm run generate`.
 import { access, mkdir, writeFile } from 'node:fs/promises';
+import { sitePaths } from './site-routes.mjs';
 
 const API = 'https://www.themealdb.com/api/json/v1/1/';
 const OUTPUT = new URL('../public/data/meals.json', import.meta.url);
+const SITEMAP = new URL('../public/sitemap.xml', import.meta.url);
+const SITE_URL = 'https://akoskappel.github.io/FeastFinder/';
 
 // Country names the API uses that Intl.DisplayNames spells differently.
 const COUNTRY_CODE_OVERRIDES = {
@@ -98,7 +102,16 @@ const index = [...meals.values()]
 await mkdir(new URL('.', OUTPUT), { recursive: true });
 await writeFile(OUTPUT, JSON.stringify({ generatedAt: new Date().toISOString().slice(0, 10), meals: index }));
 
-console.log(`Wrote ${index.length} meals to ${OUTPUT.pathname}`);
+// Trailing slashes: every page is a folder with an index.html, and GitHub Pages redirects to the slash.
+const urls = sitePaths(index).map(
+  path => `  <url><loc>${SITE_URL}${path ? `${path.replaceAll('&', '&amp;')}/` : ''}</loc></url>`,
+);
+await writeFile(
+  SITEMAP,
+  `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.join('\n')}\n</urlset>\n`,
+);
+
+console.log(`Wrote ${index.length} meals to ${OUTPUT.pathname} and ${urls.length} URLs to ${SITEMAP.pathname}`);
 if (unknownCountries.size) {
   console.warn(`No country code for: ${[...unknownCountries].join(', ')}. Add them to COUNTRY_CODE_OVERRIDES.`);
 }

@@ -26,6 +26,7 @@ const route = useRoute();
 const country = computed(() => route.params.country as string);
 
 useHead({ title: () => `${country.value} cuisine` });
+useSeoMeta({ description: () => `Recipes from ${country.value}, with ingredients and step-by-step instructions.` });
 
 const { data: meals, pending, error, refresh } = useAsyncData('meal-index', () => loadMealIndex());
 const countryMeals = computed(() => (meals.value ?? []).filter(meal => meal.strCountry === country.value));

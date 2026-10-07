@@ -17,6 +17,7 @@ const route = useRoute();
 const category = computed(() => route.params.name as string);
 
 useHead({ title: () => `${category.value} meals` });
+useSeoMeta({ description: () => `${category.value} recipes with ingredients and step-by-step instructions.` });
 
 const {
   data: meals,

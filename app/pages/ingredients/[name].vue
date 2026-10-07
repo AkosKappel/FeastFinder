@@ -17,6 +17,7 @@ const route = useRoute();
 const ingredient = computed(() => route.params.name as string);
 
 useHead({ title: () => `Meals including ${ingredient.value}` });
+useSeoMeta({ description: () => `Recipes that use ${ingredient.value}, with step-by-step instructions.` });
 
 const {
   data: meals,

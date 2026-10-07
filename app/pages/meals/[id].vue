@@ -24,4 +24,14 @@ const {
 });
 
 useHead({ title: () => meal.value?.strMeal ?? (pending.value || error.value ? null : 'Meal not found') });
+useSeoMeta({
+  description: () => (meal.value ? mealDescription(meal.value) : undefined),
+  ogTitle: () => meal.value?.strMeal,
+  ogDescription: () => (meal.value ? mealDescription(meal.value) : undefined),
+  ogImage: () => meal.value?.strMealThumb,
+});
+useHead({
+  script: () =>
+    meal.value ? [{ type: 'application/ld+json', innerHTML: JSON.stringify(recipeJsonLd(meal.value)) }] : [],
+});
 </script>

@@ -30,7 +30,18 @@ import { WifiOff } from '@lucide/vue';
 const online = useOnline();
 watch(online, isOnline => isOnline && refreshNuxtData());
 
+// One canonical address per page, without filters or paging in the query. Pages are folders on
+// GitHub Pages, so the address ends with a slash.
+const route = useRoute();
+const { siteUrl } = useRuntimeConfig().public;
+const canonicalUrl = computed(() => {
+  const path = route.path.replace(/^\/|\/$/g, '');
+  return siteUrl + (path ? `${path}/` : '');
+});
+
 useHead({
   titleTemplate: title => (title && title !== 'Feast Finder' ? `${title} · Feast Finder` : 'Feast Finder'),
+  link: [{ rel: 'canonical', href: canonicalUrl }],
+  meta: [{ property: 'og:url', content: canonicalUrl }],
 });
 </script>

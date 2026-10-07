@@ -54,6 +54,12 @@
     cursor: pointer;
   }
 
+  /* Tailwind 4 resets every margin to 0, which pins a modal <dialog> to the top left corner;
+     browsers centre it with margin: auto. */
+  dialog {
+    margin: auto;
+  }
+
   /* One visible focus style everywhere, in the brand colour instead of the browser default. */
   :focus-visible {
     @apply ring-2 ring-orange-600 ring-offset-2 ring-offset-sage outline-hidden;

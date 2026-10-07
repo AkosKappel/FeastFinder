@@ -71,6 +71,21 @@ test('long meal lists show a count and are split into pages', async ({ page }) =
   await expect(page.getByRole('link', { name: 'Dessert 30' })).toBeVisible();
 });
 
+test('category info opens in a centred dialog', async ({ page }) => {
+  await page.goto('categories');
+  await page.getByRole('button', { name: 'About Chicken' }).click();
+
+  const dialog = page.getByRole('dialog', { name: 'Chicken' });
+  await expect(dialog).toContainText('Birds.');
+  const box = (await dialog.boundingBox())!;
+  const viewport = page.viewportSize()!;
+  expect(Math.abs(box.x + box.width / 2 - viewport.width / 2)).toBeLessThan(2);
+  expect(Math.abs(box.y + box.height / 2 - viewport.height / 2)).toBeLessThan(2);
+
+  await dialog.getByRole('button', { name: 'Close' }).click();
+  await expect(dialog).toBeHidden();
+});
+
 test('favourites are saved and listed', async ({ page }) => {
   await page.goto('meals/52772');
   await page.getByRole('button', { name: 'Save' }).click();

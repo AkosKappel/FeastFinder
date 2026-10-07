@@ -1,5 +1,11 @@
 import { describe, expect, it } from 'vitest';
-import { cuisinesOf, mealsWithAllIngredients, searchMealIndex, type MealIndexEntry } from '../../app/utils/mealIndex';
+import {
+  cuisinesOf,
+  ingredientNamesOf,
+  matchIngredients,
+  searchMealIndex,
+  type MealIndexEntry,
+} from '../../app/utils/mealIndex';
 
 const meal = (strMeal: string, strCountry: string | null, ingredients: string[] = []): MealIndexEntry => ({
   idMeal: strMeal,
@@ -38,12 +44,32 @@ describe('searchMealIndex', () => {
   });
 });
 
-describe('mealsWithAllIngredients', () => {
-  it('keeps meals that contain every selected ingredient', () => {
-    expect(mealsWithAllIngredients(meals, ['Tomato', 'garlic']).map(m => m.strMeal)).toEqual([
-      'Arrabiata',
-      'Bruschetta',
+describe('matchIngredients', () => {
+  const names = (list: MealIndexEntry[]) => list.map(m => m.strMeal);
+
+  it('splits meals into complete matches and meals missing one ingredient', () => {
+    const { complete, missingOne } = matchIngredients(meals, ['Tomato', 'garlic', 'bread']);
+    expect(names(complete)).toEqual(['Bruschetta']);
+    expect(names(missingOne)).toEqual(['Arrabiata']);
+  });
+
+  it('has no near matches for a single ingredient and nothing without a selection', () => {
+    expect(matchIngredients(meals, ['tomato']).missingOne).toEqual([]);
+    expect(matchIngredients(meals, [])).toEqual({ complete: [], missingOne: [] });
+  });
+});
+
+describe('ingredientNamesOf', () => {
+  it('lists every ingredient once, sorted', () => {
+    expect(ingredientNamesOf(meals)).toEqual([
+      'apple',
+      'bread',
+      'butter',
+      'flour',
+      'garlic',
+      'penne',
+      'tomato',
+      'water',
     ]);
-    expect(mealsWithAllIngredients(meals, ['tomato', 'bread']).map(m => m.strMeal)).toEqual(['Bruschetta']);
   });
 });

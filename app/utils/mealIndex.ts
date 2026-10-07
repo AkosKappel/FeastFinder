@@ -44,10 +44,23 @@ export const searchMealIndex = (meals: MealIndexEntry[], { query = '', letter = 
   });
 };
 
-export const mealsWithAllIngredients = (meals: MealIndexEntry[], ingredients: string[]) => {
+// Meals using every selected ingredient, and (with two or more selected) meals missing just one.
+export const matchIngredients = (meals: MealIndexEntry[], ingredients: string[]) => {
   const wanted = ingredients.map(ingredient => ingredient.toLowerCase());
-  return meals.filter(meal => wanted.every(ingredient => meal.ingredients.includes(ingredient)));
+  const complete: MealIndexEntry[] = [];
+  const missingOne: MealIndexEntry[] = [];
+  if (!wanted.length) return { complete, missingOne };
+
+  for (const meal of meals) {
+    const missing = wanted.filter(ingredient => !meal.ingredients.includes(ingredient)).length;
+    if (missing === 0) complete.push(meal);
+    else if (missing === 1 && wanted.length > 1) missingOne.push(meal);
+  }
+  return { complete, missingOne };
 };
+
+export const ingredientNamesOf = (meals: MealIndexEntry[]) =>
+  [...new Set(meals.flatMap(meal => meal.ingredients))].sort((a, b) => a.localeCompare(b));
 
 export const flagUrl = (countryCode: string) =>
   `https://www.themealdb.com/images/icons/flags/big/64/${countryCode}.png`;

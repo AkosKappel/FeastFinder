@@ -117,7 +117,20 @@
 </template>
 
 <script setup lang="ts">
-import { Check, Code, ExternalLink, Heart, Search, Share2, Smartphone, UtensilsCrossed, Volume2 } from '@lucide/vue';
+import {
+  Check,
+  ChefHat,
+  Code,
+  ExternalLink,
+  Heart,
+  Scale,
+  Search,
+  ShoppingBasket,
+  Smartphone,
+  Timer,
+  UtensilsCrossed,
+  Volume2,
+} from '@lucide/vue';
 
 useHead({ title: 'About' });
 
@@ -125,7 +138,7 @@ const features = [
   {
     icon: Search,
     title: 'Search and browse',
-    text: 'Find meals by name, or browse by ingredient, category and cuisine.',
+    text: 'Find meals by name, browse by ingredient, category and cuisine, or cook with what is in your fridge.',
   },
   {
     icon: UtensilsCrossed,
@@ -133,31 +146,46 @@ const features = [
     text: 'Ingredients with measures, numbered steps to tick off while cooking, and the video when there is one.',
   },
   {
+    icon: ChefHat,
+    title: 'Cooking mode',
+    text: 'One step at a time in large text, full screen, with the screen kept on. Swipe or use the arrow keys.',
+  },
+  {
+    icon: Timer,
+    title: 'Timers',
+    text: 'Cooking times in the steps become timers that ring, vibrate and notify you, even on another page.',
+  },
+  {
     icon: Volume2,
     title: 'Read aloud',
-    text: 'Hands full? Let the browser read the instructions and follow the highlighted step.',
+    text: 'Hands full? The browser reads the steps, and you can jump to the next or previous one.',
+  },
+  {
+    icon: ShoppingBasket,
+    title: 'Shopping list',
+    text: 'Add what you still need from any recipe. Ingredients from several meals are merged.',
+  },
+  {
+    icon: Scale,
+    title: 'Metric or US units',
+    text: 'Show measures as written, in grams and millilitres, or in cups and ounces.',
   },
   {
     icon: Heart,
-    title: 'Favourites',
-    text: 'Save meals with one tap. They stay in your browser, no account needed.',
-  },
-  {
-    icon: Share2,
-    title: 'Share and print',
-    text: 'Send a recipe with your phone’s share sheet, copy the link, or print a clean copy.',
+    title: 'Favourites and sharing',
+    text: 'Save meals with one tap, share a recipe from your phone or print a clean copy.',
   },
   {
     icon: Smartphone,
     title: 'Works everywhere',
-    text: 'Designed for phones and desktops, usable with a keyboard and screen readers.',
+    text: 'Phones and desktops, light and dark theme, offline for pages you have opened, keyboard and screen readers.',
   },
 ];
 
 const howItWorks = [
   'A static single-page app built with Nuxt and hosted on GitHub Pages.',
   'Recipe data is loaded in your browser from TheMealDB and cached for 30 minutes, so browsing back and forth is instant.',
-  'No accounts and no tracking. Favourites are stored only in this browser.',
+  'No accounts and no tracking. Favourites, the shopping list and your settings are stored only in this browser.',
   'Every change is linted, type-checked, tested in a real browser and deployed automatically by GitHub Actions.',
 ];
 

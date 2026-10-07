@@ -40,7 +40,7 @@ jobs:
       - run: npx playwright install --with-deps chromium
       - run: npm run test:e2e
       # Desktop Lighthouse on the generated site: accessibility and SEO 100, best practices 95, and
-      # performance 75 (lower than the live score because TheMealDB's response times vary).
+      # performance 70 (below the live score: the home page waits for random meals and photos from TheMealDB).
       - run: npm run lighthouse
       - if: ${{ !cancelled() }}
         uses: actions/upload-artifact@v7

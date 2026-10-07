@@ -19,15 +19,21 @@ Feast Finder is a web application for finding recipes by meal name, ingredient, 
 - Search meals by name or browse them by first letter, category, ingredient or cuisine (63 countries with flags), or get a random meal
 - What's in my fridge: pick several ingredients and find meals that use all of them, or all but one
 - Meal pages with ingredient images, numbered steps and the embedded cooking video
-- Cooking checklist: tick off ingredients and steps, keep the screen on (Screen Wake Lock API) and have the instructions read aloud (Web Speech API) with the current step highlighted
+- Cooking mode: one step at a time in large text, fullscreen (Fullscreen API), with the screen kept on (Screen Wake Lock API), arrow keys and swipes
+- Timers from the cooking times in the steps, with sound (Web Audio API), vibration and a notification (Notifications API) when done
+- Read aloud (Web Speech API) with the current step highlighted, jumps to the next or previous step, or start from any step
+- Cooking checklist for ingredients and steps, and a shopping list that merges ingredients from several meals, to copy or share
+- Measures as written, in metric or in US units
 - Favourites saved in the browser, sharing via the Web Share API or the clipboard, print-friendly recipes
-- Works offline for pages and recipes you have opened before, and can be installed as an app
+- Light and dark theme (following the system or chosen), works offline for pages and recipes you have opened before, installable as an app
 - Filters, letters and pages kept in the URL, loading skeletons, error states with retry, a 404 page
-- Keyboard and screen reader friendly (Lighthouse accessibility 100), works on phones
+- Keyboard and screen reader friendly (Lighthouse accessibility 100, checked in CI), works on phones
 
-| Meal page                             | On a phone                                             |
+| Meal page                             | On a phone, dark theme                                 |
 | ------------------------------------- | ------------------------------------------------------ |
 | ![Meal page](./screenshots/meal.webp) | ![Meal page on a phone](./screenshots/meal-phone.webp) |
+
+![Cooking mode with a running timer](./screenshots/cooking-mode.webp)
 
 ![What's in my fridge](./screenshots/fridge.webp)
 
@@ -62,6 +68,7 @@ npm run dev
 | `npm run typecheck`   | Type-check the project                                               |
 | `npm test`            | Run the unit tests                                                   |
 | `npm run test:e2e`    | Run the end-to-end tests against the generated site                  |
+| `npm run lighthouse`  | Run Lighthouse on the generated site and check the score budget      |
 | `npm run format`      | Format the code with Prettier (`format:check` only checks)           |
 | `npm run generate`    | Build the meal index, the sitemap and the static site into `.output` |
 | `npm run data:update` | Rebuild the meal index and the sitemap                               |
@@ -69,7 +76,8 @@ npm run dev
 ## Testing
 
 - **Unit tests** (`test/unit`, Vitest): helpers, the API client with mocked responses, the meal index search and the SEO data.
-- **End-to-end tests** (`test/e2e`, Playwright): run on the generated site, served the way GitHub Pages serves it, in a desktop and a phone browser. TheMealDB is mocked, so the tests are fast and stable. They cover search, meal pages, favourites, the fridge, paging, error and 404 states, and run axe accessibility checks, also with the operating system in dark mode.
+- **End-to-end tests** (`test/e2e`, Playwright): run on the generated site, served the way GitHub Pages serves it, in a desktop and a phone browser. TheMealDB is mocked, so the tests are fast and stable. They cover search, meal pages, favourites, the fridge, paging, timers (with a fake clock), read aloud (with a fake speech engine), cooking mode, units, the shopping list, error and 404 states, and run axe accessibility checks in the light and dark theme.
+- **Lighthouse** (`lighthouserc.json`, Lighthouse CI): desktop runs on five pages of the generated site. CI fails below 100 for accessibility and SEO, 95 for best practices and 70 for performance (the home page waits for random meals and photos from TheMealDB, so its score varies); the reports are kept as a workflow artifact.
 
 ```bash
 npm run generate
@@ -79,7 +87,7 @@ npm run test:e2e
 
 ## Deployment
 
-Every push to `main` and a weekly schedule run [the workflow](.github/workflows/nuxtjs.yml): format check, lint, type check, unit tests, `nuxt generate` with the `github_pages` preset, end-to-end tests, then deployment to GitHub Pages. The weekly run refreshes the meal index with new recipes.
+Every push to `main` and a weekly schedule run [the workflow](.github/workflows/nuxtjs.yml): format check, lint, type check, unit tests, `nuxt generate` with the `github_pages` preset, end-to-end tests, the Lighthouse budget, then deployment to GitHub Pages. The weekly run refreshes the meal index with new recipes.
 
 ## Credits
 

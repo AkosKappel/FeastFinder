@@ -1,9 +1,9 @@
 <template>
-  <form role="search" class="flex items-center md:mx-3" @submit.prevent="submit">
+  <form role="search" class="flex items-center" @submit.prevent="submit">
     <label for="meal-search" class="sr-only">Search meals</label>
     <div class="relative w-full">
       <Search
-        class="pointer-events-none absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-500"
+        class="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-500"
         aria-hidden="true"
       />
       <input
@@ -14,7 +14,7 @@
         enterkeyhint="search"
         autocomplete="off"
         placeholder="Search meals, e.g. pasta"
-        class="block w-full rounded-lg border border-gray-300 bg-gray-50 py-2 pl-8 pr-9 text-sm text-gray-900 focus:border-orange-600 focus:ring-orange-600 [&::-webkit-search-cancel-button]:hidden"
+        class="block w-full rounded-xl border-0 bg-white py-2.5 pl-9 pr-9 text-ink placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-saffron focus:ring-offset-0 [&::-webkit-search-cancel-button]:hidden"
         @keydown.esc="clear"
       />
       <button
@@ -29,7 +29,7 @@
     </div>
     <button
       type="submit"
-      class="ms-2 rounded-lg border border-orange-700 bg-orange-700 p-2.5 text-white hover:bg-orange-800 focus:outline-none focus:ring-4 focus:ring-orange-300"
+      class="ms-2 rounded-xl bg-orange-700 p-3 text-white hover:bg-orange-600 focus-visible:ring-saffron focus-visible:ring-offset-bay-900"
     >
       <Search class="h-4 w-4" aria-hidden="true" />
       <span class="sr-only">Search</span>

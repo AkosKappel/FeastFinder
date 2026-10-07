@@ -1,0 +1,23 @@
+@import '@fontsource-variable/figtree';
+@import '@fontsource-variable/bricolage-grotesque';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-sage font-sans text-ink antialiased;
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply font-display tracking-tight;
+  }
+
+  /* One visible focus style everywhere, in the brand colour instead of the browser default. */
+  :focus-visible {
+    @apply outline-none ring-2 ring-orange-600 ring-offset-2 ring-offset-sage;
+  }
+}

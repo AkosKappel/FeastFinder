@@ -1,23 +1,23 @@
 <template>
-  <footer class="bg-gray-900 text-gray-300">
-    <div class="mx-auto w-full max-w-screen-xl px-4 py-10 lg:py-12">
-      <div class="grid grid-cols-2 gap-10 md:grid-cols-[2fr_1fr_1fr]">
+  <footer class="bg-bay-950 text-bay-100">
+    <div class="container mx-auto px-4 py-8">
+      <div class="grid grid-cols-2 gap-8 md:grid-cols-[3fr_3fr_2fr]">
         <div class="col-span-2 md:col-span-1">
           <nuxt-link to="/" class="inline-flex items-center gap-3">
             <img src="/favicon.svg" class="h-9 w-9" alt="" />
-            <span class="text-2xl font-semibold text-white">Feast Finder</span>
+            <span class="font-display text-2xl font-bold tracking-tight text-white">Feast Finder</span>
           </nuxt-link>
-          <p class="mt-4 max-w-sm">
+          <p class="mt-3 max-w-sm">
             Find your next meal by name, ingredient, category or cuisine, then cook it step by step.
           </p>
-          <div class="mt-6 flex gap-3">
+          <div class="mt-5 flex gap-3">
             <a
               v-for="profile in profiles"
               :key="profile.label"
               :href="profile.href"
               target="_blank"
               rel="noopener noreferrer"
-              class="rounded-full bg-gray-800 p-2.5 text-gray-300 transition-colors hover:bg-orange-700 hover:text-white"
+              class="rounded-full bg-bay-800 p-2.5 text-bay-100 transition-colors hover:bg-orange-700 hover:text-white"
             >
               <svg
                 class="h-5 w-5"
@@ -34,11 +34,11 @@
         </div>
 
         <nav v-for="group in linkGroups" :key="group.title" :aria-label="group.title">
-          <h2 class="mb-4 text-sm font-semibold uppercase tracking-wider text-white">{{ group.title }}</h2>
-          <ul class="space-y-3">
-            <li v-for="link in group.links" :key="link.label">
+          <h2 class="mb-3 font-display text-lg font-semibold text-white">{{ group.title }}</h2>
+          <ul class="space-y-2" :class="group.links.length > 4 && 'sm:columns-2 sm:gap-x-6'">
+            <li v-for="link in group.links" :key="link.label" class="break-inside-avoid">
               <nuxt-link v-if="link.to" :to="link.to" class="inline-flex items-center gap-2 hover:text-white">
-                <component :is="link.icon" class="h-4 w-4 text-orange-400" aria-hidden="true" />
+                <component :is="link.icon" class="h-4 w-4 text-saffron" aria-hidden="true" />
                 {{ link.label }}
               </nuxt-link>
               <a
@@ -48,7 +48,7 @@
                 rel="noopener noreferrer"
                 class="inline-flex items-center gap-2 hover:text-white"
               >
-                <component :is="link.icon" class="h-4 w-4 text-orange-400" aria-hidden="true" />
+                <component :is="link.icon" class="h-4 w-4 text-saffron" aria-hidden="true" />
                 {{ link.label }}
               </a>
             </li>
@@ -57,7 +57,7 @@
       </div>
 
       <div
-        class="mt-10 flex flex-col gap-4 border-t border-gray-800 pt-6 text-sm text-gray-400 sm:flex-row sm:items-center sm:justify-between"
+        class="mt-8 flex flex-col gap-3 border-t border-bay-800 pt-5 text-sm text-bay-200 sm:flex-row sm:items-center sm:justify-between"
       >
         <p>
           © {{ year }} Ákos Kappel. Recipe data and images from

@@ -8,6 +8,8 @@ export default defineNuxtConfig({
   // fallback can boot the app on any deep link, e.g. /meals/52772.
   ssr: false,
   modules: ['@nuxtjs/tailwindcss', '@vueuse/nuxt'],
+  // The module looks in the root assets/ folder by default; sources live in app/ since Nuxt 4.
+  tailwindcss: { cssPath: '~/assets/css/tailwind.css' },
   // CSS nesting is unused; skipping its plugin avoids a resolve warning with Tailwind 3 on Nuxt 4.
   postcss: { plugins: { 'tailwindcss/nesting': false } },
   app: {

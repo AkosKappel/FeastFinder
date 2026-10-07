@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col min-h-screen bg-gray-200">
+  <div class="flex min-h-screen flex-col">
     <a
       href="#main"
       class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded focus:bg-white focus:px-4 focus:py-2 focus:shadow-lg"
@@ -10,12 +10,13 @@
     <p
       v-if="!online"
       role="status"
-      class="flex items-center justify-center gap-2 bg-gray-800 px-4 py-2 text-center text-sm text-white print:hidden"
+      class="flex items-center justify-center gap-2 bg-bay-800 px-4 py-2 text-center text-sm text-white print:hidden"
     >
       <WifiOff class="h-4 w-4 shrink-0" aria-hidden="true" />
       You are offline. Favourites still work; recipes load again when you are back online.
     </p>
-    <main id="main" class="flex-1 mb-6">
+    <!-- Short pages still fill the screen, so the footer starts below the fold. -->
+    <main id="main" class="mb-10 min-h-[calc(100svh-8rem)] flex-1">
       <slot />
     </main>
     <AppFooter class="print:hidden" />

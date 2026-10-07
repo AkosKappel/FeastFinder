@@ -1,59 +1,72 @@
 <template>
-  <header class="flex flex-wrap justify-between items-center gap-y-3 p-4 bg-white">
-    <div class="flex space-x-4 ml-4 my-1">
-      <nuxt-link to="/" class="flex items-center gap-2">
-        <img src="/favicon.svg" class="h-8 w-8" alt="" />
-        <span class="text-2xl font-bold whitespace-nowrap">Feast Finder</span>
+  <header class="bg-bay-900 text-bay-50">
+    <div class="container mx-auto flex flex-wrap items-center justify-between gap-x-6 gap-y-3 px-4 py-3">
+      <nuxt-link to="/" class="flex items-center gap-2.5 rounded-lg">
+        <img src="/favicon.svg" class="h-9 w-9" alt="" />
+        <span class="font-display text-2xl font-bold tracking-tight text-white">Feast Finder</span>
       </nuxt-link>
-    </div>
-    <SearchBar class="order-last w-full md:order-none md:w-auto md:flex-1 md:max-w-md" @search="search" />
 
-    <div ref="menu" class="relative xl:hidden" @keydown.esc="showDropdown = false">
-      <button
-        class="flex items-center px-3 py-2 border rounded text-gray-500 hover:text-orange-700"
-        aria-controls="mobile-menu"
-        :aria-expanded="showDropdown"
-        @click="showDropdown = !showDropdown"
-      >
-        <span class="mr-1">Menu</span>
-        <MenuIcon class="h-5 w-5" aria-hidden="true" />
-      </button>
-      <ul
-        v-show="showDropdown"
-        id="mobile-menu"
-        class="absolute right-0 z-40 mt-2 w-48 bg-white rounded-md shadow-lg py-1"
-      >
-        <li v-for="link in links" :key="link.to">
-          <nuxt-link :to="link.to" class="block px-4 py-2 hover:bg-gray-100" :class="linkClass(link.to)">
-            {{ link.label }}
-          </nuxt-link>
-        </li>
-        <li>
-          <nuxt-link to="/random" class="block px-4 py-2 hover:bg-gray-100" :class="linkClass('/random')">
-            Surprise me
-          </nuxt-link>
-        </li>
-      </ul>
-    </div>
+      <SearchBar class="order-last w-full md:order-none md:w-auto md:max-w-md md:flex-1" @search="search" />
 
-    <nav class="hidden xl:block mr-4 my-1" aria-label="Main">
-      <ul class="flex items-center space-x-4">
-        <li v-for="link in links" :key="link.to" class="mx-1">
-          <nuxt-link :to="link.to" :class="linkClass(link.to)">{{ link.label }}</nuxt-link>
-        </li>
-        <li class="mx-1">
-          <nuxt-link to="/random" title="Surprise me" :class="linkClass('/random')" class="flex items-center">
-            <Shuffle class="h-5 w-5" aria-hidden="true" />
-            <span class="sr-only">Surprise me</span>
-          </nuxt-link>
-        </li>
-      </ul>
-    </nav>
+      <div ref="menu" class="relative xl:hidden" @keydown.esc="showDropdown = false">
+        <button
+          type="button"
+          class="flex items-center gap-2 rounded-lg border border-bay-700 px-3 py-2 font-medium text-bay-50 hover:bg-bay-800"
+          aria-controls="mobile-menu"
+          :aria-expanded="showDropdown"
+          @click="showDropdown = !showDropdown"
+        >
+          Menu
+          <MenuIcon class="h-5 w-5" aria-hidden="true" />
+        </button>
+        <ul
+          v-show="showDropdown"
+          id="mobile-menu"
+          class="absolute right-0 z-40 mt-2 w-56 overflow-hidden rounded-xl bg-bay-950 py-2 shadow-xl ring-1 ring-bay-800"
+        >
+          <li v-for="link in allLinks" :key="link.to">
+            <nuxt-link
+              :to="link.to"
+              class="flex items-center gap-3 px-4 py-2.5 hover:bg-bay-800"
+              :class="isActive(link.to) ? 'text-saffron' : 'text-bay-50'"
+            >
+              <component :is="link.icon" class="h-5 w-5 opacity-80" aria-hidden="true" />
+              {{ link.label }}
+            </nuxt-link>
+          </li>
+        </ul>
+      </div>
+
+      <nav class="hidden xl:block" aria-label="Main">
+        <ul class="flex items-center gap-1">
+          <li v-for="link in links" :key="link.to">
+            <nuxt-link
+              :to="link.to"
+              class="block rounded-lg px-3 py-2 font-medium transition-colors hover:bg-bay-800 hover:text-white"
+              :class="isActive(link.to) ? 'text-saffron' : 'text-bay-100'"
+            >
+              {{ link.label }}
+            </nuxt-link>
+          </li>
+          <li>
+            <nuxt-link
+              to="/random"
+              title="Surprise me"
+              class="flex rounded-lg p-2 transition-colors hover:bg-bay-800 hover:text-white"
+              :class="isActive('/random') ? 'text-saffron' : 'text-bay-100'"
+            >
+              <Shuffle class="h-5 w-5" aria-hidden="true" />
+              <span class="sr-only">Surprise me</span>
+            </nuxt-link>
+          </li>
+        </ul>
+      </nav>
+    </div>
   </header>
 </template>
 
 <script setup lang="ts">
-import { Menu as MenuIcon, Shuffle } from '@lucide/vue';
+import { Carrot, Globe, Heart, Info, LayoutGrid, Menu as MenuIcon, Shuffle, UtensilsCrossed } from '@lucide/vue';
 
 const route = useRoute();
 const router = useRouter();
@@ -62,21 +75,21 @@ const menu = useTemplateRef<HTMLElement>('menu');
 onClickOutside(menu, () => (showDropdown.value = false));
 
 const links = [
-  { to: '/meals', label: 'Meals' },
-  { to: '/ingredients', label: 'Ingredients' },
-  { to: '/categories', label: 'Categories' },
-  { to: '/cuisines', label: 'Cuisines' },
-  { to: '/favourites', label: 'Favourites' },
-  { to: '/about', label: 'About' },
+  { to: '/meals', label: 'Meals', icon: UtensilsCrossed },
+  { to: '/ingredients', label: 'Ingredients', icon: Carrot },
+  { to: '/categories', label: 'Categories', icon: LayoutGrid },
+  { to: '/cuisines', label: 'Cuisines', icon: Globe },
+  { to: '/favourites', label: 'Favourites', icon: Heart },
+  { to: '/about', label: 'About', icon: Info },
 ];
+const allLinks = [...links.slice(0, 5), { to: '/random', label: 'Surprise me', icon: Shuffle }, links[5]!];
 
 watch(
   () => route.fullPath,
   () => (showDropdown.value = false),
 );
 
-const linkClass = (path: string) =>
-  route.path.startsWith(path) ? 'text-lg text-orange-700' : 'text-lg text-gray-600 hover:text-orange-700';
+const isActive = (path: string) => route.path.startsWith(path);
 
 const search = (query: string) => {
   router.push(query ? { path: '/meals', query: { q: query } } : '/meals');

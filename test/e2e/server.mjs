@@ -13,7 +13,11 @@ const TYPES = {
   '.css': 'text/css',
   '.json': 'application/json',
   '.png': 'image/png',
+  '.jpg': 'image/jpeg',
+  '.svg': 'image/svg+xml',
   '.ico': 'image/x-icon',
+  '.webmanifest': 'application/manifest+json',
+  '.xml': 'application/xml',
 };
 
 const fileFor = async pathname => {

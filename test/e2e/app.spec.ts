@@ -52,6 +52,10 @@ test('a meal opens from a direct link with steps, ingredients and actions', asyn
   await expect(page.getByRole('listitem').filter({ hasText: 'Bake for 35 minutes.' })).toBeVisible();
   await expect(page.getByRole('link', { name: /Salt/ })).toBeVisible();
   await expect(page.getByRole('link', { name: 'Cuisine: Japan' })).toHaveAttribute('href', /\/cuisines\/Japan$/);
+
+  await page.getByRole('checkbox', { name: 'Got Salt' }).check();
+  await page.getByText('Bake for 35 minutes.').click();
+  await expect(page.getByRole('checkbox', { name: 'Bake for 35 minutes.' })).toBeChecked();
   await expectNoSeriousA11yIssues(page);
 });
 

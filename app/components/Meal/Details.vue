@@ -10,7 +10,7 @@
     </button>
 
     <header class="mb-6">
-      <h1 class="text-3xl font-semibold text-orange-700 md:text-4xl">{{ meal.strMeal }}</h1>
+      <h1 class="text-4xl font-bold md:text-5xl">{{ meal.strMeal }}</h1>
       <p v-if="meal.strMealAlternate" class="mt-1 text-gray-600">Also known as {{ meal.strMealAlternate }}</p>
 
       <ul class="mt-4 flex flex-wrap gap-2" aria-label="Meal details">
@@ -57,15 +57,15 @@
       </div>
     </header>
 
-    <div class="grid gap-8 md:grid-cols-5">
-      <div class="md:col-span-3">
+    <div class="grid gap-8 lg:grid-cols-5">
+      <div class="lg:col-span-3">
         <img
           :src="meal.strMealThumb"
           :alt="meal.strMeal"
           width="700"
           height="700"
           fetchpriority="high"
-          class="h-auto w-full rounded-lg bg-bay-100"
+          class="aspect-[4/3] w-full rounded-2xl bg-bay-100 object-cover"
           @error="onImageError"
         />
         <p v-if="meal.strImageSource" class="mt-1 text-sm text-gray-600">
@@ -81,13 +81,23 @@
         </p>
       </div>
 
-      <section class="md:col-span-2" aria-labelledby="ingredients-heading">
+      <section class="lg:col-span-2" aria-labelledby="ingredients-heading">
         <h2 id="ingredients-heading" class="mb-3 text-2xl font-semibold">Ingredients</h2>
-        <ul class="divide-y divide-bay-50 rounded-lg bg-white shadow-xs">
-          <li v-for="ingredient in ingredients" :key="ingredient.name">
+        <ul class="divide-y divide-bay-50 overflow-hidden rounded-2xl bg-white shadow-xs ring-1 ring-bay-100">
+          <li v-for="ingredient in ingredients" :key="ingredient.name" class="flex items-center">
+            <label class="flex shrink-0 cursor-pointer self-stretch items-center pl-3 pr-1 print:hidden">
+              <input
+                v-model="gathered"
+                type="checkbox"
+                :value="ingredient.name"
+                class="h-5 w-5 accent-orange-700"
+                :aria-label="`Got ${ingredient.name}`"
+              />
+            </label>
             <nuxt-link
               :to="`/ingredients/${encodeURIComponent(ingredient.name)}`"
-              class="flex items-center gap-3 px-3 py-2 hover:bg-orange-50"
+              class="flex flex-1 items-center gap-3 px-3 py-2 hover:bg-orange-50"
+              :class="gathered.includes(ingredient.name) && 'text-gray-500 line-through'"
             >
               <img
                 :src="ingredientThumbUrl(ingredient.name, 'small')"
@@ -138,17 +148,23 @@
         <li
           v-for="(step, index) in steps"
           :key="index"
-          class="flex gap-4 rounded-lg p-3 transition-colors"
+          class="rounded-2xl shadow-xs ring-1 ring-bay-100 transition-colors"
           :class="readAloud.currentStep.value === index ? 'bg-orange-100' : 'bg-white'"
           :aria-current="readAloud.currentStep.value === index ? 'step' : undefined"
         >
-          <span
-            class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-orange-700 font-semibold text-white"
-            aria-hidden="true"
-          >
-            {{ index + 1 }}
-          </span>
-          <p class="pt-1">{{ step }}</p>
+          <!-- The whole step ticks off; the number turns into a check mark. -->
+          <label class="flex cursor-pointer gap-4 p-3">
+            <input v-model="doneSteps" type="checkbox" :value="index" class="peer sr-only" />
+            <span
+              class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full font-semibold peer-focus-visible:ring-2 peer-focus-visible:ring-orange-600 peer-focus-visible:ring-offset-2"
+              :class="doneSteps.includes(index) ? 'bg-bay-100 text-bay-700' : 'bg-orange-700 text-white'"
+              aria-hidden="true"
+            >
+              <Check v-if="doneSteps.includes(index)" class="h-5 w-5" />
+              <template v-else>{{ index + 1 }}</template>
+            </span>
+            <span class="pt-1" :class="doneSteps.includes(index) && 'text-gray-500 line-through'">{{ step }}</span>
+          </label>
         </li>
       </ol>
     </section>
@@ -205,7 +221,7 @@ const chipClass =
   'inline-flex items-center gap-1 rounded-full bg-white px-3 py-1 text-sm text-gray-800 shadow-xs hover:text-orange-700';
 const tagClass = 'inline-flex items-center gap-1 rounded-full bg-gray-100 px-3 py-1 text-sm text-gray-700';
 const actionClass =
-  'inline-flex items-center gap-2 rounded-lg bg-white px-3 py-2 font-medium text-gray-800 shadow-xs hover:bg-orange-50';
+  'inline-flex items-center gap-2 rounded-xl bg-white px-4 py-2.5 font-medium text-gray-800 shadow-xs ring-1 ring-bay-100 hover:bg-orange-50';
 
 const ingredients = computed(() => getIngredientsFromMeal(props.meal));
 const steps = computed(() => splitInstructions(props.meal.strInstructions));
@@ -214,7 +230,19 @@ const videoId = computed(() => youtubeVideoId(props.meal.strYoutube));
 
 const readAloud = useReadAloud(steps);
 const { onImageError } = usePlaceholderImage();
-watch(() => props.meal.idMeal, readAloud.stop);
+
+// Cooking checklist: ingredients gathered and steps done, for this visit only.
+const gathered = ref<string[]>([]);
+const doneSteps = ref<number[]>([]);
+
+watch(
+  () => props.meal.idMeal,
+  () => {
+    readAloud.stop();
+    gathered.value = [];
+    doneSteps.value = [];
+  },
+);
 
 const router = useRouter();
 const goBack = () => (window.history.state?.back ? router.back() : router.push('/meals'));

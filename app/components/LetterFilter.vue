@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex gap-1 overflow-x-auto rounded-xl bg-surface p-1.5 shadow-xs ring-1 ring-line [scrollbar-width:thin]"
+    class="flex justify-center-safe gap-1 overflow-x-auto rounded-xl bg-surface p-1.5 shadow-xs ring-1 ring-line [scrollbar-width:thin]"
     role="group"
     :aria-label="label"
   >

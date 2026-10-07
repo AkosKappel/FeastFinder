@@ -8,77 +8,80 @@
 
       <SearchBar class="order-last w-full md:order-none md:w-auto md:max-w-md md:flex-1" @search="search" />
 
-      <div ref="menu" class="relative xl:hidden" @keydown.esc="showDropdown = false">
-        <button
-          type="button"
-          class="flex items-center gap-2 rounded-lg border border-bay-700 px-3 py-2 font-medium text-bay-50 hover:bg-bay-800"
-          aria-controls="mobile-menu"
-          :aria-expanded="showDropdown"
-          @click="showDropdown = !showDropdown"
-        >
-          Menu
-          <MenuIcon class="h-5 w-5" aria-hidden="true" />
-        </button>
-        <ul
-          v-show="showDropdown"
-          id="mobile-menu"
-          class="absolute right-0 z-40 mt-2 w-56 overflow-hidden rounded-xl bg-bay-950 py-2 shadow-xl ring-1 ring-bay-800"
-        >
-          <li v-for="link in allLinks" :key="link.to">
-            <nuxt-link
-              :to="link.to"
-              class="flex items-center gap-3 px-4 py-2.5 hover:bg-bay-800"
-              :class="isActive(link.to) ? 'text-saffron' : 'text-bay-50'"
-            >
-              <component :is="link.icon" class="h-5 w-5 opacity-80" aria-hidden="true" />
-              {{ link.label }}
-            </nuxt-link>
-          </li>
-        </ul>
-      </div>
-
-      <nav class="hidden xl:block" aria-label="Main">
-        <ul class="flex items-center gap-1">
-          <li v-for="link in links" :key="link.to">
-            <nuxt-link
-              :to="link.to"
-              class="block rounded-lg px-3 py-2 font-medium transition-colors hover:bg-bay-800 hover:text-white"
-              :class="isActive(link.to) ? 'text-saffron' : 'text-bay-100'"
-            >
-              {{ link.label }}
-            </nuxt-link>
-          </li>
-          <li>
-            <nuxt-link
-              to="/random"
-              title="Surprise me"
-              class="flex rounded-lg p-2 transition-colors hover:bg-bay-800 hover:text-white"
-              :class="isActive('/random') ? 'text-saffron' : 'text-bay-100'"
-            >
-              <Shuffle class="h-5 w-5" aria-hidden="true" />
-              <span class="sr-only">Surprise me</span>
-            </nuxt-link>
-          </li>
-          <li>
-            <nuxt-link
-              to="/shopping-list"
-              title="Shopping list"
-              class="relative flex rounded-lg p-2 transition-colors hover:bg-bay-800 hover:text-white"
-              :class="isActive('/shopping-list') ? 'text-saffron' : 'text-bay-100'"
-            >
-              <ShoppingBasket class="h-5 w-5" aria-hidden="true" />
-              <span class="sr-only">Shopping list, {{ countLabel(toBuy, 'item') }} to buy</span>
-              <span
-                v-if="toBuy"
-                class="absolute -top-1 -right-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-saffron px-1 text-xs font-bold text-bay-950"
-                aria-hidden="true"
+      <div class="flex items-center gap-1">
+        <ThemeToggle />
+        <div ref="menu" class="relative xl:hidden" @keydown.esc="showDropdown = false">
+          <button
+            type="button"
+            class="flex items-center gap-2 rounded-lg border border-bay-700 px-3 py-2 font-medium text-bay-50 hover:bg-bay-800"
+            aria-controls="mobile-menu"
+            :aria-expanded="showDropdown"
+            @click="showDropdown = !showDropdown"
+          >
+            Menu
+            <MenuIcon class="h-5 w-5" aria-hidden="true" />
+          </button>
+          <ul
+            v-show="showDropdown"
+            id="mobile-menu"
+            class="absolute right-0 z-40 mt-2 w-56 overflow-hidden rounded-xl bg-bay-950 py-2 shadow-xl ring-1 ring-bay-800"
+          >
+            <li v-for="link in allLinks" :key="link.to">
+              <nuxt-link
+                :to="link.to"
+                class="flex items-center gap-3 px-4 py-2.5 hover:bg-bay-800"
+                :class="isActive(link.to) ? 'text-saffron' : 'text-bay-50'"
               >
-                {{ toBuy }}
-              </span>
-            </nuxt-link>
-          </li>
-        </ul>
-      </nav>
+                <component :is="link.icon" class="h-5 w-5 opacity-80" aria-hidden="true" />
+                {{ link.label }}
+              </nuxt-link>
+            </li>
+          </ul>
+        </div>
+
+        <nav class="hidden xl:block" aria-label="Main">
+          <ul class="flex items-center gap-1">
+            <li v-for="link in links" :key="link.to">
+              <nuxt-link
+                :to="link.to"
+                class="block rounded-lg px-3 py-2 font-medium transition-colors hover:bg-bay-800 hover:text-white"
+                :class="isActive(link.to) ? 'text-saffron' : 'text-bay-100'"
+              >
+                {{ link.label }}
+              </nuxt-link>
+            </li>
+            <li>
+              <nuxt-link
+                to="/random"
+                title="Surprise me"
+                class="flex rounded-lg p-2 transition-colors hover:bg-bay-800 hover:text-white"
+                :class="isActive('/random') ? 'text-saffron' : 'text-bay-100'"
+              >
+                <Shuffle class="h-5 w-5" aria-hidden="true" />
+                <span class="sr-only">Surprise me</span>
+              </nuxt-link>
+            </li>
+            <li>
+              <nuxt-link
+                to="/shopping-list"
+                title="Shopping list"
+                class="relative flex rounded-lg p-2 transition-colors hover:bg-bay-800 hover:text-white"
+                :class="isActive('/shopping-list') ? 'text-saffron' : 'text-bay-100'"
+              >
+                <ShoppingBasket class="h-5 w-5" aria-hidden="true" />
+                <span class="sr-only">Shopping list, {{ countLabel(toBuy, 'item') }} to buy</span>
+                <span
+                  v-if="toBuy"
+                  class="absolute -top-1 -right-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-saffron px-1 text-xs font-bold text-bay-950"
+                  aria-hidden="true"
+                >
+                  {{ toBuy }}
+                </span>
+              </nuxt-link>
+            </li>
+          </ul>
+        </nav>
+      </div>
     </div>
   </header>
 </template>

@@ -57,7 +57,7 @@
             <ul class="grid gap-2 sm:grid-cols-2">
               <li v-for="ingredient in ingredients" :key="ingredient.name">
                 <label
-                  class="flex cursor-pointer items-center gap-3 rounded-2xl bg-white px-4 py-3 text-lg shadow-xs ring-1 ring-bay-100"
+                  class="flex cursor-pointer items-center gap-3 rounded-2xl bg-surface px-4 py-3 text-lg shadow-xs ring-1 ring-line"
                 >
                   <input
                     v-model="gathered"
@@ -76,7 +76,7 @@
             </ul>
           </template>
           <template v-else>
-            <p class="mb-4 font-display text-xl font-semibold text-orange-800">Step {{ current + 1 }}</p>
+            <p class="mb-4 font-display text-xl font-semibold text-accent">Step {{ current + 1 }}</p>
             <p
               class="text-2xl leading-relaxed md:text-4xl md:leading-snug"
               :class="done.includes(current) && 'text-gray-500'"
@@ -93,7 +93,7 @@
         </div>
       </div>
 
-      <footer class="flex items-center justify-between gap-3 border-t border-bay-100 bg-white px-4 py-3">
+      <footer class="flex items-center justify-between gap-3 border-t border-line bg-surface px-4 py-3">
         <button type="button" :class="secondaryButtonClass" :disabled="current === -1" @click="go(current - 1)">
           <ChevronLeft class="h-6 w-6" aria-hidden="true" />
           Back
@@ -130,7 +130,7 @@ const gathered = defineModel<string[]>('gathered', { required: true });
 const headerButtonClass =
   'inline-flex items-center gap-2 rounded-xl bg-bay-800 px-3 py-2.5 font-semibold hover:bg-bay-700';
 const navButtonClass = 'inline-flex items-center gap-2 rounded-xl px-5 py-3 text-lg font-semibold';
-const secondaryButtonClass = `${navButtonClass} bg-white ring-1 ring-bay-200 disabled:opacity-40`;
+const secondaryButtonClass = `${navButtonClass} bg-surface ring-1 ring-line-strong disabled:opacity-40`;
 const primaryButtonClass = `${navButtonClass} bg-orange-700 text-white hover:bg-orange-600`;
 
 const dialog = useTemplateRef<HTMLDialogElement>('dialog');

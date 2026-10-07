@@ -1,13 +1,13 @@
 <template>
   <article
-    class="group relative flex flex-col overflow-hidden rounded-2xl bg-white shadow-xs ring-1 ring-bay-100 transition-shadow duration-300 focus-within:ring-2 focus-within:ring-orange-600 hover:shadow-lg"
+    class="group relative flex flex-col overflow-hidden rounded-2xl bg-surface shadow-xs ring-1 ring-line transition-shadow duration-300 focus-within:ring-2 focus-within:ring-orange-600 hover:shadow-lg"
   >
     <img
       :src="`${meal.strMealThumb}/medium`"
       :srcset="mealImageSrcset(meal.strMealThumb)"
       sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
       alt=""
-      class="aspect-[4/3] w-full bg-bay-100 object-cover object-center transition-transform duration-300 motion-safe:group-hover:scale-105"
+      class="aspect-[4/3] w-full bg-tint object-cover object-center transition-transform duration-300 motion-safe:group-hover:scale-105"
       loading="lazy"
       @error="onImageError"
     />

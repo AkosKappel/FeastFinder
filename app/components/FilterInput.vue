@@ -10,7 +10,7 @@
       v-model="model"
       type="search"
       autocomplete="off"
-      class="w-full rounded-xl border-0 bg-white py-2.5 pl-9 pr-9 text-ink shadow-xs ring-1 ring-bay-100 placeholder:text-gray-500 focus:outline-hidden focus:ring-2 focus:ring-orange-600 [&::-webkit-search-cancel-button]:hidden"
+      class="w-full rounded-xl border-0 bg-surface py-2.5 pl-9 pr-9 text-ink shadow-xs ring-1 ring-line placeholder:text-gray-500 focus:outline-hidden focus:ring-2 focus:ring-orange-600 [&::-webkit-search-cancel-button]:hidden"
       :placeholder="`${label}...`"
       @keydown.esc="model = ''"
     />

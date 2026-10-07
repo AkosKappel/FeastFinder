@@ -1,7 +1,7 @@
 <template>
   <NuxtLayout>
     <section class="container mx-auto flex flex-col items-center px-4 py-16 text-center">
-      <p class="text-6xl font-bold text-orange-700">{{ error.statusCode }}</p>
+      <p class="text-6xl font-bold text-accent">{{ error.statusCode }}</p>
       <h1 class="mt-4 text-3xl font-semibold">{{ notFound ? 'Page not found' : 'Something went wrong' }}</h1>
       <p class="mt-2 max-w-md text-gray-600">
         {{
@@ -21,7 +21,7 @@
         </button>
         <button
           type="button"
-          class="inline-flex items-center gap-2 rounded-lg bg-white px-4 py-2 font-semibold text-gray-800 shadow-xs hover:bg-orange-50"
+          class="inline-flex items-center gap-2 rounded-lg bg-surface px-4 py-2 font-semibold text-gray-800 shadow-xs hover:bg-orange-50"
           @click="clearError({ redirect: '/meals' })"
         >
           <Search class="h-5 w-5" aria-hidden="true" />

@@ -57,8 +57,8 @@
       <li
         v-for="(step, index) in steps"
         :key="index"
-        class="rounded-2xl shadow-xs ring-1 ring-bay-100 transition-colors"
-        :class="readAloud.currentStep.value === index ? 'bg-orange-100' : 'bg-white'"
+        class="rounded-2xl shadow-xs ring-1 ring-line transition-colors"
+        :class="readAloud.currentStep.value === index ? 'bg-orange-100' : 'bg-surface'"
         :aria-current="readAloud.currentStep.value === index ? 'step' : undefined"
       >
         <div class="flex items-start gap-2 p-3">
@@ -67,7 +67,7 @@
             <input v-model="done" type="checkbox" :value="index" class="peer sr-only" />
             <span
               class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full font-semibold peer-focus-visible:ring-2 peer-focus-visible:ring-orange-600 peer-focus-visible:ring-offset-2"
-              :class="done.includes(index) ? 'bg-bay-100 text-bay-700' : 'bg-orange-700 text-white'"
+              :class="done.includes(index) ? 'bg-tint text-bay-700 dark:text-bay-200' : 'bg-orange-700 text-white'"
               aria-hidden="true"
             >
               <Check v-if="done.includes(index)" class="h-5 w-5" />
@@ -78,7 +78,7 @@
           <button
             v-if="readAloud.isSupported.value"
             type="button"
-            class="-my-1 shrink-0 rounded-lg p-2 text-gray-600 hover:bg-orange-50 hover:text-orange-800 print:hidden"
+            class="-my-1 shrink-0 rounded-lg p-2 text-gray-600 hover:bg-orange-50 hover:text-accent print:hidden"
             :aria-label="`Read aloud from step ${index + 1}`"
             @click="readAloud.play(index)"
           >
@@ -104,5 +104,5 @@ defineEmits<{ cook: [] }>();
 const done = defineModel<number[]>('done', { required: true });
 
 const actionClass =
-  'inline-flex items-center gap-2 rounded-xl bg-white px-4 py-2.5 font-medium text-gray-800 shadow-xs ring-1 ring-bay-100 hover:bg-orange-50 disabled:opacity-50';
+  'inline-flex items-center gap-2 rounded-xl bg-surface px-4 py-2.5 font-medium text-gray-800 shadow-xs ring-1 ring-line hover:bg-orange-50 disabled:opacity-50';
 </script>

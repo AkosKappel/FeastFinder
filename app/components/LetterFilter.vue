@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex gap-1 overflow-x-auto rounded-xl bg-white p-1.5 shadow-xs ring-1 ring-bay-100 [scrollbar-width:thin]"
+    class="flex gap-1 overflow-x-auto rounded-xl bg-surface p-1.5 shadow-xs ring-1 ring-line [scrollbar-width:thin]"
     role="group"
     :aria-label="label"
   >
@@ -49,6 +49,6 @@ const isAvailable = (letter: string) => !props.available || props.available.incl
 
 const buttonClass = (active: boolean, empty = false) => [
   'h-9 shrink-0 rounded-lg font-semibold transition-colors',
-  active ? 'bg-bay-900 text-white' : empty ? 'text-gray-400' : 'text-ink hover:bg-bay-50',
+  active ? 'bg-bay-900 text-white' : empty ? 'text-gray-400' : 'text-ink hover:bg-tint-soft',
 ];
 </script>

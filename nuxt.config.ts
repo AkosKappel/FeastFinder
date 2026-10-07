@@ -57,6 +57,13 @@ export default defineNuxtConfig({
         { rel: 'apple-touch-icon', href: `${baseURL}apple-touch-icon.png` },
         { rel: 'manifest', href: `${baseURL}site.webmanifest` },
       ],
+      // Applies the saved theme (see ThemeToggle.vue) before the app renders, so dark mode does not flash.
+      script: [
+        {
+          innerHTML:
+            "try{var t=localStorage.getItem('feast-finder:theme');if(t==='dark'||(t!=='light'&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.classList.add('dark')}catch(e){}",
+        },
+      ],
     },
   },
 });

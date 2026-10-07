@@ -12,7 +12,7 @@
       :empty-message="`No meals from ${country} yet.`"
       @retry="refresh()"
     />
-    <nuxt-link to="/cuisines" class="mb-8 inline-flex items-center gap-1 text-gray-700 hover:text-orange-700">
+    <nuxt-link to="/cuisines" class="mb-8 inline-flex items-center gap-1 text-gray-700 hover:text-accent">
       <ArrowLeft class="h-4 w-4" aria-hidden="true" />
       All cuisines
     </nuxt-link>

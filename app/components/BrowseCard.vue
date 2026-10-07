@@ -1,6 +1,6 @@
 <template>
   <article
-    class="group relative flex flex-col overflow-hidden rounded-2xl bg-white shadow-xs ring-1 ring-bay-100 transition-shadow duration-300 focus-within:ring-2 focus-within:ring-orange-600 hover:shadow-lg"
+    class="group relative flex flex-col overflow-hidden rounded-2xl bg-surface shadow-xs ring-1 ring-line transition-shadow duration-300 focus-within:ring-2 focus-within:ring-orange-600 hover:shadow-lg"
   >
     <img
       :src="image"
@@ -9,14 +9,14 @@
       class="h-40 w-full object-contain p-4 transition-transform duration-300 motion-safe:group-hover:scale-105"
       @error="onImageError"
     />
-    <div class="flex min-h-[3.5rem] items-center justify-between gap-2 border-t border-bay-50 px-4 py-3">
+    <div class="flex min-h-[3.5rem] items-center justify-between gap-2 border-t border-line-soft px-4 py-3">
       <component :is="headingTag" class="text-lg font-semibold leading-snug">
         <nuxt-link :to="to" class="after:absolute after:inset-0 focus:outline-hidden">{{ title }}</nuxt-link>
       </component>
       <button
         v-if="description"
         type="button"
-        class="relative z-10 -mr-1.5 shrink-0 rounded-full p-1.5 text-gray-600 hover:bg-bay-50 hover:text-ink"
+        class="relative z-10 -mr-1.5 shrink-0 rounded-full p-1.5 text-gray-600 hover:bg-tint-soft hover:text-ink"
         :aria-label="`About ${title}`"
         @click="showModal = true"
       >

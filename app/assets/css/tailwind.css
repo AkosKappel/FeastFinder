@@ -3,6 +3,9 @@
 
 @import 'tailwindcss';
 
+/* Dark mode follows the .dark class on <html>, set from the theme toggle or the system setting. */
+@custom-variant dark (&:where(.dark, .dark *));
+
 /* Kitchen palette: bay leaf (dark surfaces), paprika (actions, Tailwind orange), saffron (highlights
    on dark), sage (page background). */
 @theme {
@@ -19,6 +22,16 @@
   --color-sage: #eef2ef;
   --color-ink: #1c2b27;
   --color-saffron: #fcd34d;
+
+  /* Light surfaces and their lines and tints; these switch in dark mode. The dark bands keep the
+     bay colours in both themes. */
+  --color-surface: #fff;
+  --color-line: #e1ebe5;
+  --color-line-soft: #f2f6f3;
+  --color-line-strong: #c3d6ca;
+  --color-tint: #e1ebe5;
+  --color-tint-soft: #f2f6f3;
+  --color-accent: var(--color-orange-800);
 
   --font-sans: 'Figtree Variable', ui-sans-serif, system-ui, sans-serif;
   --font-display: 'Bricolage Grotesque Variable', ui-sans-serif, system-ui, sans-serif;
@@ -45,6 +58,32 @@
   :focus-visible {
     @apply ring-2 ring-orange-600 ring-offset-2 ring-offset-sage outline-hidden;
   }
+}
+
+/* Grey text, page, ink and the light orange and red shades only appear on light surfaces, so dark
+   mode swaps their values instead of adding dark: variants everywhere. */
+.dark {
+  color-scheme: dark;
+  --color-sage: #0d1714;
+  --color-ink: #e7eeea;
+  --color-surface: #16221e;
+  --color-line: #2a3b35;
+  --color-line-soft: #22322d;
+  --color-line-strong: #3a4e47;
+  --color-tint: #22322d;
+  --color-tint-soft: #1b2a25;
+  --color-accent: #fdba74;
+  --color-gray-100: #22322d;
+  --color-gray-400: #6f7b76;
+  --color-gray-500: #95a09b;
+  --color-gray-600: #b3bcb8;
+  --color-gray-700: #cdd5d1;
+  --color-gray-800: #e2e8e5;
+  --color-gray-900: #f1f5f3;
+  --color-orange-50: #2b1e15;
+  --color-orange-100: #3d2a1a;
+  --color-red-600: #fca5a5;
+  --color-red-700: #f87171;
 }
 
 /* Dark bands (header, heroes, footer): a saffron ring reads better there, and a transparent offset

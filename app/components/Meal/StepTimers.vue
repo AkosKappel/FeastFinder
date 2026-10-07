@@ -8,7 +8,7 @@
           large ? 'px-5 py-3 text-xl' : 'px-3 py-1.5 text-sm',
           timerFor(duration)
             ? 'bg-bay-900 text-white ring-bay-900'
-            : 'bg-white text-gray-800 ring-bay-200 hover:bg-orange-50',
+            : 'bg-surface text-gray-800 ring-line-strong hover:bg-orange-50',
         ]"
         :aria-label="buttonLabel(duration)"
         @click="toggle(duration)"

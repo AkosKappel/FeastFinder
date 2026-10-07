@@ -16,7 +16,7 @@
       :aria-expanded="open"
       :aria-controls="listId"
       :aria-activedescendant="activeIndex >= 0 ? optionId(activeIndex) : undefined"
-      class="w-full rounded-xl border-0 bg-white py-3.5 pl-12 pr-4 text-lg text-ink shadow-xs ring-1 ring-bay-100 placeholder:text-gray-500 focus:outline-hidden focus:ring-2 focus:ring-orange-600"
+      class="w-full rounded-xl border-0 bg-surface py-3.5 pl-12 pr-4 text-lg text-ink shadow-xs ring-1 ring-line placeholder:text-gray-500 focus:outline-hidden focus:ring-2 focus:ring-orange-600"
       @focus="open = true"
       @input="onInput"
       @keydown.down.prevent="move(1)"
@@ -29,7 +29,7 @@
       :id="listId"
       role="listbox"
       aria-label="Matching ingredients"
-      class="absolute z-30 mt-2 max-h-72 w-full overflow-y-auto rounded-xl bg-white py-1.5 shadow-xl ring-1 ring-bay-100"
+      class="absolute z-30 mt-2 max-h-72 w-full overflow-y-auto rounded-xl bg-surface py-1.5 shadow-xl ring-1 ring-line"
     >
       <li
         v-for="(name, index) in matches"
@@ -38,7 +38,7 @@
         role="option"
         :aria-selected="index === activeIndex"
         class="flex cursor-pointer items-center gap-3 px-3 py-2 capitalize"
-        :class="index === activeIndex ? 'bg-bay-50 text-bay-900' : 'text-ink'"
+        :class="index === activeIndex ? 'bg-tint-soft text-bay-900 dark:text-bay-50' : 'text-ink'"
         @mousedown.prevent="choose(name)"
         @mousemove="activeIndex = index"
       >

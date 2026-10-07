@@ -4,7 +4,7 @@
     <nuxt-link
       v-if="moreTo"
       :to="moreTo"
-      class="inline-flex items-center gap-1 font-semibold text-orange-800 hover:underline"
+      class="inline-flex items-center gap-1 font-semibold text-accent hover:underline"
     >
       {{ moreLabel }}
       <ArrowRight class="h-4 w-4" aria-hidden="true" />

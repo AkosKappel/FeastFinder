@@ -35,10 +35,10 @@
           <li
             v-for="feature in features"
             :key="feature.title"
-            class="rounded-2xl bg-white p-5 shadow-xs ring-1 ring-bay-100"
+            class="rounded-2xl bg-surface p-5 shadow-xs ring-1 ring-line"
           >
             <span class="inline-flex rounded-xl bg-orange-50 p-2.5">
-              <component :is="feature.icon" class="h-6 w-6 text-orange-700" aria-hidden="true" />
+              <component :is="feature.icon" class="h-6 w-6 text-accent" aria-hidden="true" />
             </span>
             <h3 class="mt-3 text-lg font-semibold">{{ feature.title }}</h3>
             <p class="mt-1 text-gray-700">{{ feature.text }}</p>
@@ -51,7 +51,7 @@
           <h2 id="how-heading" class="mb-4 text-2xl font-semibold">How it works</h2>
           <ul class="space-y-3 text-gray-700">
             <li v-for="point in howItWorks" :key="point" class="flex gap-3">
-              <Check class="mt-1 h-5 w-5 shrink-0 text-orange-700" aria-hidden="true" />
+              <Check class="mt-1 h-5 w-5 shrink-0 text-accent" aria-hidden="true" />
               <span>{{ point }}</span>
             </li>
           </ul>
@@ -64,7 +64,7 @@
                 :href="tool.href"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="inline-block rounded-full bg-white px-4 py-2 font-medium text-gray-800 shadow-xs ring-1 ring-bay-100 hover:text-orange-700"
+                class="inline-block rounded-full bg-surface px-4 py-2 font-medium text-gray-800 shadow-xs ring-1 ring-line hover:text-accent"
               >
                 {{ tool.name }}
               </a>
@@ -74,7 +74,7 @@
       </section>
 
       <section
-        class="mt-14 rounded-2xl bg-white p-6 shadow-xs ring-1 ring-bay-100 md:p-8"
+        class="mt-14 rounded-2xl bg-surface p-6 shadow-xs ring-1 ring-line md:p-8"
         aria-labelledby="author-heading"
       >
         <h2 id="author-heading" class="text-2xl font-semibold">Who made it</h2>
@@ -89,7 +89,7 @@
             :href="link.href"
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-flex items-center gap-2 rounded-xl bg-bay-50 px-4 py-2.5 font-medium text-gray-800 ring-1 ring-bay-100 hover:bg-orange-50"
+            class="inline-flex items-center gap-2 rounded-xl bg-tint-soft px-4 py-2.5 font-medium text-gray-800 ring-1 ring-line hover:bg-orange-50"
           >
             <ExternalLink class="h-4 w-4" aria-hidden="true" />
             {{ link.label }}
@@ -105,7 +105,7 @@
             href="https://www.themealdb.com/"
             target="_blank"
             rel="noopener noreferrer"
-            class="font-medium text-orange-800 underline"
+            class="font-medium text-accent underline"
             >TheMealDB</a
           >, a free, community-built recipe database. Feast Finder uses its public test key, which is meant for
           development and education. Recipes are in English, measures are as written by the contributors, and some meals

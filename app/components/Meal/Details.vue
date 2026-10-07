@@ -2,7 +2,7 @@
   <article class="container mx-auto px-4 py-6">
     <button
       type="button"
-      class="mb-4 inline-flex items-center gap-1 text-gray-700 hover:text-orange-700 print:hidden"
+      class="mb-4 inline-flex items-center gap-1 text-gray-700 hover:text-accent print:hidden"
       @click="goBack"
     >
       <ArrowLeft class="h-4 w-4" aria-hidden="true" />
@@ -51,7 +51,7 @@
           :aria-pressed="screenOn"
           @click="toggleScreenOn"
         >
-          <Sun class="h-5 w-5" :class="screenOn && 'text-orange-700'" aria-hidden="true" />
+          <Sun class="h-5 w-5" :class="screenOn && 'text-accent'" aria-hidden="true" />
           {{ screenOn ? 'Screen stays on' : 'Keep screen on' }}
         </button>
       </div>
@@ -65,17 +65,12 @@
           width="700"
           height="700"
           fetchpriority="high"
-          class="aspect-[4/3] w-full rounded-2xl bg-bay-100 object-cover"
+          class="aspect-[4/3] w-full rounded-2xl bg-tint object-cover"
           @error="onImageError"
         />
         <p v-if="meal.strImageSource" class="mt-1 text-sm text-gray-600">
           Image:
-          <a
-            :href="meal.strImageSource"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="underline hover:text-orange-700"
-          >
+          <a :href="meal.strImageSource" target="_blank" rel="noopener noreferrer" class="underline hover:text-accent">
             {{ hostnameOf(meal.strImageSource) }}
           </a>
         </p>
@@ -111,7 +106,7 @@
 
     <section v-if="videoId" class="mt-10 print:hidden" aria-labelledby="video-heading">
       <h2 id="video-heading" class="mb-4 flex items-center gap-2 text-2xl font-semibold">
-        <CirclePlay class="h-6 w-6 text-orange-700" aria-hidden="true" />
+        <CirclePlay class="h-6 w-6 text-accent" aria-hidden="true" />
         Video
       </h2>
       <div class="aspect-video w-full max-w-3xl overflow-hidden rounded-lg bg-black">
@@ -129,7 +124,7 @@
     <p v-if="meal.strSource" class="mt-8 flex items-center gap-2 text-gray-700">
       <ExternalLink class="h-4 w-4" aria-hidden="true" />
       Original recipe:
-      <a :href="meal.strSource" target="_blank" rel="noopener noreferrer" class="underline hover:text-orange-700">
+      <a :href="meal.strSource" target="_blank" rel="noopener noreferrer" class="underline hover:text-accent">
         {{ hostnameOf(meal.strSource) }}
       </a>
     </p>
@@ -143,10 +138,10 @@ import type { Meal } from '@/types/Meal';
 const props = defineProps<{ meal: Meal }>();
 
 const chipClass =
-  'inline-flex items-center gap-1 rounded-full bg-white px-3 py-1 text-sm text-gray-800 shadow-xs hover:text-orange-700';
+  'inline-flex items-center gap-1 rounded-full bg-surface px-3 py-1 text-sm text-gray-800 shadow-xs hover:text-accent';
 const tagClass = 'inline-flex items-center gap-1 rounded-full bg-gray-100 px-3 py-1 text-sm text-gray-700';
 const actionClass =
-  'inline-flex items-center gap-2 rounded-xl bg-white px-4 py-2.5 font-medium text-gray-800 shadow-xs ring-1 ring-bay-100 hover:bg-orange-50';
+  'inline-flex items-center gap-2 rounded-xl bg-surface px-4 py-2.5 font-medium text-gray-800 shadow-xs ring-1 ring-line hover:bg-orange-50';
 
 const ingredients = computed(() => getIngredientsFromMeal(props.meal));
 const steps = computed(() => splitInstructions(props.meal.strInstructions));

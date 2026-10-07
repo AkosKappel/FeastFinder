@@ -8,7 +8,7 @@
 
       <template v-if="items.length">
         <p class="mb-4 text-gray-600" aria-live="polite">{{ countLabel(toBuy, 'item') }} to buy</p>
-        <ul class="divide-y divide-bay-50 overflow-hidden rounded-2xl bg-white shadow-xs ring-1 ring-bay-100">
+        <ul class="divide-y divide-line-soft overflow-hidden rounded-2xl bg-surface shadow-xs ring-1 ring-line">
           <li v-for="item in sortedItems" :key="item.name" class="flex items-center gap-3 px-3 py-2">
             <label class="flex flex-1 cursor-pointer items-center gap-3">
               <input
@@ -34,7 +34,7 @@
             </label>
             <button
               type="button"
-              class="shrink-0 rounded-lg p-2 text-gray-600 hover:bg-orange-50 hover:text-orange-800"
+              class="shrink-0 rounded-lg p-2 text-gray-600 hover:bg-orange-50 hover:text-accent"
               :aria-label="`Remove ${item.name}`"
               @click="remove(item.name)"
             >
@@ -85,7 +85,7 @@ const describeNeed = (need: ShoppingItem['needs'][number]) =>
   need.measure ? `${convertMeasure(need.measure, units.value)} for ${need.meal}` : `for ${need.meal}`;
 
 const actionClass =
-  'inline-flex items-center gap-2 rounded-xl bg-white px-4 py-2.5 font-medium text-gray-800 shadow-xs ring-1 ring-bay-100 hover:bg-orange-50';
+  'inline-flex items-center gap-2 rounded-xl bg-surface px-4 py-2.5 font-medium text-gray-800 shadow-xs ring-1 ring-line hover:bg-orange-50';
 
 const { share: shareNatively, isSupported: canShare } = useShare();
 const { copy, copied } = useClipboard({ copiedDuring: 2000 });

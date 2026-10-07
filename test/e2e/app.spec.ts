@@ -131,10 +131,25 @@ test.describe('with the operating system in dark mode', () => {
   test.use({ colorScheme: 'dark' });
 
   test('pages keep readable contrast', async ({ page }) => {
-    for (const path of ['./', 'meals/52772', 'about']) {
+    for (const path of ['./', 'meals/52772', 'about', 'categories', 'fridge', 'shopping-list', 'nope']) {
       await page.goto(path);
       await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
       await expectNoSeriousA11yIssues(page);
     }
+  });
+
+  test('the theme toggle switches between system, light and dark and is remembered', async ({ page }) => {
+    await page.goto('about');
+    const html = page.locator('html');
+    await expect(html).toHaveClass(/dark/);
+
+    await page.getByRole('button', { name: /Theme: system/ }).click();
+    await expect(html).not.toHaveClass(/dark/);
+    await page.getByRole('button', { name: /Theme: light/ }).click();
+    await expect(html).toHaveClass(/dark/);
+
+    await page.reload();
+    await expect(page.getByRole('button', { name: /Theme: dark/ })).toBeVisible();
+    await expect(html).toHaveClass(/dark/);
   });
 });

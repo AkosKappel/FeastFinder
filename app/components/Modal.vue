@@ -2,7 +2,7 @@
   <!-- Native modal dialog: focus trap, Escape to close and focus return come from the browser. -->
   <dialog
     ref="dialog"
-    class="w-full max-w-2xl rounded-lg p-0 shadow-xl backdrop:bg-black/50"
+    class="w-full max-w-2xl rounded-lg bg-surface p-0 text-ink shadow-xl backdrop:bg-black/50"
     :aria-labelledby="titleId"
     @close="$emit('close')"
     @click.self="dialog?.close()"

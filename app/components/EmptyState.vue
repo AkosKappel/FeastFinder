@@ -1,8 +1,8 @@
 <template>
   <div
-    class="flex flex-col items-start gap-4 rounded-2xl border-2 border-dashed border-bay-200 p-6 sm:flex-row sm:items-center"
+    class="flex flex-col items-start gap-4 rounded-2xl border-2 border-dashed border-line-strong p-6 sm:flex-row sm:items-center"
   >
-    <component :is="icon" class="h-10 w-10 shrink-0 text-bay-600" aria-hidden="true" />
+    <component :is="icon" class="h-10 w-10 shrink-0 text-bay-600 dark:text-bay-300" aria-hidden="true" />
     <p class="text-gray-700">{{ message }}</p>
     <nuxt-link
       v-if="actionTo"

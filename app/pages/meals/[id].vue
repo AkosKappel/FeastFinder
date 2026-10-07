@@ -23,5 +23,5 @@ const {
   watch: [mealId],
 });
 
-useHead({ title: () => meal.value?.strMeal ?? (pending.value ? null : 'Meal not found') });
+useHead({ title: () => meal.value?.strMeal ?? (pending.value || error.value ? null : 'Meal not found') });
 </script>

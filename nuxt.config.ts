@@ -24,7 +24,7 @@ export default defineNuxtConfig({
           content:
             'Find recipes by meal name, ingredient or food category, with ingredients and step-by-step instructions.',
         },
-        { name: 'theme-color', content: '#c2410c' },
+        { name: 'theme-color', content: '#17332c' },
         { property: 'og:site_name', content: 'Feast Finder' },
         { property: 'og:type', content: 'website' },
       ],

@@ -1,5 +1,5 @@
 <template>
-  <footer class="bg-bay-950 text-bay-100">
+  <footer class="surface-dark bg-bay-950 text-bay-100">
     <div class="container mx-auto px-4 py-8">
       <div class="grid grid-cols-2 gap-8 md:grid-cols-[3fr_3fr_2fr]">
         <div class="col-span-2 md:col-span-1">
@@ -69,7 +69,11 @@
             >TheMealDB</a
           >.
         </p>
-        <button type="button" class="inline-flex items-center gap-1 self-start hover:text-white" @click="scrollToTop">
+        <button
+          type="button"
+          class="-my-2 inline-flex items-center gap-1 self-start py-2 hover:text-white"
+          @click="scrollToTop"
+        >
           <ArrowUp class="h-4 w-4" aria-hidden="true" />
           Back to top
         </button>

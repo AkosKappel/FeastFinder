@@ -46,3 +46,11 @@
     @apply ring-2 ring-orange-600 ring-offset-2 ring-offset-sage outline-hidden;
   }
 }
+
+/* Dark bands (header, heroes, footer): a saffron ring reads better there, and a transparent offset
+   lets the band colour show through. */
+@layer components {
+  .surface-dark :focus-visible {
+    @apply ring-saffron ring-offset-transparent;
+  }
+}

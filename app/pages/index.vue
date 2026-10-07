@@ -1,7 +1,7 @@
 <template>
   <div>
-    <section class="bg-bay-900 text-white">
-      <div class="container mx-auto grid items-center gap-10 px-4 pb-14 pt-10 md:grid-cols-[3fr_2fr] md:pb-20 md:pt-14">
+    <section class="surface-dark bg-bay-900 text-white">
+      <div class="container mx-auto grid items-center gap-10 px-4 pb-14 pt-10 lg:grid-cols-[3fr_2fr] md:pb-20 md:pt-14">
         <div>
           <h1 class="max-w-xl text-4xl font-bold leading-[1.05] md:text-6xl">What are we cooking today?</h1>
           <p class="mt-5 max-w-lg text-lg text-bay-100">
@@ -29,7 +29,7 @@
         </div>
 
         <!-- Today's picks as a stack of plates: the one bold element of the page. -->
-        <ul v-if="meals?.length" class="relative hidden h-72 md:block" aria-label="Today's picks">
+        <ul v-if="meals?.length" class="relative hidden h-72 lg:block" aria-label="Today's picks">
           <li
             v-for="(meal, index) in meals.slice(0, 3)"
             :key="meal.idMeal"
@@ -85,7 +85,7 @@
 <script setup lang="ts">
 import { Globe, Refrigerator, Shuffle, UtensilsCrossed } from '@lucide/vue';
 
-const plateClasses = ['left-0 top-6 -rotate-6', 'left-1/3 top-0 rotate-3', 'right-0 top-16 -rotate-2'];
+const plateClasses = ['left-0 top-6 -rotate-6', 'left-1/4 top-0 rotate-3', 'right-0 top-16 -rotate-2'];
 
 const actions = [
   { to: '/random', label: 'Surprise me', icon: Shuffle },

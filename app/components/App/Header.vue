@@ -1,5 +1,5 @@
 <template>
-  <header class="bg-bay-900 text-bay-50">
+  <header class="surface-dark bg-bay-900 text-bay-50">
     <div class="container mx-auto flex flex-wrap items-center justify-between gap-x-6 gap-y-3 px-4 py-3">
       <nuxt-link to="/" class="flex items-center gap-2.5 rounded-lg">
         <img src="/favicon.svg" class="h-9 w-9" alt="" />

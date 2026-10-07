@@ -93,7 +93,7 @@
           href="https://www.themealdb.com/"
           target="_blank"
           rel="noopener noreferrer"
-          class="font-medium text-orange-700 underline"
+          class="font-medium text-orange-800 underline"
           >TheMealDB</a
         >, a free, community-built recipe database. Feast Finder uses its public test key, which is meant for
         development and education. Recipes are in English, measures are as written by the contributors, and some meals

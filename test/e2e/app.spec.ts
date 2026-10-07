@@ -110,3 +110,15 @@ test('cuisines list countries and open their meals', async ({ page }) => {
   await expect(page.getByRole('link', { name: 'Green Curry' })).toBeVisible();
   await expectNoSeriousA11yIssues(page);
 });
+
+test.describe('with the operating system in dark mode', () => {
+  test.use({ colorScheme: 'dark' });
+
+  test('pages keep readable contrast', async ({ page }) => {
+    for (const path of ['./', 'meals/52772', 'about']) {
+      await page.goto(path);
+      await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+      await expectNoSeriousA11yIssues(page);
+    }
+  });
+});

@@ -3,6 +3,9 @@ name: Deploy to GitHub Pages
 
 on:
   workflow_dispatch:
+  # Weekly rebuild so the meal index (public/data/meals.json) picks up new recipes.
+  schedule:
+    - cron: '0 4 * * 1'
   push:
     branches:
       - main
@@ -30,7 +33,7 @@ jobs:
       - run: npm run format:check
       - run: npm run typecheck
       - run: npm test
-      - run: npx nuxt generate
+      - run: npm run generate
         env:
           NITRO_PRESET: github_pages
       - uses: actions/upload-pages-artifact@v5

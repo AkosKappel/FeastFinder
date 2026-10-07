@@ -13,11 +13,11 @@
     />
     <div class="flex flex-1 items-start justify-between gap-2 p-4">
       <div>
-        <h3 class="mb-2 text-lg font-semibold leading-snug">
+        <component :is="headingTag" class="mb-2 text-lg font-semibold leading-snug">
           <nuxt-link :to="`/meals/${meal.idMeal}`" class="after:absolute after:inset-0 focus:outline-hidden">
             {{ meal.strMeal }}
           </nuxt-link>
-        </h3>
+        </component>
         <p v-if="meal.strCategory || meal.strCountry" class="flex flex-wrap gap-x-4 gap-y-1 text-sm text-gray-600">
           <span v-if="meal.strCategory" class="inline-flex items-center gap-1">
             <Tag class="h-4 w-4" aria-hidden="true" />
@@ -37,6 +37,8 @@
 <script setup lang="ts">
 import { Globe, Tag } from '@lucide/vue';
 import type { MealPreview } from '@/types/Meal';
+
+const headingTag = useCardHeading();
 
 defineProps<{ meal: MealPreview }>();
 

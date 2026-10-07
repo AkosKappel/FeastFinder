@@ -10,9 +10,9 @@
       @error="onImageError"
     />
     <div class="flex min-h-[3.5rem] items-center justify-between gap-2 border-t border-bay-50 px-4 py-3">
-      <h3 class="text-lg font-semibold leading-snug">
+      <component :is="headingTag" class="text-lg font-semibold leading-snug">
         <nuxt-link :to="to" class="after:absolute after:inset-0 focus:outline-hidden">{{ title }}</nuxt-link>
-      </h3>
+      </component>
       <button
         v-if="description"
         type="button"
@@ -29,6 +29,8 @@
 
 <script setup lang="ts">
 import { Info } from '@lucide/vue';
+
+const headingTag = useCardHeading();
 
 defineProps<{
   title: string;

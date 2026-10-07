@@ -86,6 +86,8 @@
 import { Plus, Refrigerator, X } from '@lucide/vue';
 
 useHead({ title: "What's in my fridge?" });
+// Result cards sit under the h2 result headings.
+provideCardHeading('h3');
 
 const { data: meals, pending, error, refresh } = useAsyncData('meal-index', () => loadMealIndex());
 const ingredientNames = computed(() => ingredientNamesOf(meals.value ?? []));

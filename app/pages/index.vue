@@ -85,6 +85,9 @@
 <script setup lang="ts">
 import { Globe, Refrigerator, Shuffle, UtensilsCrossed } from '@lucide/vue';
 
+// Cards sit under the h2 sections of this page.
+provideCardHeading('h3');
+
 const plateClasses = ['left-0 top-6 -rotate-6', 'left-1/4 top-0 rotate-3', 'right-0 top-16 -rotate-2'];
 
 const actions = [

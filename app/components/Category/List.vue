@@ -1,6 +1,6 @@
 <template>
   <section class="container mx-auto px-4 my-8" :aria-busy="loading">
-    <component :is="headingTag" v-if="title" class="text-3xl font-semibold mb-4">{{ title }}</component>
+    <SectionHeading v-if="title" :title="title" :tag="headingTag" :more-to="moreTo" />
     <ErrorMessage v-if="error" @retry="$emit('retry')" />
     <CardGridSkeleton v-else-if="loading || !categories" :count="skeletonCount" />
     <div v-else-if="categories.length" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -28,6 +28,10 @@ defineProps({
   headingTag: {
     type: String as PropType<'h1' | 'h2'>,
     default: 'h2',
+  },
+  moreTo: {
+    type: String,
+    default: '',
   },
   categories: {
     type: Array as PropType<Category[] | null>,

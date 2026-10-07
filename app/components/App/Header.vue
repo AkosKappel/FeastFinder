@@ -3,9 +3,7 @@
     <div class="flex space-x-4 ml-4 my-1">
       <nuxt-link to="/" class="flex items-center gap-2">
         <img src="/favicon.svg" class="h-8 w-8" alt="" />
-        <component :is="route.path === '/' ? 'h1' : 'span'" class="text-2xl font-bold whitespace-nowrap"
-          >Feast Finder</component
-        >
+        <span class="text-2xl font-bold whitespace-nowrap">Feast Finder</span>
       </nuxt-link>
     </div>
     <SearchBar class="order-last w-full md:order-none md:w-auto md:flex-1 md:max-w-md" @search="search" />

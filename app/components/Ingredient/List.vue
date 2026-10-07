@@ -1,8 +1,6 @@
 <template>
   <section class="container mx-auto px-4 my-8" :aria-busy="props.loading">
-    <component :is="props.headingTag" v-if="props.title" class="text-3xl font-semibold mb-4">{{
-      props.title
-    }}</component>
+    <SectionHeading v-if="props.title" :title="props.title" :tag="props.headingTag" :more-to="props.moreTo" />
     <div v-if="props.allowFilter" class="mb-6 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
       <LetterFilter v-model="activeLetter" />
       <FilterInput v-model="filter" label="Filter ingredients" />
@@ -43,6 +41,10 @@ const props = defineProps({
   headingTag: {
     type: String as PropType<'h1' | 'h2'>,
     default: 'h2',
+  },
+  moreTo: {
+    type: String,
+    default: '',
   },
   ingredients: {
     type: Array as PropType<Ingredient[] | null>,

@@ -26,6 +26,13 @@ export const teriyaki = {
 const pasta = { ...teriyaki, idMeal: '52000', strMeal: 'Garlic Pasta', strCategory: 'Pasta', strCountry: 'Italy' };
 const curry = { ...teriyaki, idMeal: '52001', strMeal: 'Green Curry', strCategory: 'Chicken', strCountry: 'Thailand' };
 
+// A long category, to page through.
+const desserts = Array.from({ length: 30 }, (_, i) => ({
+  idMeal: String(53000 + i),
+  strMeal: `Dessert ${i + 1}`,
+  strMealThumb: thumb(`dessert-${i + 1}`),
+}));
+
 const categories = [
   { idCategory: '1', strCategory: 'Chicken', strCategoryThumb: thumb('chicken'), strCategoryDescription: 'Birds.' },
   { idCategory: '2', strCategory: 'Pasta', strCategoryThumb: thumb('pasta'), strCategoryDescription: 'Noodles.' },
@@ -91,6 +98,7 @@ export const mockApi = async (page: Page, { failures = 0 } = {}) => {
       case 'list.php':
         return meals(ingredients);
       case 'filter.php':
+        if (param('c') === 'Dessert') return meals(desserts);
         return meals([teriyaki, curry].filter(meal => meal.strCategory === (param('c') ?? 'Chicken')));
       default:
         return meals(null);

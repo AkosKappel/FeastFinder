@@ -6,6 +6,7 @@
       :meals="meals"
       :loading="pending"
       :error="Boolean(error)"
+      :page-size="24"
       @retry="refresh()"
     />
   </div>

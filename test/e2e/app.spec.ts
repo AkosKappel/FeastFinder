@@ -55,6 +55,18 @@ test('a meal opens from a direct link with steps, ingredients and actions', asyn
   await expectNoSeriousA11yIssues(page);
 });
 
+test('long meal lists show a count and are split into pages', async ({ page }) => {
+  await page.goto('categories/Dessert');
+
+  await expect(page.getByText('30 meals', { exact: true })).toBeVisible();
+  await expect(page.getByRole('article')).toHaveCount(24);
+
+  await page.getByRole('button', { name: 'Next' }).click();
+  await expect(page).toHaveURL(/\/categories\/Dessert\?page=2$/);
+  await expect(page.getByRole('article')).toHaveCount(6);
+  await expect(page.getByRole('link', { name: 'Dessert 30' })).toBeVisible();
+});
+
 test('favourites are saved and listed', async ({ page }) => {
   await page.goto('meals/52772');
   await page.getByRole('button', { name: 'Save' }).click();

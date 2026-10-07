@@ -1,8 +1,8 @@
 <template>
-  <section class="container mx-auto px-4 my-8" :aria-busy="props.loading">
+  <section class="my-8" :aria-busy="props.loading">
     <SectionHeading v-if="props.title" :title="props.title" :tag="props.headingTag" :more-to="props.moreTo" />
-    <div v-if="props.allowFilter" class="mb-6 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-      <LetterFilter v-model="activeLetter" />
+    <div v-if="props.allowFilter" class="mb-6 flex flex-col gap-3">
+      <LetterFilter v-model="activeLetter" :available="availableLetters" />
       <FilterInput v-model="filter" label="Filter ingredients" />
     </div>
     <ErrorMessage v-if="props.error" @retry="$emit('retry')" />
@@ -74,6 +74,10 @@ defineEmits(['retry']);
 const activeLetter = useQueryParam('letter', { resets: ['page'] });
 const filter = useQueryParam('filter', { resets: ['page'] });
 const currentPage = usePageParam();
+
+const availableLetters = computed(() =>
+  firstLetters((props.ingredients ?? []).map(ingredient => ingredient.strIngredient)),
+);
 
 const filteredIngredients = computed(() => {
   const searchTerm = filter.value.trim().toLowerCase();

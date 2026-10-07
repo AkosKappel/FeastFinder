@@ -1,11 +1,25 @@
 <template>
-  <div class="flex flex-wrap gap-1" role="group" :aria-label="label">
+  <div
+    class="flex gap-1 overflow-x-auto rounded-xl bg-white p-1.5 shadow-sm ring-1 ring-bay-100 [scrollbar-width:thin]"
+    role="group"
+    :aria-label="label"
+  >
+    <button
+      type="button"
+      :class="buttonClass(model === '')"
+      class="px-3"
+      :aria-pressed="model === ''"
+      @click="model = ''"
+    >
+      All
+    </button>
     <button
       v-for="letter in ALPHABET"
       :key="letter"
       type="button"
-      class="h-9 w-9 rounded text-base font-semibold uppercase transition-colors"
-      :class="model === letter ? 'bg-orange-700 text-white' : 'text-gray-700 hover:bg-white'"
+      class="w-9 uppercase"
+      :class="buttonClass(model === letter, !isAvailable(letter))"
+      :disabled="!isAvailable(letter) && model !== letter"
       :aria-pressed="model === letter"
       @click="model = model === letter ? '' : letter"
     >
@@ -17,12 +31,24 @@
 <script setup lang="ts">
 const ALPHABET = 'abcdefghijklmnopqrstuvwxyz'.split('');
 
-defineProps({
+const props = defineProps({
   label: {
     type: String,
     default: 'Filter by first letter',
   },
+  // Letters that have at least one item; the others are shown but cannot be picked.
+  available: {
+    type: Array as PropType<string[] | null>,
+    default: null,
+  },
 });
 
 const model = defineModel<string>({ required: true });
+
+const isAvailable = (letter: string) => !props.available || props.available.includes(letter);
+
+const buttonClass = (active: boolean, empty = false) => [
+  'h-9 shrink-0 rounded-lg font-semibold transition-colors',
+  active ? 'bg-bay-900 text-white' : empty ? 'text-gray-400' : 'text-ink hover:bg-bay-50',
+];
 </script>

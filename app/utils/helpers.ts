@@ -85,3 +85,7 @@ export const hostnameOf = (url: string) => {
 
 export const countLabel = (count: number, singular: string, plural = `${singular}s`) =>
   `${count} ${count === 1 ? singular : plural}`;
+
+export const firstLetters = (names: string[]) => [
+  ...new Set(names.map(name => name.trim().charAt(0).toLowerCase()).filter(Boolean)),
+];

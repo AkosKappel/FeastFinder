@@ -2,7 +2,7 @@
   <div class="container mx-auto px-4">
     <section class="my-8" :aria-busy="pending">
       <h1 class="mb-4 text-3xl font-semibold">{{ title }}</h1>
-      <LetterFilter v-model="letter" label="Meals starting with" class="mb-6" />
+      <LetterFilter v-model="letter" label="Meals starting with" :available="availableLetters" class="mb-6" />
       <ErrorMessage v-if="error" @retry="refresh()" />
       <CardGridSkeleton v-else-if="pending || !meals" />
       <template v-else>
@@ -27,6 +27,7 @@ useHead({ title });
 
 const { data: meals, pending, error, refresh } = useAsyncData('meal-index', () => loadMealIndex());
 
+const availableLetters = computed(() => (meals.value ? firstLetters(meals.value.map(meal => meal.strMeal)) : null));
 const results = computed(() => searchMealIndex(meals.value ?? [], { query: query.value, letter: letter.value }));
 const totalPages = computed(() => Math.max(1, Math.ceil(results.value.length / PAGE_SIZE)));
 const page = computed({

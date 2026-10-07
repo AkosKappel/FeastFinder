@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import type { Meal } from '../../app/types/Meal';
 import {
+  firstLetters,
   countLabel,
   formatMealTags,
   hostnameOf,
@@ -136,5 +137,11 @@ describe('countLabel', () => {
     expect(countLabel(1, 'meal')).toBe('1 meal');
     expect(countLabel(0, 'meal')).toBe('0 meals');
     expect(countLabel(3, 'country', 'countries')).toBe('3 countries');
+  });
+});
+
+describe('firstLetters', () => {
+  it('lists each lowercase first letter once', () => {
+    expect(firstLetters(['Apple', 'apricot', ' Banana', ''])).toEqual(['a', 'b']);
   });
 });

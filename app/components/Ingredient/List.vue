@@ -33,7 +33,7 @@
 import type { Ingredient } from '@/types/Ingredient';
 
 const ITEMS_PER_PAGE = 12;
-const placeholderImage = `${useRuntimeConfig().app.baseURL}meal-placeholder.png`;
+const { placeholder: placeholderImage } = usePlaceholderImage();
 
 const props = defineProps({
   title: {

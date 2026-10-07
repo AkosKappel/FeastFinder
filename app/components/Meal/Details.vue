@@ -44,6 +44,16 @@
           <Printer class="h-5 w-5" aria-hidden="true" />
           Print
         </button>
+        <button
+          v-if="canKeepScreenOn"
+          type="button"
+          :class="actionClass"
+          :aria-pressed="screenOn"
+          @click="toggleScreenOn"
+        >
+          <Sun class="h-5 w-5" :class="screenOn && 'text-orange-700'" aria-hidden="true" />
+          {{ screenOn ? 'Screen stays on' : 'Keep screen on' }}
+        </button>
       </div>
     </header>
 
@@ -56,6 +66,7 @@
           height="700"
           fetchpriority="high"
           class="h-auto w-full rounded-lg bg-gray-300"
+          @error="onImageError"
         />
         <p v-if="meal.strImageSource" class="mt-1 text-sm text-gray-600">
           Image:
@@ -182,6 +193,7 @@ import {
   Printer,
   Share2,
   Square,
+  Sun,
   Tag,
   Volume2,
 } from '@lucide/vue';
@@ -201,6 +213,7 @@ const tags = computed(() => formatMealTags(props.meal).split(', ').filter(Boolea
 const videoId = computed(() => youtubeVideoId(props.meal.strYoutube));
 
 const readAloud = useReadAloud(steps);
+const { onImageError } = usePlaceholderImage();
 watch(() => props.meal.idMeal, readAloud.stop);
 
 const router = useRouter();
@@ -220,4 +233,8 @@ const share = async () => {
 };
 
 const print = () => window.print();
+
+// Screen Wake Lock: stops the phone from dimming while cooking. Released when leaving the page.
+const { isSupported: canKeepScreenOn, isActive: screenOn, request, release } = useWakeLock();
+const toggleScreenOn = () => (screenOn.value ? release() : request('screen'));
 </script>

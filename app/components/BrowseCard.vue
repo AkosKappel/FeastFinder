@@ -10,7 +10,7 @@
       :aria-label="`About ${title}`"
       @click="showModal = true"
     >
-      <img :src="image" alt="" loading="lazy" class="h-48 w-full object-contain object-center" />
+      <img :src="image" alt="" loading="lazy" class="h-48 w-full object-contain object-center" @error="onImageError" />
       <span
         class="absolute right-2 top-2 rounded-full bg-white/90 p-1.5 text-gray-700 shadow group-hover:text-orange-700"
         aria-hidden="true"
@@ -18,7 +18,14 @@
         <Info class="h-4 w-4" />
       </span>
     </button>
-    <img v-else :src="image" alt="" loading="lazy" class="h-48 w-full object-contain object-center" />
+    <img
+      v-else
+      :src="image"
+      alt=""
+      loading="lazy"
+      class="h-48 w-full object-contain object-center"
+      @error="onImageError"
+    />
     <div class="mt-auto p-4 text-center">
       <nuxt-link
         :to="to"
@@ -43,4 +50,5 @@ defineProps<{
 }>();
 
 const showModal = ref(false);
+const { onImageError } = usePlaceholderImage();
 </script>

@@ -9,6 +9,7 @@
       alt=""
       class="h-48 w-full bg-gray-300 object-cover object-center transition-transform duration-300 motion-safe:group-hover:scale-105"
       loading="lazy"
+      @error="onImageError"
     />
     <div class="flex flex-1 items-start justify-between gap-2 p-4">
       <div>
@@ -38,4 +39,6 @@ import { Globe, Tag } from '@lucide/vue';
 import type { MealPreview } from '@/types/Meal';
 
 defineProps<{ meal: MealPreview }>();
+
+const { onImageError } = usePlaceholderImage();
 </script>

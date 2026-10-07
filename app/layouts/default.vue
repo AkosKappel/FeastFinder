@@ -7,6 +7,14 @@
       Skip to content
     </a>
     <AppHeader class="print:hidden" />
+    <p
+      v-if="!online"
+      role="status"
+      class="flex items-center justify-center gap-2 bg-gray-800 px-4 py-2 text-center text-sm text-white print:hidden"
+    >
+      <WifiOff class="h-4 w-4 shrink-0" aria-hidden="true" />
+      You are offline. Favourites still work; recipes load again when you are back online.
+    </p>
     <main id="main" class="flex-1 mb-6">
       <slot />
     </main>
@@ -15,6 +23,12 @@
 </template>
 
 <script setup lang="ts">
+import { WifiOff } from '@lucide/vue';
+
+// Reload whatever failed while offline as soon as the connection is back.
+const online = useOnline();
+watch(online, isOnline => isOnline && refreshNuxtData());
+
 useHead({
   titleTemplate: title => (title && title !== 'Feast Finder' ? `${title} · Feast Finder` : 'Feast Finder'),
 });

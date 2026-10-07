@@ -1,8 +1,10 @@
-// Serves the generated site like GitHub Pages does: under /FeastFinder/, with 404.html for unknown paths.
+// Serves the generated site like GitHub Pages does: under /FeastFinder/, with 404.html for unknown paths
+// and gzip for text files, so Lighthouse measures what visitors get.
 import { createReadStream } from 'node:fs';
 import { stat } from 'node:fs/promises';
 import { createServer } from 'node:http';
 import { extname, join, normalize, relative } from 'node:path';
+import { createGzip } from 'node:zlib';
 
 const ROOT = new URL('../../.output/public/', import.meta.url).pathname;
 const BASE = '/FeastFinder/';
@@ -38,6 +40,12 @@ createServer(async (request, response) => {
   const path = await fileFor(pathname);
   response.statusCode = path ? 200 : 404;
   const file = path ?? join(ROOT, '404.html');
-  response.setHeader('Content-Type', TYPES[extname(file)] ?? 'application/octet-stream');
-  createReadStream(file).pipe(response);
+  const type = TYPES[extname(file)] ?? 'application/octet-stream';
+  response.setHeader('Content-Type', type);
+  if (/text|javascript|json|xml|svg/.test(type) && /\bgzip\b/.test(request.headers['accept-encoding'] ?? '')) {
+    response.setHeader('Content-Encoding', 'gzip');
+    createReadStream(file).pipe(createGzip()).pipe(response);
+  } else {
+    createReadStream(file).pipe(response);
+  }
 }).listen(PORT, () => console.log(`Serving ${ROOT} at http://localhost:${PORT}${BASE}`));

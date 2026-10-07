@@ -16,10 +16,12 @@
     "data:update": "node scripts/build-meal-index.mjs",
     "predev": "node scripts/build-meal-index.mjs --if-missing",
     "pregenerate": "npm run data:update",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "lighthouse": "lhci autorun"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.13.0",
+    "@lhci/cli": "^0.15.1",
     "@nuxt/eslint": "^1.17.0",
     "@playwright/test": "^1.63.0",
     "@tailwindcss/vite": "^4.3.3",

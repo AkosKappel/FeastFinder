@@ -33,3 +33,7 @@ public/sitemap.xml
 # Playwright
 test-results/
 playwright-report/
+
+# Lighthouse CI
+.lighthouseci/
+lighthouse-report/

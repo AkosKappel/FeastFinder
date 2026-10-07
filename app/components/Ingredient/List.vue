@@ -11,7 +11,7 @@
     <CardGridSkeleton v-else-if="props.loading || !props.ingredients" :count="props.skeletonCount" />
     <template v-else-if="paginatedIngredients.length">
       <p v-if="props.allowFilter" class="mb-4 text-gray-600" aria-live="polite">
-        {{ filteredIngredients.length }} ingredients
+        {{ countLabel(filteredIngredients.length, 'ingredient') }}
       </p>
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         <BrowseCard

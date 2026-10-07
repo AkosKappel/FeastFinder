@@ -82,3 +82,6 @@ export const hostnameOf = (url: string) => {
     return url;
   }
 };
+
+export const countLabel = (count: number, singular: string, plural = `${singular}s`) =>
+  `${count} ${count === 1 ? singular : plural}`;

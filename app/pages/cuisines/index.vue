@@ -27,7 +27,7 @@
             <Globe v-else class="h-10 w-10 shrink-0 p-1.5 text-gray-500" aria-hidden="true" />
             <span>
               <span class="block font-semibold leading-tight">{{ cuisine.country }}</span>
-              <span class="text-sm text-gray-600">{{ cuisine.mealCount }} meals</span>
+              <span class="text-sm text-gray-600">{{ countLabel(cuisine.mealCount, 'meal') }}</span>
             </span>
           </nuxt-link>
         </li>

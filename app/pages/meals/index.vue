@@ -6,7 +6,7 @@
       <ErrorMessage v-if="error" @retry="refresh()" />
       <CardGridSkeleton v-else-if="pending || !meals" />
       <template v-else>
-        <p class="mb-4 text-gray-600" aria-live="polite">{{ results.length }} meals</p>
+        <p class="mb-4 text-gray-600" aria-live="polite">{{ countLabel(results.length, 'meal') }}</p>
         <MealGrid :meals="pageOfResults" empty-message="No meals match. Try another name or letter." />
         <Pagination v-model="page" :total-pages="totalPages" label="Meal pages" />
       </template>

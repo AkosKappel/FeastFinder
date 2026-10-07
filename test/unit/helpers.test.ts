@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import type { Meal } from '../../app/types/Meal';
 import {
+  countLabel,
   formatMealTags,
   hostnameOf,
   getIngredientsFromMeal,
@@ -127,5 +128,13 @@ describe('youtubeVideoId', () => {
 describe('hostnameOf', () => {
   it('shows the site name without www', () => {
     expect(hostnameOf('https://www.bbcgoodfood.com/recipes/x')).toBe('bbcgoodfood.com');
+  });
+});
+
+describe('countLabel', () => {
+  it('uses the singular only for one', () => {
+    expect(countLabel(1, 'meal')).toBe('1 meal');
+    expect(countLabel(0, 'meal')).toBe('0 meals');
+    expect(countLabel(3, 'country', 'countries')).toBe('3 countries');
   });
 });

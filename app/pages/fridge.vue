@@ -55,7 +55,7 @@
       <CardGridSkeleton v-else-if="pending" :count="4" class="mt-8" />
       <template v-else-if="selected.length">
         <h2 class="mb-4 mt-10 text-2xl font-semibold" aria-live="polite">
-          {{ matches.complete.length }} meals with everything
+          {{ countLabel(matches.complete.length, 'meal') }} with everything
         </h2>
         <MealGrid :meals="matches.complete" empty-message="No meal uses all of these. Try removing one." />
         <template v-if="matches.missingOne.length">

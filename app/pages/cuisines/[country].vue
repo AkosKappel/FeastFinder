@@ -8,7 +8,7 @@
       <ErrorMessage v-if="error" @retry="refresh()" />
       <CardGridSkeleton v-else-if="pending || !meals" />
       <template v-else>
-        <p class="mb-4 text-gray-600">{{ countryMeals.length }} meals</p>
+        <p class="mb-4 text-gray-600">{{ countLabel(countryMeals.length, 'meal') }}</p>
         <MealGrid :meals="countryMeals" :empty-message="`No meals from ${country} yet.`" />
       </template>
       <nuxt-link to="/cuisines" class="mt-8 inline-flex items-center gap-1 text-gray-700 hover:text-orange-700">

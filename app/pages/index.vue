@@ -1,63 +1,91 @@
 <template>
-  <div class="container mx-auto px-4">
-    <section
-      class="mx-4 mt-6 overflow-hidden rounded-2xl bg-gradient-to-br from-orange-700 to-orange-900 px-6 py-12 text-white shadow-lg md:px-12 md:py-16"
-    >
-      <h1 class="max-w-2xl text-4xl font-bold leading-tight md:text-5xl">Find your next favourite meal</h1>
-      <p class="mt-4 max-w-xl text-lg text-orange-50">
-        Recipes from around the world, with step-by-step instructions you can listen to while you cook.
-      </p>
-      <div class="mt-8 flex flex-wrap gap-3">
-        <nuxt-link
-          to="/meals"
-          class="inline-flex items-center gap-2 rounded-lg bg-white px-5 py-2.5 font-semibold text-orange-800 hover:bg-orange-50"
-        >
-          <UtensilsCrossed class="h-5 w-5" aria-hidden="true" />
-          Browse meals
-        </nuxt-link>
-        <nuxt-link
-          v-for="action in actions"
-          :key="action.to"
-          :to="action.to"
-          class="inline-flex items-center gap-2 rounded-lg border border-white/60 px-5 py-2.5 font-semibold hover:bg-white/10"
-        >
-          <component :is="action.icon" class="h-5 w-5" aria-hidden="true" />
-          {{ action.label }}
-        </nuxt-link>
+  <div>
+    <section class="bg-bay-900 text-white">
+      <div class="container mx-auto grid items-center gap-10 px-4 pb-14 pt-10 md:grid-cols-[3fr_2fr] md:pb-20 md:pt-14">
+        <div>
+          <h1 class="max-w-xl text-4xl font-bold leading-[1.05] md:text-6xl">What are we cooking today?</h1>
+          <p class="mt-5 max-w-lg text-lg text-bay-100">
+            Pick a dish, gather the ingredients and follow the steps. The page can read them out while your hands are
+            busy.
+          </p>
+          <div class="mt-8 grid grid-cols-2 gap-3 sm:flex sm:flex-wrap">
+            <nuxt-link
+              to="/meals"
+              class="col-span-2 inline-flex items-center justify-center gap-2 rounded-xl bg-orange-700 px-5 py-3 font-semibold text-white hover:bg-orange-600 focus-visible:ring-offset-bay-900"
+            >
+              <UtensilsCrossed class="h-5 w-5" aria-hidden="true" />
+              Browse meals
+            </nuxt-link>
+            <nuxt-link
+              v-for="action in actions"
+              :key="action.to"
+              :to="action.to"
+              class="inline-flex items-center justify-center gap-2 rounded-xl bg-bay-800 px-4 py-3 text-center font-semibold leading-tight text-bay-50 last:col-span-2 sm:px-5 hover:bg-bay-700 focus-visible:ring-offset-bay-900"
+            >
+              <component :is="action.icon" class="h-5 w-5 text-saffron" aria-hidden="true" />
+              {{ action.label }}
+            </nuxt-link>
+          </div>
+        </div>
+
+        <!-- Today's picks as a stack of plates: the one bold element of the page. -->
+        <ul v-if="meals?.length" class="relative hidden h-72 md:block" aria-label="Today's picks">
+          <li
+            v-for="(meal, index) in meals.slice(0, 3)"
+            :key="meal.idMeal"
+            class="absolute w-56 transition-transform duration-300 hover:z-10 motion-safe:hover:-translate-y-2 lg:w-64"
+            :class="plateClasses[index]"
+          >
+            <nuxt-link :to="`/meals/${meal.idMeal}`" class="block rounded-2xl" :aria-label="meal.strMeal">
+              <img
+                :src="`${meal.strMealThumb}/medium`"
+                alt=""
+                width="350"
+                height="350"
+                class="aspect-square w-full rounded-2xl object-cover shadow-2xl ring-4 ring-bay-900"
+              />
+            </nuxt-link>
+          </li>
+        </ul>
       </div>
     </section>
-    <MealList
-      title="Recommended Meals"
-      more-to="/meals"
-      :meals="meals"
-      :loading="mealsPending"
-      :error="Boolean(mealsError)"
-      :skeleton-count="4"
-      @retry="refreshMeals()"
-    />
-    <CategoryList
-      title="Food Categories"
-      more-to="/categories"
-      :categories="categories"
-      :loading="categoriesPending"
-      :error="Boolean(categoriesError)"
-      :skeleton-count="4"
-      @retry="refreshCategories()"
-    />
-    <IngredientList
-      title="Best Ingredients"
-      more-to="/ingredients"
-      :ingredients="ingredients"
-      :loading="ingredientsPending"
-      :error="Boolean(ingredientsError)"
-      :skeleton-count="4"
-      @retry="refreshIngredients()"
-    />
+
+    <div class="container mx-auto px-4">
+      <MealList
+        title="Recommended meals"
+        more-to="/meals"
+        :meals="meals"
+        :loading="mealsPending"
+        :error="Boolean(mealsError)"
+        :skeleton-count="4"
+        @retry="refreshMeals()"
+      />
+      <CategoryList
+        title="Food categories"
+        more-to="/categories"
+        :categories="categories"
+        :loading="categoriesPending"
+        :error="Boolean(categoriesError)"
+        :skeleton-count="4"
+        @retry="refreshCategories()"
+      />
+      <IngredientList
+        title="Ingredients to explore"
+        more-to="/ingredients"
+        :ingredients="ingredients"
+        :loading="ingredientsPending"
+        :error="Boolean(ingredientsError)"
+        :skeleton-count="4"
+        @retry="refreshIngredients()"
+      />
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { Globe, Refrigerator, Shuffle, UtensilsCrossed } from '@lucide/vue';
+
+const plateClasses = ['left-0 top-6 -rotate-6', 'left-1/3 top-0 rotate-3', 'right-0 top-16 -rotate-2'];
 
 const actions = [
   { to: '/random', label: 'Surprise me', icon: Shuffle },

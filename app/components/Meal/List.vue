@@ -1,5 +1,5 @@
 <template>
-  <section class="container mx-auto px-4 my-8" :aria-busy="loading">
+  <section class="my-8" :aria-busy="loading">
     <SectionHeading v-if="title" :title="title" :tag="headingTag" :more-to="moreTo" />
     <ErrorMessage v-if="error" @retry="$emit('retry')" />
     <CardGridSkeleton v-else-if="loading || !meals" :count="skeletonCount" />

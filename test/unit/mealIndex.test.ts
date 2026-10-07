@@ -3,6 +3,7 @@ import {
   cuisinesOf,
   ingredientNamesOf,
   matchIngredients,
+  popularIngredients,
   searchMealIndex,
   type MealIndexEntry,
 } from '../../app/utils/mealIndex';
@@ -71,5 +72,11 @@ describe('ingredientNamesOf', () => {
       'tomato',
       'water',
     ]);
+  });
+});
+
+describe('popularIngredients', () => {
+  it('orders ingredients by how many meals use them, then by name', () => {
+    expect(popularIngredients(meals, 3)).toEqual(['garlic', 'tomato', 'apple']);
   });
 });

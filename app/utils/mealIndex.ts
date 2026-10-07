@@ -64,3 +64,12 @@ export const ingredientNamesOf = (meals: MealIndexEntry[]) =>
 
 export const flagUrl = (countryCode: string) =>
   `https://www.themealdb.com/images/icons/flags/big/64/${countryCode}.png`;
+
+export const popularIngredients = (meals: MealIndexEntry[], count: number) => {
+  const uses = new Map<string, number>();
+  for (const meal of meals) for (const name of meal.ingredients) uses.set(name, (uses.get(name) ?? 0) + 1);
+  return [...uses.entries()]
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+    .slice(0, count)
+    .map(([name]) => name);
+};

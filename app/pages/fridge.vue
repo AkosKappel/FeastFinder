@@ -1,74 +1,89 @@
 <template>
   <div class="container mx-auto px-4">
     <section class="my-8" :aria-busy="pending">
-      <h1 class="mb-2 text-3xl font-semibold">What's in my fridge?</h1>
-      <p class="mb-6 max-w-2xl text-gray-600">
-        Add the ingredients you have and find meals that use all of them, plus meals that need just one more thing.
+      <h1 class="text-4xl font-bold">What's in my fridge?</h1>
+      <p class="mt-2 max-w-2xl text-lg text-gray-700">
+        Add what you have at home. You get meals that use all of it, and meals that need just one more thing.
       </p>
 
-      <form class="flex max-w-xl gap-2" @submit.prevent="add(draft)">
-        <label for="fridge-ingredient" class="sr-only">Ingredient</label>
-        <input
-          id="fridge-ingredient"
-          v-model="draft"
-          list="fridge-ingredients"
-          autocomplete="off"
-          enterkeyhint="done"
-          placeholder="e.g. chicken, garlic, rice"
-          class="w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-orange-700 focus:ring-orange-700"
-        />
-        <datalist id="fridge-ingredients">
-          <option v-for="name in ingredientNames" :key="name" :value="name" />
-        </datalist>
-        <button
-          type="submit"
-          class="inline-flex shrink-0 items-center gap-1 rounded-lg bg-orange-700 px-4 py-2 font-semibold text-white hover:bg-orange-800"
-        >
-          <Plus class="h-5 w-5" aria-hidden="true" />
-          Add
-        </button>
-      </form>
-      <p v-if="unknown" class="mt-2 text-sm text-red-700" role="alert">
-        No meal uses "{{ unknown }}". Pick a suggestion from the list.
-      </p>
+      <ErrorMessage v-if="error" @retry="refresh()" />
+      <template v-else>
+        <div class="mt-6">
+          <IngredientPicker
+            :options="ingredientNames"
+            :exclude="selected"
+            @select="add"
+            @unknown="name => (unknown = name)"
+          />
+          <p v-if="unknown" class="mt-2 text-red-700" role="alert">
+            No recipe uses "{{ unknown }}". Try another spelling or pick a suggestion.
+          </p>
+        </div>
 
-      <ul v-if="selected.length" class="mt-4 flex flex-wrap gap-2" aria-label="Selected ingredients">
-        <li v-for="name in selected" :key="name">
+        <div v-if="selected.length" class="mt-5 flex flex-wrap items-center gap-2">
+          <h2 class="sr-only">Your ingredients</h2>
           <button
+            v-for="name in selected"
+            :key="name"
             type="button"
-            class="inline-flex items-center gap-1 rounded-full bg-orange-700 py-1 pl-3 pr-2 capitalize text-white hover:bg-orange-800"
+            class="inline-flex items-center gap-1.5 rounded-full bg-bay-900 py-1.5 pl-4 pr-2.5 font-medium capitalize text-white hover:bg-bay-800"
             :aria-label="`Remove ${name}`"
             @click="remove(name)"
           >
             {{ name }}
-            <X class="h-4 w-4" aria-hidden="true" />
+            <X class="h-4 w-4 text-bay-200" aria-hidden="true" />
           </button>
-        </li>
-        <li>
-          <button type="button" class="px-2 py-1 text-gray-700 underline hover:text-orange-700" @click="selected = []">
+          <button
+            type="button"
+            class="px-2 py-1.5 font-medium text-gray-700 underline hover:text-ink"
+            @click="selected = []"
+          >
             Clear all
           </button>
-        </li>
-      </ul>
+        </div>
 
-      <ErrorMessage v-if="error" @retry="refresh()" />
-      <CardGridSkeleton v-else-if="pending" :count="4" class="mt-8" />
-      <template v-else-if="selected.length">
-        <h2 class="mb-4 mt-10 text-2xl font-semibold" aria-live="polite">
-          {{ countLabel(matches.complete.length, 'meal') }} with everything
-        </h2>
-        <MealGrid :meals="matches.complete" empty-message="No meal uses all of these. Try removing one." />
-        <template v-if="matches.missingOne.length">
-          <h2 class="mb-4 mt-10 text-2xl font-semibold">One ingredient short ({{ matches.missingOne.length }})</h2>
-          <MealGrid :meals="matches.missingOne" />
+        <div v-if="suggestions.length" class="mt-5">
+          <h2 class="mb-2 font-sans text-base font-semibold text-gray-700">Common ingredients</h2>
+          <ul class="flex flex-wrap gap-2">
+            <li v-for="name in suggestions" :key="name">
+              <button
+                type="button"
+                class="inline-flex items-center gap-1.5 rounded-full bg-white py-1.5 pl-2.5 pr-4 font-medium capitalize text-ink shadow-sm ring-1 ring-bay-100 hover:bg-bay-50"
+                @click="add(name)"
+              >
+                <Plus class="h-4 w-4 text-orange-700" aria-hidden="true" />
+                {{ name }}
+              </button>
+            </li>
+          </ul>
+        </div>
+
+        <CardGridSkeleton v-if="pending" :count="4" class="mt-10" />
+        <template v-else-if="selected.length">
+          <h2 class="mb-4 mt-10 text-2xl font-semibold" aria-live="polite">
+            {{ countLabel(matches.complete.length, 'meal') }} with everything
+          </h2>
+          <MealGrid :meals="matches.complete" empty-message="No meal uses all of these. Remove one to see more." />
+          <template v-if="matches.missingOne.length">
+            <h2 class="mb-4 mt-10 text-2xl font-semibold">
+              {{ countLabel(matches.missingOne.length, 'meal') }} one ingredient short
+            </h2>
+            <MealGrid :meals="matches.missingOne" />
+          </template>
         </template>
+        <EmptyState
+          v-else
+          :icon="Refrigerator"
+          message="Your matches show up here. Start with something you have plenty of, like rice or eggs."
+          class="mt-10"
+        />
       </template>
     </section>
   </div>
 </template>
 
 <script setup lang="ts">
-import { Plus, X } from '@lucide/vue';
+import { Plus, Refrigerator, X } from '@lucide/vue';
 
 useHead({ title: "What's in my fridge?" });
 
@@ -82,18 +97,16 @@ const selected = computed({
   set: names => (withParam.value = names.join(',')),
 });
 
-const draft = ref('');
+const suggestions = computed(() =>
+  popularIngredients(meals.value ?? [], 14)
+    .filter(name => !selected.value.includes(name))
+    .slice(0, 10),
+);
+
 const unknown = ref('');
 
-const add = (value: string) => {
-  const name = value.trim().toLowerCase();
-  if (!name) return;
-  if (!ingredientNames.value.includes(name)) {
-    unknown.value = name;
-    return;
-  }
+const add = (name: string) => {
   unknown.value = '';
-  draft.value = '';
   if (!selected.value.includes(name)) selected.value = [...selected.value, name];
 };
 

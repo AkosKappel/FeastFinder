@@ -31,17 +31,12 @@ interface MealsResponse<T> {
   meals: T[] | null;
 }
 
-const filterMeals = async (filter: 'c' | 'i' | 'a', value: string) => {
+const filterMeals = async (filter: 'c' | 'i', value: string) => {
   const { meals } = await fetchMealDb<MealsResponse<MealPreview>>(`filter.php?${filter}=${encodeURIComponent(value)}`);
   return meals ?? [];
 };
 
 export const mealDb = {
-  async searchMeals(query = '') {
-    const { meals } = await fetchMealDb<MealsResponse<Meal>>(`search.php?s=${encodeURIComponent(query)}`);
-    return meals ?? [];
-  },
-
   async getMeal(id: string) {
     const { meals } = await fetchMealDb<MealsResponse<Meal>>(`lookup.php?i=${encodeURIComponent(id)}`);
     return meals?.[0] ?? null;
@@ -67,5 +62,4 @@ export const mealDb = {
 
   mealsByCategory: (category: string) => filterMeals('c', category),
   mealsByIngredient: (ingredient: string) => filterMeals('i', ingredient),
-  mealsByArea: (area: string) => filterMeals('a', area),
 };

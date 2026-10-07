@@ -54,11 +54,11 @@ describe('fetchMealDb', () => {
 });
 
 describe('mealDb', () => {
-  it('encodes the search query and returns an empty list when nothing matches', async () => {
+  it('encodes the filter value and returns an empty list when nothing matches', async () => {
     fetchMock.mockResolvedValue({ meals: null });
 
-    await expect(mealDb.searchMeals('mac & cheese')).resolves.toEqual([]);
-    expect(fetchMock).toHaveBeenCalledWith('search.php?s=mac%20%26%20cheese', expect.anything());
+    await expect(mealDb.mealsByIngredient('mac & cheese')).resolves.toEqual([]);
+    expect(fetchMock).toHaveBeenCalledWith('filter.php?i=mac%20%26%20cheese', expect.anything());
   });
 
   it('returns null for an unknown meal', async () => {

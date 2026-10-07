@@ -8,16 +8,19 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "test": "vitest run",
+    "test": "vitest run test/unit",
     "typecheck": "nuxt typecheck",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "data:update": "node scripts/build-meal-index.mjs",
     "predev": "node scripts/build-meal-index.mjs --if-missing",
-    "pregenerate": "npm run data:update"
+    "pregenerate": "npm run data:update",
+    "test:e2e": "playwright test"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
     "@nuxtjs/tailwindcss": "^6.14.0",
+    "@playwright/test": "^1.63.0",
     "nuxt": "^4.6.0",
     "prettier": "^3.9.9",
     "typescript": "^6.0.3",

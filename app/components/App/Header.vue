@@ -17,16 +17,7 @@
         @click="showDropdown = !showDropdown"
       >
         <span class="mr-1">Menu</span>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="h-5 w-5"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          aria-hidden="true"
-        >
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-        </svg>
+        <MenuIcon class="h-5 w-5" aria-hidden="true" />
       </button>
       <ul
         v-show="showDropdown"
@@ -38,13 +29,24 @@
             {{ link.label }}
           </nuxt-link>
         </li>
+        <li>
+          <nuxt-link to="/random" class="block px-4 py-2 hover:bg-gray-100" :class="linkClass('/random')">
+            Surprise me
+          </nuxt-link>
+        </li>
       </ul>
     </div>
 
     <nav class="hidden xl:block mr-4 my-1" aria-label="Main">
-      <ul class="flex space-x-4">
+      <ul class="flex items-center space-x-4">
         <li v-for="link in links" :key="link.to" class="mx-1">
           <nuxt-link :to="link.to" :class="linkClass(link.to)">{{ link.label }}</nuxt-link>
+        </li>
+        <li class="mx-1">
+          <nuxt-link to="/random" title="Surprise me" :class="linkClass('/random')" class="flex items-center">
+            <Shuffle class="h-5 w-5" aria-hidden="true" />
+            <span class="sr-only">Surprise me</span>
+          </nuxt-link>
         </li>
       </ul>
     </nav>
@@ -52,6 +54,8 @@
 </template>
 
 <script setup lang="ts">
+import { Menu as MenuIcon, Shuffle } from '@lucide/vue';
+
 const route = useRoute();
 const router = useRouter();
 const showDropdown = ref(false);
@@ -62,7 +66,7 @@ const links = [
   { to: '/meals', label: 'Meals' },
   { to: '/ingredients', label: 'Ingredients' },
   { to: '/categories', label: 'Categories' },
-  { to: '/random', label: 'Surprise me' },
+  { to: '/cuisines', label: 'Cuisines' },
   { to: '/favourites', label: 'Favourites' },
   { to: '/about', label: 'About' },
 ];

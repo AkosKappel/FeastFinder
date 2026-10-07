@@ -11,8 +11,8 @@ export const useFavourites = () => {
     if (isFavourite(meal.idMeal)) {
       favourites.value = favourites.value.filter(saved => saved.idMeal !== meal.idMeal);
     } else {
-      const { idMeal, strMeal, strMealThumb, strCategory, strArea } = meal;
-      favourites.value = [{ idMeal, strMeal, strMealThumb, strCategory, strArea }, ...favourites.value];
+      const { idMeal, strMeal, strMealThumb, strCategory, strCountry } = meal;
+      favourites.value = [{ idMeal, strMeal, strMealThumb, strCategory, strCountry }, ...favourites.value];
     }
   };
 

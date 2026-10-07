@@ -20,10 +20,10 @@
             <span class="sr-only">Category:</span> {{ meal.strCategory }}
           </nuxt-link>
         </li>
-        <li v-if="meal.strArea">
-          <nuxt-link :to="`/areas/${encodeURIComponent(meal.strArea)}`" :class="chipClass">
+        <li v-if="meal.strCountry">
+          <nuxt-link :to="`/cuisines/${encodeURIComponent(meal.strCountry)}`" :class="chipClass">
             <Globe class="h-4 w-4" aria-hidden="true" />
-            <span class="sr-only">Cuisine:</span> {{ meal.strArea }}
+            <span class="sr-only">Cuisine:</span> {{ meal.strCountry }}
           </nuxt-link>
         </li>
         <li v-for="tag in tags" :key="tag">

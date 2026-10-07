@@ -17,14 +17,14 @@
             {{ meal.strMeal }}
           </nuxt-link>
         </h3>
-        <p v-if="meal.strCategory || meal.strArea" class="flex flex-wrap gap-x-4 gap-y-1 text-sm text-gray-600">
+        <p v-if="meal.strCategory || meal.strCountry" class="flex flex-wrap gap-x-4 gap-y-1 text-sm text-gray-600">
           <span v-if="meal.strCategory" class="inline-flex items-center gap-1">
             <Tag class="h-4 w-4" aria-hidden="true" />
             <span class="sr-only">Category:</span> {{ meal.strCategory }}
           </span>
-          <span v-if="meal.strArea" class="inline-flex items-center gap-1">
+          <span v-if="meal.strCountry" class="inline-flex items-center gap-1">
             <Globe class="h-4 w-4" aria-hidden="true" />
-            <span class="sr-only">Cuisine:</span> {{ meal.strArea }}
+            <span class="sr-only">Cuisine:</span> {{ meal.strCountry }}
           </span>
         </p>
       </div>

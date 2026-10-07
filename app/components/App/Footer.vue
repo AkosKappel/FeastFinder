@@ -79,7 +79,7 @@
 </template>
 
 <script setup lang="ts">
-import { ArrowUp, Carrot, Code, Database, Heart, Info, LayoutGrid, Shuffle, UtensilsCrossed } from '@lucide/vue';
+import { ArrowUp, Carrot, Code, Database, Globe, Heart, Info, LayoutGrid, Shuffle, UtensilsCrossed } from '@lucide/vue';
 
 const year = new Date().getFullYear();
 
@@ -105,6 +105,7 @@ const linkGroups = [
       { label: 'Meals', to: '/meals', icon: UtensilsCrossed },
       { label: 'Ingredients', to: '/ingredients', icon: Carrot },
       { label: 'Categories', to: '/categories', icon: LayoutGrid },
+      { label: 'Cuisines', to: '/cuisines', icon: Globe },
       { label: 'Surprise me', to: '/random', icon: Shuffle },
       { label: 'Favourites', to: '/favourites', icon: Heart },
     ],

@@ -65,7 +65,7 @@
           width="700"
           height="700"
           fetchpriority="high"
-          class="h-auto w-full rounded-lg bg-gray-300"
+          class="h-auto w-full rounded-lg bg-bay-100"
           @error="onImageError"
         />
         <p v-if="meal.strImageSource" class="mt-1 text-sm text-gray-600">
@@ -83,7 +83,7 @@
 
       <section class="md:col-span-2" aria-labelledby="ingredients-heading">
         <h2 id="ingredients-heading" class="mb-3 text-2xl font-semibold">Ingredients</h2>
-        <ul class="divide-y divide-gray-300 rounded-lg bg-white shadow-sm">
+        <ul class="divide-y divide-bay-50 rounded-lg bg-white shadow-sm">
           <li v-for="ingredient in ingredients" :key="ingredient.name">
             <nuxt-link
               :to="`/ingredients/${encodeURIComponent(ingredient.name)}`"

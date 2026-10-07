@@ -20,9 +20,9 @@ test.beforeEach(async ({ page }) => {
 test('home page shows recommended meals, categories and ingredients', async ({ page }) => {
   await page.goto('./');
 
-  await expect(page.getByRole('heading', { name: 'Recommended Meals' })).toBeVisible();
-  await expect(page.getByRole('link', { name: 'Teriyaki Chicken Casserole' })).toBeVisible();
-  await expect(page.getByRole('heading', { name: 'Food Categories' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Recommended meals' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Teriyaki Chicken Casserole' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Food categories' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Garlic', exact: true })).toBeVisible();
   await expectNoSeriousA11yIssues(page);
 });
@@ -83,13 +83,13 @@ test('unknown pages show the 404 page', async ({ page }) => {
 
   await expect(page.getByRole('heading', { name: 'Page not found' })).toBeVisible();
   await page.getByRole('button', { name: 'Home' }).click();
-  await expect(page.getByRole('heading', { name: 'Recommended Meals' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Recommended meals' })).toBeVisible();
 });
 
 test('the fridge finds meals with all chosen ingredients', async ({ page }) => {
   await page.goto('fridge');
 
-  const input = page.getByRole('combobox', { name: 'Ingredient' });
+  const input = page.getByRole('combobox', { name: 'Add an ingredient' });
   for (const ingredient of ['garlic', 'rice']) {
     await input.fill(ingredient);
     await input.press('Enter');
@@ -98,7 +98,7 @@ test('the fridge finds meals with all chosen ingredients', async ({ page }) => {
   await expect(page).toHaveURL(/with=garlic%2Crice|with=garlic,rice/);
   await expect(page.getByRole('heading', { name: '1 meal with everything' })).toBeVisible();
   await expect(page.getByRole('link', { name: 'Green Curry' })).toBeVisible();
-  await expect(page.getByRole('heading', { name: /One ingredient short/ })).toBeVisible();
+  await expect(page.getByRole('heading', { name: /one ingredient short/ })).toBeVisible();
   await expect(page.getByRole('link', { name: 'Garlic Pasta' })).toBeVisible();
 });
 

@@ -4,8 +4,9 @@ import { defineConfig, devices } from '@playwright/test';
 // with TheMealDB and the meal index mocked in test/e2e/mocks.ts.
 export default defineConfig({
   testDir: 'test/e2e',
-  // Axe scans are slow on a cold, busy machine.
+  // Axe scans and the first app start are slow on a cold, busy machine.
   timeout: 60_000,
+  expect: { timeout: 10_000 },
   fullyParallel: true,
   forbidOnly: Boolean(process.env.CI),
   retries: process.env.CI ? 1 : 0,

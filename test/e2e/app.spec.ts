@@ -145,13 +145,14 @@ test('cuisines list countries and open their meals', async ({ page }) => {
 test.describe('with the operating system in dark mode', () => {
   test.use({ colorScheme: 'dark' });
 
-  test('pages keep readable contrast', async ({ page }) => {
-    for (const path of ['./', 'meals/52772', 'about', 'categories', 'fridge', 'shopping-list', 'nope']) {
+  // One test per page: axe scans are slow, and separate tests run in parallel.
+  for (const path of ['./', 'meals/52772', 'about', 'categories', 'fridge', 'shopping-list', 'nope']) {
+    test(`${path} keeps readable contrast`, async ({ page }) => {
       await page.goto(path);
       await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
       await expectNoSeriousA11yIssues(page);
-    }
-  });
+    });
+  }
 
   test('the theme toggle switches between system, light and dark and is remembered', async ({ page }) => {
     await page.goto('about');

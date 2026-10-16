@@ -16,7 +16,8 @@ Feast Finder is a web application for finding recipes by meal name, ingredient, 
 
 ## Features
 
-- Search meals by name or browse them by first letter, category, ingredient or cuisine (63 countries with flags), or get a random meal
+- Search meals by name, with meal and ingredient suggestions while typing or by voice (Web Speech API)
+- Browse meals by first letter, category, ingredient (filtered by type) or cuisine (63 countries with flags), meals from your own country on the home page (from the browser language), or get a random meal
 - What's in my fridge: pick several ingredients and find meals that use all of them, or all but one
 - Meal pages with ingredient images, numbered steps and the embedded cooking video
 - Cooking mode: one step at a time in large text, fullscreen (Fullscreen API), with the screen kept on (Screen Wake Lock API), arrow keys and swipes
@@ -25,6 +26,7 @@ Feast Finder is a web application for finding recipes by meal name, ingredient, 
 - Cooking checklist for ingredients and steps, and a shopping list that merges ingredients from several meals, to copy or share
 - Measures as written, in metric or in US units
 - Favourites saved in the browser, sharing via the Web Share API or the clipboard, print-friendly recipes
+- Animated page changes where the meal photo morphs from the card into the meal page (View Transitions API, off with reduced motion)
 - Light and dark theme (following the system or chosen), works offline for pages and recipes you have opened before, installable as an app
 - Filters, letters and pages kept in the URL, loading skeletons, error states with retry, a 404 page
 - Keyboard and screen reader friendly (Lighthouse accessibility 100, checked in CI), works on phones
@@ -41,7 +43,7 @@ Feast Finder is a web application for finding recipes by meal name, ingredient, 
 
 - [Nuxt 4](https://nuxt.com/) with Vue 3 and TypeScript, rendered in the browser as a static single-page app
 - [Tailwind CSS 4](https://tailwindcss.com/) with the theme defined in CSS, [Lucide](https://lucide.dev/) icons, self-hosted fonts from [Fontsource](https://fontsource.org/)
-- [VueUse](https://vueuse.org/) for browser APIs (local storage, share, clipboard, wake lock, online status)
+- [VueUse](https://vueuse.org/) for browser APIs (local storage, share, clipboard, wake lock, online status, speech recognition)
 - [Vitest](https://vitest.dev/) unit tests, [Playwright](https://playwright.dev/) end-to-end tests with [axe](https://github.com/dequelabs/axe-core) accessibility checks, ESLint and Prettier
 - GitHub Actions and GitHub Pages for CI and hosting
 

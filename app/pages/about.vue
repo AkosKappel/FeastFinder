@@ -138,7 +138,7 @@ const features = [
   {
     icon: Search,
     title: 'Search and browse',
-    text: 'Find meals by name, browse by ingredient, category and cuisine, or cook with what is in your fridge.',
+    text: 'Search by typing or by voice with suggestions as you type, browse by ingredient, category and cuisine, or cook with what is in your fridge.',
   },
   {
     icon: UtensilsCrossed,

@@ -14,7 +14,7 @@
         role="combobox"
         enterkeyhint="search"
         autocomplete="off"
-        placeholder="Search meals, e.g. pasta"
+        :placeholder="voice.isListening.value ? 'Listening...' : 'Search meals, e.g. pasta'"
         aria-autocomplete="list"
         aria-controls="search-suggestions"
         :aria-expanded="showSuggestions"
@@ -70,6 +70,17 @@
       </ul>
     </div>
     <button
+      v-if="voice.isSupported.value"
+      type="button"
+      class="ms-2 rounded-xl bg-bay-800 p-3 text-bay-50 hover:bg-bay-700 focus-visible:ring-saffron focus-visible:ring-offset-bay-900"
+      :class="voice.isListening.value && 'text-saffron motion-safe:animate-pulse'"
+      :aria-pressed="voice.isListening.value"
+      @click="voice.toggle()"
+    >
+      <Mic class="h-4 w-4" aria-hidden="true" />
+      <span class="sr-only">Search by voice</span>
+    </button>
+    <button
       type="submit"
       class="ms-2 rounded-xl bg-orange-700 p-3 text-white hover:bg-orange-600 focus-visible:ring-saffron focus-visible:ring-offset-bay-900"
     >
@@ -80,7 +91,7 @@
 </template>
 
 <script setup lang="ts">
-import { Search, X } from '@lucide/vue';
+import { Mic, Search, X } from '@lucide/vue';
 import type { MealIndexEntry } from '@/utils/mealIndex';
 
 const emit = defineEmits<{ search: [query: string] }>();
@@ -170,6 +181,13 @@ const submit = () => {
   close();
   emit('search', input.value.trim());
 };
+
+// Voice search (Chrome, Edge, Safari): the words appear in the box while speaking, then it searches.
+const voice = useSpeechRecognition({ lang: 'en-US', continuous: false });
+watch([voice.result, voice.isFinal], ([text, final]) => {
+  input.value = text;
+  if (final && text.trim()) submit();
+});
 
 const clear = () => {
   input.value = '';

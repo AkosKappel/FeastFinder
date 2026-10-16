@@ -58,6 +58,32 @@ test('search suggests meals and ingredients while typing', async ({ page }) => {
   await expect(page.getByRole('heading', { name: 'Garlic Pasta', level: 1 })).toBeVisible();
 });
 
+test('voice search fills the box and searches', async ({ page }) => {
+  // A stand-in for the browser's speech recognition that "hears" one phrase.
+  await page.addInitScript(() => {
+    class FakeRecognition {
+      onstart = () => {};
+      onresult = (_event: unknown) => {};
+      onend = () => {};
+      start() {
+        this.onstart();
+        const result = Object.assign([{ transcript: 'garlic', confidence: 0.9 }], { isFinal: true });
+        setTimeout(() => {
+          this.onresult({ resultIndex: 0, results: [result] });
+          this.onend();
+        }, 100);
+      }
+      stop() {}
+    }
+    Object.assign(window, { SpeechRecognition: FakeRecognition });
+  });
+  await page.goto('./');
+
+  await page.getByRole('button', { name: 'Search by voice' }).click();
+  await expect(page).toHaveURL(/\/meals\?q=garlic$/);
+  await expect(page.getByRole('combobox', { name: 'Search meals' })).toHaveValue('garlic');
+});
+
 test('a meal opens from a direct link with steps, ingredients and actions', async ({ page }) => {
   await page.goto('meals/52772');
 

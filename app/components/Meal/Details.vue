@@ -66,6 +66,7 @@
           height="700"
           fetchpriority="high"
           class="aspect-[4/3] w-full rounded-2xl bg-tint object-cover"
+          :style="MEAL_PHOTO_TRANSITION"
           @error="onImageError"
         />
         <p v-if="meal.strImageSource" class="mt-1 text-sm text-gray-600">

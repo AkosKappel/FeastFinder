@@ -26,6 +26,8 @@ export default defineNuxtConfig({
   // GitHub Pages serves static files only: render in the browser so the generated 404.html
   // fallback can boot the app on any deep link, e.g. /meals/52772.
   ssr: false,
+  // Page changes cross-fade and meal photos morph (see useMealTransition); off with reduced motion.
+  experimental: { viewTransition: true },
   modules: ['@vueuse/nuxt', '@nuxt/eslint'],
   css: ['~/assets/css/tailwind.css'],
   vite: { plugins: [tailwindcss()] },

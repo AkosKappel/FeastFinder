@@ -9,7 +9,15 @@
       <div v-for="n in 3" :key="`action-${n}`" class="h-11 w-24 rounded-xl bg-tint"></div>
     </div>
     <div class="grid gap-8 lg:grid-cols-5">
-      <div class="aspect-[4/3] rounded-2xl bg-tint lg:col-span-3"></div>
+      <!-- The opened card's photo stands in until the meal loads, so the morph has a target. -->
+      <img
+        v-if="image"
+        :src="`${image}/medium`"
+        alt=""
+        class="aspect-[4/3] w-full rounded-2xl object-cover lg:col-span-3"
+        :style="MEAL_PHOTO_TRANSITION"
+      />
+      <div v-else class="aspect-[4/3] rounded-2xl bg-tint lg:col-span-3"></div>
       <div class="space-y-3 lg:col-span-2">
         <div class="h-7 w-40 rounded-sm bg-tint"></div>
         <div v-for="n in 8" :key="`ingredient-${n}`" class="h-12 rounded-sm bg-tint-soft"></div>
@@ -22,3 +30,7 @@
   </div>
   <span class="sr-only">Loading meal details...</span>
 </template>
+
+<script setup lang="ts">
+defineProps<{ image?: string }>();
+</script>

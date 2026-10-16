@@ -9,12 +9,17 @@
       alt=""
       class="aspect-[4/3] w-full bg-tint object-cover object-center transition-transform duration-300 motion-safe:group-hover:scale-105"
       loading="lazy"
+      :style="transition?.id === meal.idMeal ? MEAL_PHOTO_TRANSITION : undefined"
       @error="onImageError"
     />
     <div class="flex flex-1 items-start justify-between gap-2 p-4">
       <div>
         <component :is="headingTag" class="mb-2 text-lg font-semibold leading-snug">
-          <nuxt-link :to="`/meals/${meal.idMeal}`" class="after:absolute after:inset-0 focus:outline-hidden">
+          <nuxt-link
+            :to="`/meals/${meal.idMeal}`"
+            class="after:absolute after:inset-0 focus:outline-hidden"
+            @click="transition = { id: meal.idMeal, thumb: meal.strMealThumb }"
+          >
             {{ meal.strMeal }}
           </nuxt-link>
         </component>
@@ -41,6 +46,8 @@ import type { MealPreview } from '@/types/Meal';
 const headingTag = useCardHeading();
 
 defineProps<{ meal: MealPreview }>();
+
+const transition = useMealTransition();
 
 const { onImageError } = usePlaceholderImage();
 </script>

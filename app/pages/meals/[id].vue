@@ -1,7 +1,7 @@
 <template>
   <div>
     <ErrorMessage v-if="error" class="container mx-auto px-4" @retry="refresh()" />
-    <MealDetailsSkeleton v-else-if="pending" />
+    <MealDetailsSkeleton v-else-if="pending" :image="transition?.id === mealId ? transition.thumb : undefined" />
     <MealDetails v-else-if="meal" :meal="meal" />
     <section v-else class="container mx-auto px-4 py-8 text-center">
       <h1 class="text-3xl font-semibold mb-4">Meal not found</h1>
@@ -13,6 +13,7 @@
 <script setup lang="ts">
 const route = useRoute();
 const mealId = computed(() => route.params.id as string);
+const transition = useMealTransition();
 
 const {
   data: meal,

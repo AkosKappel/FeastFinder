@@ -59,14 +59,15 @@
 
     <div class="grid gap-8 lg:grid-cols-5">
       <div class="lg:col-span-3">
+        <!-- The card-sized photo (already cached) shows behind the full one while it loads, so it does not blink. -->
         <img
           :src="meal.strMealThumb"
           :alt="meal.strMeal"
           width="700"
           height="700"
           fetchpriority="high"
-          class="aspect-[4/3] w-full rounded-2xl bg-tint object-cover"
-          :style="MEAL_PHOTO_TRANSITION"
+          class="aspect-[4/3] w-full rounded-2xl bg-tint bg-cover bg-center object-cover"
+          :style="{ ...MEAL_PHOTO_TRANSITION, backgroundImage: `url(${meal.strMealThumb}/medium)` }"
           @error="onImageError"
         />
         <p v-if="meal.strImageSource" class="mt-1 text-sm text-gray-600">

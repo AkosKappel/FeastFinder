@@ -82,3 +82,15 @@ export const rankMatches = <T>(items: readonly T[], query: string, nameOf: (item
   const starts = (item: T) => nameOf(item).toLowerCase().startsWith(term);
   return [...found.filter(starts), ...found.filter(item => !starts(item))].slice(0, max);
 };
+
+// Meals from the country of a browser locale, e.g. "sk-SK" (or plain "sk") gives Slovak meals.
+// Languages without a region fall back to the likeliest one ("en" means the United States).
+export const mealsFromLocale = (meals: MealIndexEntry[], locale: string) => {
+  let region: string | undefined;
+  try {
+    region = new Intl.Locale(locale).maximize().region?.toLowerCase();
+  } catch {
+    return [];
+  }
+  return region ? meals.filter(meal => meal.countryCode === region) : [];
+};

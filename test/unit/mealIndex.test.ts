@@ -3,6 +3,7 @@ import {
   cuisinesOf,
   ingredientNamesOf,
   matchIngredients,
+  mealsFromLocale,
   popularIngredients,
   rankMatches,
   searchMealIndex,
@@ -93,5 +94,19 @@ describe('rankMatches', () => {
 
   it('returns nothing for an empty query', () => {
     expect(rankMatches(names, '  ', same, 10)).toEqual([]);
+  });
+});
+
+describe('mealsFromLocale', () => {
+  const names = (locale: string) => mealsFromLocale(meals, locale).map(m => m.strMeal);
+
+  it('matches the region of the locale, or the likeliest region of a bare language', () => {
+    expect(names('it-IT')).toEqual(['Arrabiata', 'Bruschetta']);
+    expect(names('it')).toEqual(['Arrabiata', 'Bruschetta']);
+  });
+
+  it('returns nothing for a region without meals or an invalid locale', () => {
+    expect(names('sk-SK')).toEqual([]);
+    expect(names('not a locale')).toEqual([]);
   });
 });

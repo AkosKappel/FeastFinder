@@ -27,6 +27,18 @@ test('home page shows recommended meals, categories and ingredients', async ({ p
   await expectNoSeriousA11yIssues(page);
 });
 
+test.describe('with an Italian browser', () => {
+  test.use({ locale: 'it-IT' });
+
+  test('the home page suggests Italian meals', async ({ page }) => {
+    await page.goto('./');
+
+    const section = page.locator('section', { has: page.getByRole('heading', { name: 'Italy cuisine' }) });
+    await expect(section.getByRole('link', { name: 'Garlic Pasta' })).toBeVisible();
+    await expect(section.getByRole('link', { name: 'Green Curry' })).toBeHidden();
+  });
+});
+
 test('search goes to the results and keeps the query in the URL', async ({ page }) => {
   await page.goto('./');
 

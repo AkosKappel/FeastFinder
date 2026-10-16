@@ -60,6 +60,12 @@
         :skeleton-count="4"
         @retry="refreshMeals()"
       />
+      <MealList
+        v-if="localMeals.length"
+        :title="`${localMeals[0]!.strCountry} cuisine`"
+        :more-to="`/cuisines/${encodeURIComponent(localMeals[0]!.strCountry!)}`"
+        :meals="localMeals"
+      />
       <CategoryList
         title="Food categories"
         more-to="/categories"
@@ -102,6 +108,11 @@ const {
   error: mealsError,
   refresh: refreshMeals,
 } = useAsyncData('home-meals', () => mealDb.getRandomMeals(4));
+
+// A taste of the visitor's country, from the browser language (no permission prompt). Hidden when
+// the region has no meals or the meal index fails: it is an extra.
+const { data: mealIndex } = useAsyncData('meal-index', () => loadMealIndex());
+const localMeals = computed(() => pickRandom(mealsFromLocale(mealIndex.value ?? [], navigator.language), 4));
 
 const {
   data: categories,

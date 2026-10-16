@@ -56,11 +56,12 @@ export const ingredientThumbUrl = (name: string, size: 'small' | 'medium') =>
   `https://www.themealdb.com/images/ingredients/${encodeURIComponent(name)}-${size}.png`;
 
 // Instructions are free text: steps are separate lines, sometimes with "STEP 1" lines or "1." prefixes.
+// Lines without a letter are dropped too: bare step numbers ("2"), "▢" checkboxes, zero-width spaces.
 export const splitInstructions = (instructions: string | null) =>
   (instructions ?? '')
     .split(/\r?\n/)
     .map(line => line.trim())
-    .filter(line => line && !/^step\s*\d+[.:)]?$/i.test(line))
+    .filter(line => /\p{L}/u.test(line) && !/^step\s*\d+[.:)]?$/i.test(line))
     .map(line => line.replace(/^(step\s*)?\d+(\s*[.:)]|\s+-)\s*/i, ''))
     .filter(Boolean);
 

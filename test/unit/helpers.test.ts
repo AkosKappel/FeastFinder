@@ -103,6 +103,14 @@ describe('splitInstructions', () => {
     ]);
   });
 
+  it('drops lines without words: bare step numbers, checkboxes and invisible characters', () => {
+    expect(splitInstructions('Whisk the molasses.\r\n2\r\nAdd the flour.\r\n▢\r\n\u200b\r\n3.\r\nFry.')).toEqual([
+      'Whisk the molasses.',
+      'Add the flour.',
+      'Fry.',
+    ]);
+  });
+
   it('keeps numbers that are part of the text', () => {
     expect(splitInstructions('350 grams of flour go in first.')).toEqual(['350 grams of flour go in first.']);
     expect(splitInstructions('2-3 minutes per side.\nSTEP 4 - Serve.')).toEqual(['2-3 minutes per side.', 'Serve.']);

@@ -4,6 +4,7 @@ import {
   ingredientNamesOf,
   matchIngredients,
   popularIngredients,
+  rankMatches,
   searchMealIndex,
   type MealIndexEntry,
 } from '../../app/utils/mealIndex';
@@ -78,5 +79,19 @@ describe('ingredientNamesOf', () => {
 describe('popularIngredients', () => {
   it('orders ingredients by how many meals use them, then by name', () => {
     expect(popularIngredients(meals, 3)).toEqual(['garlic', 'tomato', 'apple']);
+  });
+});
+
+describe('rankMatches', () => {
+  const names = ['Bread', 'Apple Bread', 'Breadcrumbs', 'Butter'];
+  const same = (name: string) => name;
+
+  it('puts names starting with the query first and caps the count', () => {
+    expect(rankMatches(names, ' bread', same, 10)).toEqual(['Bread', 'Breadcrumbs', 'Apple Bread']);
+    expect(rankMatches(names, 'bread', same, 2)).toEqual(['Bread', 'Breadcrumbs']);
+  });
+
+  it('returns nothing for an empty query', () => {
+    expect(rankMatches(names, '  ', same, 10)).toEqual([]);
   });
 });

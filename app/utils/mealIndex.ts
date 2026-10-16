@@ -73,3 +73,12 @@ export const popularIngredients = (meals: MealIndexEntry[], count: number) => {
     .slice(0, count)
     .map(([name]) => name);
 };
+
+// Items whose name starts with the query come first, then items that contain it anywhere.
+export const rankMatches = <T>(items: readonly T[], query: string, nameOf: (item: T) => string, max: number) => {
+  const term = query.trim().toLowerCase();
+  if (!term) return [];
+  const found = items.filter(item => nameOf(item).toLowerCase().includes(term));
+  const starts = (item: T) => nameOf(item).toLowerCase().startsWith(term);
+  return [...found.filter(starts), ...found.filter(item => !starts(item))].slice(0, max);
+};

@@ -30,8 +30,8 @@ test('home page shows recommended meals, categories and ingredients', async ({ p
 test('search goes to the results and keeps the query in the URL', async ({ page }) => {
   await page.goto('./');
 
-  await page.getByRole('searchbox', { name: 'Search meals' }).fill('garlic');
-  await page.getByRole('searchbox', { name: 'Search meals' }).press('Enter');
+  await page.getByRole('combobox', { name: 'Search meals' }).fill('garlic');
+  await page.getByRole('combobox', { name: 'Search meals' }).press('Enter');
 
   await expect(page).toHaveURL(/\/meals\?q=garlic$/);
   await expect(page.getByRole('heading', { name: 'Results for "garlic"', level: 1 })).toBeVisible();
@@ -39,9 +39,23 @@ test('search goes to the results and keeps the query in the URL', async ({ page 
   await expect(page.getByText('1 meal', { exact: true })).toBeVisible();
 
   await page.getByRole('button', { name: 'Clear search' }).click();
-  await page.getByRole('searchbox', { name: 'Search meals' }).press('Enter');
+  await page.getByRole('combobox', { name: 'Search meals' }).press('Enter');
   await expect(page).toHaveURL(/\/meals$/);
   await expect(page.getByText('3 meals', { exact: true })).toBeVisible();
+});
+
+test('search suggests meals and ingredients while typing', async ({ page }) => {
+  await page.goto('./');
+  const search = page.getByRole('combobox', { name: 'Search meals' });
+
+  await search.fill('gar');
+  await expect(page.getByRole('option', { name: /Garlic Pasta/ })).toBeVisible();
+  await expect(page.getByRole('option', { name: /garlic Ingredient/ })).toBeVisible();
+
+  await search.press('ArrowDown');
+  await search.press('Enter');
+  await expect(page).toHaveURL(/\/meals\/52000$/);
+  await expect(page.getByRole('heading', { name: 'Garlic Pasta', level: 1 })).toBeVisible();
 });
 
 test('a meal opens from a direct link with steps, ingredients and actions', async ({ page }) => {

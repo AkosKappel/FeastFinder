@@ -67,16 +67,14 @@ const activeIndex = ref(-1);
 const root = useTemplateRef<HTMLElement>('root');
 onClickOutside(root, () => (open.value = false));
 
-// Names that start with the typed text come first, then names that contain it.
-const matches = computed(() => {
-  const query = term.value.trim().toLowerCase();
-  if (!query) return [];
-  const available = props.options.filter(name => !props.exclude.includes(name) && name.includes(query));
-  return [
-    ...available.filter(name => name.startsWith(query)),
-    ...available.filter(name => !name.startsWith(query)),
-  ].slice(0, MAX_MATCHES);
-});
+const matches = computed(() =>
+  rankMatches(
+    props.options.filter(name => !props.exclude.includes(name)),
+    term.value,
+    name => name,
+    MAX_MATCHES,
+  ),
+);
 
 const onInput = () => {
   open.value = true;

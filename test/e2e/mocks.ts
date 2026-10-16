@@ -44,10 +44,10 @@ const ingredients = [
     strIngredient: 'Chicken',
     strDescription: 'A bird.',
     strThumb: thumb('i-chicken'),
-    strType: null,
+    strType: 'Meat',
   },
   { idIngredient: '2', strIngredient: 'Garlic', strDescription: null, strThumb: thumb('i-garlic'), strType: null },
-  { idIngredient: '3', strIngredient: 'Rice', strDescription: null, strThumb: null, strType: null },
+  { idIngredient: '3', strIngredient: 'Rice', strDescription: null, strThumb: null, strType: 'Grain' },
 ];
 
 const indexEntry = (meal: typeof teriyaki, code: string, mealIngredients: string[]) => ({

@@ -12,6 +12,7 @@
           <IngredientPicker
             :options="ingredientNames"
             :exclude="selected"
+            :types="ingredientTypes"
             @select="add"
             @unknown="name => (unknown = name)"
           />
@@ -91,6 +92,16 @@ provideCardHeading('h3');
 
 const { data: meals, pending, error, refresh } = useAsyncData('meal-index', () => loadMealIndex());
 const ingredientNames = computed(() => ingredientNamesOf(meals.value ?? []));
+
+// Types are a nice extra: the picker works without them if the list fails to load.
+const { data: ingredientList } = useAsyncData('ingredients', () => mealDb.getIngredients());
+const ingredientTypes = computed(() =>
+  Object.fromEntries(
+    (ingredientList.value ?? []).flatMap(({ strIngredient, strType }) =>
+      strType ? [[strIngredient.toLowerCase(), strType]] : [],
+    ),
+  ),
+);
 
 // Kept in the URL (?with=chicken,garlic) so a fridge can be bookmarked or shared.
 const withParam = useQueryParam('with');

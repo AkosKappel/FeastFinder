@@ -131,6 +131,20 @@ test('unknown pages show the 404 page', async ({ page }) => {
   await expect(page.getByRole('heading', { name: 'Recommended meals' })).toBeVisible();
 });
 
+test('ingredients filter by type, and the fridge picker shows each type', async ({ page }) => {
+  await page.goto('ingredients');
+
+  await expect(page.getByText('3 ingredients', { exact: true })).toBeVisible();
+  await page.getByRole('combobox', { name: 'Ingredient type' }).selectOption('Meat');
+  await expect(page).toHaveURL(/type=Meat/);
+  await expect(page.getByText('1 ingredient', { exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Chicken', exact: true })).toBeVisible();
+
+  await page.goto('fridge');
+  await page.getByRole('combobox', { name: 'Add an ingredient' }).fill('chick');
+  await expect(page.getByRole('option', { name: 'chicken Meat' })).toBeVisible();
+});
+
 test('the fridge finds meals with all chosen ingredients', async ({ page }) => {
   await page.goto('fridge');
 

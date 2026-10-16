@@ -44,6 +44,7 @@
       >
         <img :src="ingredientThumbUrl(name, 'small')" alt="" width="32" height="32" class="h-8 w-8 object-contain" />
         {{ name }}
+        <span v-if="types?.[name]" class="ml-auto text-xs normal-case text-gray-600">{{ types[name] }}</span>
       </li>
     </ul>
   </div>
@@ -52,7 +53,8 @@
 <script setup lang="ts">
 import { Search } from '@lucide/vue';
 
-const props = defineProps<{ options: string[]; exclude: string[] }>();
+// `types` maps lowercase ingredient names to their type (e.g. Meat), shown next to each match.
+const props = defineProps<{ options: string[]; exclude: string[]; types?: Record<string, string> }>();
 const emit = defineEmits<{ select: [name: string]; unknown: [name: string] }>();
 
 const MAX_MATCHES = 8;

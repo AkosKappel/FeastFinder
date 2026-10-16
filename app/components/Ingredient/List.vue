@@ -3,7 +3,18 @@
     <SectionHeading v-if="props.title" :title="props.title" :tag="props.headingTag" :more-to="props.moreTo" />
     <div v-if="props.allowFilter" class="mb-6 flex flex-col gap-3">
       <LetterFilter v-model="activeLetter" :available="availableLetters" />
-      <FilterInput v-model="filter" label="Filter ingredients" />
+      <div class="flex flex-col gap-3 sm:flex-row">
+        <FilterInput v-model="filter" label="Filter ingredients" />
+        <label class="sr-only" :for="typeSelectId">Ingredient type</label>
+        <select
+          :id="typeSelectId"
+          v-model="activeType"
+          class="rounded-xl border-0 bg-surface py-2.5 pl-3 pr-9 text-ink shadow-xs ring-1 ring-line focus:outline-hidden focus:ring-2 focus:ring-orange-600"
+        >
+          <option value="">All types</option>
+          <option v-for="type in types" :key="type" :value="type">{{ type }}</option>
+        </select>
+      </div>
     </div>
     <ErrorMessage v-if="props.error" @retry="$emit('retry')" />
     <CardGridSkeleton v-else-if="props.loading || !props.ingredients" :count="props.skeletonCount" />
@@ -73,7 +84,14 @@ defineEmits(['retry']);
 // Filter, letter and page live in the URL, so back/forward and shared links keep them.
 const activeLetter = useQueryParam('letter', { resets: ['page'] });
 const filter = useQueryParam('filter', { resets: ['page'] });
+const activeType = useQueryParam('type', { resets: ['page'] });
 const currentPage = usePageParam();
+const typeSelectId = useId();
+
+// About half the ingredients have no type; they show under "All types" only.
+const types = computed(() =>
+  [...new Set((props.ingredients ?? []).flatMap(ingredient => ingredient.strType ?? []))].sort(),
+);
 
 const availableLetters = computed(() =>
   firstLetters((props.ingredients ?? []).map(ingredient => ingredient.strIngredient)),
@@ -85,7 +103,11 @@ const filteredIngredients = computed(() => {
   return (props.ingredients ?? [])
     .filter(ingredient => {
       const name = ingredient.strIngredient.toLowerCase();
-      return (!activeLetter.value || name.startsWith(activeLetter.value)) && name.includes(searchTerm);
+      return (
+        (!activeLetter.value || name.startsWith(activeLetter.value)) &&
+        (!activeType.value || ingredient.strType === activeType.value) &&
+        name.includes(searchTerm)
+      );
     })
     .sort((a, b) => a.strIngredient.localeCompare(b.strIngredient));
 });

@@ -20,9 +20,10 @@ const {
   pending,
   error,
   refresh,
-} = useAsyncData('meal', () => mealDb.getMeal(mealId.value), {
-  watch: [mealId],
-});
+} = useAsyncData(
+  () => `meal-${mealId.value}`,
+  () => mealDb.getMeal(mealId.value),
+);
 
 useHead({ title: () => meal.value?.strMeal ?? (pending.value || error.value ? null : 'Meal not found') });
 useSeoMeta({

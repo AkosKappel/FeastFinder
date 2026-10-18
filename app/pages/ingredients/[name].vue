@@ -24,5 +24,8 @@ const {
   pending,
   error,
   refresh,
-} = useAsyncData('ingredient-meals', () => mealDb.mealsByIngredient(ingredient.value), { watch: [ingredient] });
+} = useAsyncData(
+  () => `ingredient-meals-${ingredient.value}`,
+  () => mealDb.mealsByIngredient(ingredient.value),
+);
 </script>

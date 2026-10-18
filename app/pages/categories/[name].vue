@@ -24,5 +24,8 @@ const {
   pending,
   error,
   refresh,
-} = useAsyncData('category-meals', () => mealDb.mealsByCategory(category.value), { watch: [category] });
+} = useAsyncData(
+  () => `category-meals-${category.value}`,
+  () => mealDb.mealsByCategory(category.value),
+);
 </script>

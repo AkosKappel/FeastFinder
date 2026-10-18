@@ -70,6 +70,19 @@ test('search suggests meals and ingredients while typing', async ({ page }) => {
   await expect(page.getByRole('heading', { name: 'Garlic Pasta', level: 1 })).toBeVisible();
 });
 
+test('searching from a meal page opens the chosen meal', async ({ page }) => {
+  await page.goto('meals/52772');
+  await expect(page.getByRole('heading', { name: 'Teriyaki Chicken Casserole', level: 1 })).toBeVisible();
+  const search = page.getByRole('combobox', { name: 'Search meals' });
+
+  await search.fill('gar');
+  await expect(page.getByRole('option', { name: /Garlic Pasta/ })).toBeVisible();
+  await search.press('ArrowDown');
+  await search.press('Enter');
+  await expect(page).toHaveURL(/\/meals\/52000$/);
+  await expect(page.getByRole('heading', { name: 'Garlic Pasta', level: 1 })).toBeVisible();
+});
+
 test('voice search fills the box and searches', async ({ page }) => {
   // A stand-in for the browser's speech recognition that "hears" one phrase.
   await page.addInitScript(() => {

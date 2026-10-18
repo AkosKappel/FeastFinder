@@ -37,7 +37,7 @@
           <h2 class="mb-3 font-display text-lg font-semibold text-white">{{ group.title }}</h2>
           <ul class="space-y-2" :class="group.links.length > 4 && 'sm:columns-2 sm:gap-x-6'">
             <li v-for="link in group.links" :key="link.label" class="break-inside-avoid">
-              <nuxt-link v-if="link.to" :to="link.to" class="inline-flex items-center gap-2 hover:text-white">
+              <nuxt-link v-if="'to' in link" :to="link.to" class="inline-flex items-center gap-2 hover:text-white">
                 <component :is="link.icon" class="h-4 w-4 text-saffron" aria-hidden="true" />
                 {{ link.label }}
               </nuxt-link>
@@ -83,20 +83,7 @@
 </template>
 
 <script setup lang="ts">
-import {
-  ArrowUp,
-  Carrot,
-  Code,
-  Database,
-  Globe,
-  Heart,
-  Info,
-  LayoutGrid,
-  Refrigerator,
-  ShoppingBasket,
-  Shuffle,
-  UtensilsCrossed,
-} from '@lucide/vue';
+import { ArrowUp, Code, Database } from '@lucide/vue';
 
 const year = new Date().getFullYear();
 
@@ -118,21 +105,12 @@ const profiles = [
 const linkGroups = [
   {
     title: 'Explore',
-    links: [
-      { label: 'Meals', to: '/meals', icon: UtensilsCrossed },
-      { label: 'Ingredients', to: '/ingredients', icon: Carrot },
-      { label: 'Categories', to: '/categories', icon: LayoutGrid },
-      { label: 'Cuisines', to: '/cuisines', icon: Globe },
-      { label: "What's in my fridge?", to: '/fridge', icon: Refrigerator },
-      { label: 'Surprise me', to: '/random', icon: Shuffle },
-      { label: 'Favourites', to: '/favourites', icon: Heart },
-      { label: 'Shopping list', to: '/shopping-list', icon: ShoppingBasket },
-    ],
+    links: exploreLinks,
   },
   {
     title: 'Project',
     links: [
-      { label: 'About', to: '/about', icon: Info },
+      aboutLink,
       { label: 'Source code', href: 'https://github.com/AkosKappel/FeastFinder', icon: Code },
       { label: 'TheMealDB API', href: 'https://www.themealdb.com/api.php', icon: Database },
     ],

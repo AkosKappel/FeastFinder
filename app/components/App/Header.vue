@@ -9,6 +9,19 @@
       <SearchBar class="order-last w-full md:order-none md:w-auto md:max-w-md md:flex-1" @search="search" />
 
       <div class="flex items-center gap-1">
+        <button
+          type="button"
+          class="flex items-center gap-2 rounded-lg p-2 text-bay-100 transition-colors hover:bg-bay-800 hover:text-white"
+          aria-keyshortcuts="Control+K Meta+K"
+          title="Quick find"
+          @click="openPalette = true"
+        >
+          <TextSearch class="h-5 w-5" aria-hidden="true" />
+          <span class="sr-only">Quick find</span>
+          <kbd class="hidden rounded-sm border border-bay-700 px-1.5 font-sans text-xs md:inline" aria-hidden="true">
+            {{ shortcutHint }}
+          </kbd>
+        </button>
         <ThemeToggle />
         <div ref="menu" class="relative xl:hidden" @keydown.esc="showDropdown = false">
           <button
@@ -96,6 +109,7 @@ import {
   Menu as MenuIcon,
   ShoppingBasket,
   Shuffle,
+  TextSearch,
   UtensilsCrossed,
 } from '@lucide/vue';
 
@@ -121,6 +135,9 @@ const allLinks = [
 ];
 
 const { toBuy } = useShoppingList();
+
+const openPalette = useCommandPalette();
+const shortcutHint = /Mac|iPhone|iPad/.test(navigator.userAgent) ? '⌘K' : 'Ctrl K';
 
 watch(
   () => route.fullPath,

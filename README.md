@@ -17,6 +17,7 @@ Feast Finder is a web application for finding recipes by meal name, ingredient, 
 ## Features
 
 - Search meals by name, with meal and ingredient suggestions while typing or by voice (Web Speech API)
+- Quick find (Ctrl+K or ⌘K): jump to a page, category, cuisine or meal from anywhere with the keyboard
 - Browse meals by first letter, category, ingredient (filtered by type) or cuisine (63 countries with flags), meals from your own country on the home page (from the browser language), or get a random meal
 - What's in my fridge: pick several ingredients and find meals that use all of them, or all but one
 - Meal pages with ingredient images, numbered steps and the embedded cooking video
@@ -77,8 +78,8 @@ npm run dev
 
 ## Testing
 
-- **Unit tests** (`test/unit`, Vitest): helpers, the API client with mocked responses, the meal index search and the SEO data.
-- **End-to-end tests** (`test/e2e`, Playwright): run on the generated site, served the way GitHub Pages serves it, in a desktop and a phone browser. TheMealDB is mocked, so the tests are fast and stable. They cover search, meal pages, favourites, the fridge, paging, timers (with a fake clock), read aloud (with a fake speech engine), cooking mode, units, the shopping list, error and 404 states, and run axe accessibility checks in the light and dark theme.
+- **Unit tests** (`test/unit`, Vitest): helpers, the API client with mocked responses, the meal index search, the quick find options and the SEO data.
+- **End-to-end tests** (`test/e2e`, Playwright): run on the generated site, served the way GitHub Pages serves it, in a desktop and a phone browser. TheMealDB is mocked, so the tests are fast and stable. They cover search, quick find, meal pages, favourites, the fridge, paging, timers (with a fake clock), read aloud (with a fake speech engine), cooking mode, units, the shopping list, error and 404 states, and run axe accessibility checks in the light and dark theme.
 - **Lighthouse** (`lighthouserc.json`, Lighthouse CI): desktop runs on five pages of the generated site. CI fails below 100 for accessibility and SEO, 95 for best practices and 70 for performance (the home page waits for random meals and photos from TheMealDB, so its score varies); the reports are kept as a workflow artifact.
 
 ```bash

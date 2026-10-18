@@ -22,6 +22,7 @@
     <AppFooter class="print:hidden" />
     <!-- Running timers stay in view on every page. -->
     <CookingTimers class="fixed right-4 bottom-4 z-40" />
+    <CommandPalette />
   </div>
 </template>
 

@@ -22,7 +22,7 @@
         </li>
         <li v-if="meal.strCountry">
           <nuxt-link :to="`/cuisines/${encodeURIComponent(meal.strCountry)}`" :class="chipClass">
-            <Globe class="h-4 w-4" aria-hidden="true" />
+            <CuisineFlag :country="meal.strCountry" />
             <span class="sr-only">Cuisine:</span> {{ meal.strCountry }}
           </nuxt-link>
         </li>
@@ -134,7 +134,7 @@
 </template>
 
 <script setup lang="ts">
-import { ArrowLeft, Check, CirclePlay, ExternalLink, Globe, Hash, Printer, Share2, Sun, Tag } from '@lucide/vue';
+import { ArrowLeft, Check, CirclePlay, ExternalLink, Hash, Printer, Share2, Sun, Tag } from '@lucide/vue';
 import type { Meal } from '@/types/Meal';
 
 const props = defineProps<{ meal: Meal }>();

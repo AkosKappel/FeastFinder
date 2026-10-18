@@ -5,40 +5,12 @@
 // Runs before `npm run dev` (only when the file is missing) and before `npm run generate`.
 import { access, mkdir, writeFile } from 'node:fs/promises';
 import { sitePaths } from './site-routes.mjs';
+import { countryCodeOf } from '../app/utils/countryCode.ts';
 
 const API = 'https://www.themealdb.com/api/json/v1/1/';
 const OUTPUT = new URL('../public/data/meals.json', import.meta.url);
 const SITEMAP = new URL('../public/sitemap.xml', import.meta.url);
 const SITE_URL = 'https://akoskappel.github.io/FeastFinder/';
-
-// Country names the API uses that Intl.DisplayNames spells differently.
-const COUNTRY_CODE_OVERRIDES = {
-  'Antigua and Barbuda': 'ag',
-  'Bosnia and Herzegovina': 'ba',
-  'DR Congo': 'cd',
-  'Hong Kong': 'hk',
-  'Ivory Coast': 'ci',
-  Myanmar: 'mm',
-  Palestine: 'ps',
-  'Republic of the Congo': 'cg',
-  'Saint Lucia': 'lc',
-  'Trinidad and Tobago': 'tt',
-  Turkey: 'tr',
-};
-
-const countryCodes = () => {
-  const names = new Intl.DisplayNames(['en'], { type: 'region' });
-  const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-  const codes = new Map(Object.entries(COUNTRY_CODE_OVERRIDES));
-  for (const first of letters) {
-    for (const second of letters) {
-      const code = first + second;
-      const name = names.of(code);
-      if (name && name !== code && !codes.has(name)) codes.set(name, code.toLowerCase());
-    }
-  }
-  return codes;
-};
 
 const fetchJson = async path => {
   // Retries network errors, HTTP errors and the occasional malformed body under load.
@@ -63,7 +35,6 @@ if (process.argv.includes('--if-missing')) {
   }
 }
 
-const codes = countryCodes();
 const meals = new Map();
 
 for (const letter of 'abcdefghijklmnopqrstuvwxyz0123456789') {
@@ -77,7 +48,7 @@ const unknownCountries = new Set();
 const index = [...meals.values()]
   .map(meal => {
     const country = meal.strCountry?.trim() || null;
-    const countryCode = country ? (codes.get(country) ?? null) : null;
+    const countryCode = country ? countryCodeOf(country) : null;
     if (country && !countryCode) unknownCountries.add(country);
 
     const ingredients = [];

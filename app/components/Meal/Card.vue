@@ -29,7 +29,7 @@
             <span class="sr-only">Category:</span> {{ meal.strCategory }}
           </span>
           <span v-if="meal.strCountry" class="inline-flex items-center gap-1">
-            <Globe class="h-4 w-4" aria-hidden="true" />
+            <CuisineFlag :country="meal.strCountry" />
             <span class="sr-only">Cuisine:</span> {{ meal.strCountry }}
           </span>
         </p>
@@ -40,7 +40,7 @@
 </template>
 
 <script setup lang="ts">
-import { Globe, Tag } from '@lucide/vue';
+import { Tag } from '@lucide/vue';
 import type { MealPreview } from '@/types/Meal';
 
 const headingTag = useCardHeading();

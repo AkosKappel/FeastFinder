@@ -8,7 +8,7 @@
     @close="open = false"
     @click.self="open = false"
   >
-    <form role="search" class="border-b border-line" @submit.prevent="openActive">
+    <form role="search" class="border-b border-line focus-within:border-orange-600" @submit.prevent="openActive">
       <label class="flex items-center gap-3 px-4">
         <Search class="h-5 w-5 shrink-0 text-gray-500" aria-hidden="true" />
         <span class="sr-only">Page, category, cuisine or meal</span>
@@ -24,7 +24,7 @@
           aria-controls="command-palette-list"
           aria-expanded="true"
           :aria-activedescendant="activeIndex >= 0 ? optionId(activeIndex) : undefined"
-          class="w-full border-0 bg-transparent py-4 text-ink placeholder:text-gray-500 focus:outline-hidden [&::-webkit-search-cancel-button]:hidden"
+          class="w-full border-0 bg-transparent py-4 text-ink placeholder:text-gray-500 focus:outline-hidden focus-visible:ring-0 focus-visible:ring-offset-0 [&::-webkit-search-cancel-button]:hidden"
           @keydown.down.prevent="activeIndex = stepIndex(activeIndex, 1, options.length)"
           @keydown.up.prevent="activeIndex = stepIndex(activeIndex, -1, options.length)"
         />

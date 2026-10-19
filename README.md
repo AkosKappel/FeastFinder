@@ -90,7 +90,7 @@ npm run test:e2e
 
 ## Deployment
 
-Every push to `main` and a weekly schedule run [the workflow](.github/workflows/nuxtjs.yml): format check, lint, type check, unit tests, `nuxt generate` with the `github_pages` preset, end-to-end tests, the Lighthouse budget, then deployment to GitHub Pages. The weekly run refreshes the meal index with new recipes.
+Every push to `main` and a weekly schedule run [the workflow](.github/workflows/nuxtjs.yml). Three jobs run in parallel, each with its own `nuxt generate` (`github_pages` preset): format check, lint, type check and unit tests; end-to-end tests; and the Lighthouse budget. The site deploys to GitHub Pages only when all of them pass. The weekly run refreshes the meal index with new recipes.
 
 ## Credits
 

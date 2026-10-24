@@ -118,15 +118,18 @@
 
 <script setup lang="ts">
 import {
+  CalendarDays,
   Check,
   ChefHat,
   Code,
   ExternalLink,
   Heart,
+  Refrigerator,
   Scale,
   Search,
   ShoppingBasket,
   Smartphone,
+  TextSearch,
   Timer,
   UtensilsCrossed,
   Volume2,
@@ -138,12 +141,22 @@ const features = [
   {
     icon: Search,
     title: 'Search and browse',
-    text: 'Search by typing or by voice with suggestions as you type, browse by ingredient, category and cuisine, or cook with what is in your fridge.',
+    text: 'Search by typing or by voice with suggestions as you go. Browse by first letter, ingredient, category or cuisine, see meals from your country on the home page, or let Surprise me pick one.',
+  },
+  {
+    icon: TextSearch,
+    title: 'Quick find',
+    text: 'Press Ctrl+K (⌘K on a Mac) on any page to jump to a page, category, cuisine or meal with the keyboard.',
+  },
+  {
+    icon: Refrigerator,
+    title: "What's in my fridge?",
+    text: 'Pick the ingredients you have and find meals that use all of them, or all but one.',
   },
   {
     icon: UtensilsCrossed,
     title: 'Step-by-step recipes',
-    text: 'Ingredients with measures, numbered steps to tick off while cooking, and the video when there is one.',
+    text: 'Ingredients with pictures and measures, numbered steps, a checklist to tick off while cooking, and the video when there is one.',
   },
   {
     icon: ChefHat,
@@ -161,9 +174,14 @@ const features = [
     text: 'Hands full? The browser reads the steps, and you can jump to the next or previous one.',
   },
   {
+    icon: CalendarDays,
+    title: 'Meal planner',
+    text: 'Plan lunch and dinner for the week from a recipe, a search or your favourites. Move meals around, start cooking from the plan, share or print it.',
+  },
+  {
     icon: ShoppingBasket,
     title: 'Shopping list',
-    text: 'Add what you still need from any recipe. Ingredients from several meals are merged.',
+    text: 'Add what you still need from a recipe or the whole week at once. Ingredients are merged, and you can tick them off, copy or share the list.',
   },
   {
     icon: Scale,
@@ -178,14 +196,14 @@ const features = [
   {
     icon: Smartphone,
     title: 'Works everywhere',
-    text: 'Phones and desktops, light and dark theme, offline for pages you have opened, keyboard and screen readers.',
+    text: 'Install it as an app, open pages you have seen before offline, switch between light and dark, and use it with a keyboard or screen reader.',
   },
 ];
 
 const howItWorks = [
   'A static single-page app built with Nuxt and hosted on GitHub Pages.',
   'Recipe data is loaded in your browser from TheMealDB and cached for 30 minutes, so browsing back and forth is instant.',
-  'No accounts and no tracking. Favourites, the shopping list and your settings are stored only in this browser.',
+  'No accounts and no tracking. Favourites, the meal plan, the shopping list, units and theme are stored only in this browser, so clearing its site data removes them.',
   'Every change is linted, type-checked, tested in a real browser and deployed automatically by GitHub Actions.',
 ];
 

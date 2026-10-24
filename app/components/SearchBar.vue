@@ -2,40 +2,64 @@
   <form ref="form" role="search" class="flex items-center" @submit.prevent="submit">
     <label for="meal-search" class="sr-only">Search meals</label>
     <div class="relative w-full">
-      <Search
-        class="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-500"
-        aria-hidden="true"
-      />
-      <input
-        id="meal-search"
-        ref="inputEl"
-        v-model="input"
-        type="search"
-        role="combobox"
-        enterkeyhint="search"
-        autocomplete="off"
-        :placeholder="voice.isListening.value ? 'Listening...' : 'Search meals, e.g. pasta'"
-        aria-autocomplete="list"
-        aria-controls="search-suggestions"
-        :aria-expanded="showSuggestions"
-        :aria-activedescendant="activeIndex >= 0 ? `search-suggestion-${activeIndex}` : undefined"
-        class="block w-full rounded-xl border-0 bg-surface py-2.5 pl-9 pr-9 text-ink placeholder:text-gray-500 focus:outline-hidden focus:ring-2 focus:ring-saffron focus:ring-offset-0 [&::-webkit-search-cancel-button]:hidden"
-        @focus="onFocus"
-        @input="open = true"
-        @keydown.down.prevent="move(1)"
-        @keydown.up.prevent="move(-1)"
-        @keydown.enter="onEnter"
-        @keydown.esc="onEscape"
-      />
-      <button
-        v-if="input"
-        type="button"
-        class="absolute right-1 top-1/2 -translate-y-1/2 rounded-sm p-1.5 text-gray-500 hover:text-gray-900"
-        aria-label="Clear search"
-        @click="clear"
-      >
-        <X class="h-4 w-4" aria-hidden="true" />
-      </button>
+      <!-- Looks like one input: search, clear, voice and quick find sit inside the box. -->
+      <div class="flex items-center rounded-xl bg-surface text-gray-500 focus-within:ring-2 focus-within:ring-saffron">
+        <button type="submit" :class="inlineButtonClass" class="ms-1">
+          <Search class="h-4 w-4" aria-hidden="true" />
+          <span class="sr-only">Search</span>
+        </button>
+        <input
+          id="meal-search"
+          ref="inputEl"
+          v-model="input"
+          type="search"
+          role="combobox"
+          enterkeyhint="search"
+          autocomplete="off"
+          :placeholder="voice.isListening.value ? 'Listening...' : 'Search meals, e.g. pasta'"
+          aria-autocomplete="list"
+          aria-controls="search-suggestions"
+          :aria-expanded="showSuggestions"
+          :aria-activedescendant="activeIndex >= 0 ? `search-suggestion-${activeIndex}` : undefined"
+          class="block w-full min-w-0 border-0 bg-transparent px-1 py-2.5 text-ink placeholder:text-gray-500 focus:outline-hidden focus-visible:ring-0 focus-visible:ring-offset-0 [&::-webkit-search-cancel-button]:hidden"
+          @focus="onFocus"
+          @input="open = true"
+          @keydown.down.prevent="move(1)"
+          @keydown.up.prevent="move(-1)"
+          @keydown.enter="onEnter"
+          @keydown.esc="onEscape"
+        />
+        <button v-if="input" type="button" :class="inlineButtonClass" aria-label="Clear search" @click="clear">
+          <X class="h-4 w-4" aria-hidden="true" />
+        </button>
+        <button
+          v-if="voice.isSupported.value"
+          type="button"
+          :class="[inlineButtonClass, voice.isListening.value && 'text-accent motion-safe:animate-pulse']"
+          :aria-pressed="voice.isListening.value"
+          @click="voice.toggle()"
+        >
+          <Mic class="h-4 w-4" aria-hidden="true" />
+          <span class="sr-only">Search by voice</span>
+        </button>
+        <button
+          type="button"
+          :class="inlineButtonClass"
+          class="me-1"
+          aria-keyshortcuts="Control+K Meta+K"
+          title="Quick find"
+          @click="openPalette = true"
+        >
+          <TextSearch class="h-4 w-4 md:hidden" aria-hidden="true" />
+          <span class="sr-only">Quick find</span>
+          <kbd
+            class="hidden rounded-sm border border-line-strong px-1.5 font-sans text-xs whitespace-nowrap md:inline"
+            aria-hidden="true"
+          >
+            {{ shortcutHint }}
+          </kbd>
+        </button>
+      </div>
       <ul
         v-show="showSuggestions"
         id="search-suggestions"
@@ -69,29 +93,11 @@
         </li>
       </ul>
     </div>
-    <button
-      v-if="voice.isSupported.value"
-      type="button"
-      class="ms-2 rounded-xl bg-bay-800 p-3 text-bay-50 hover:bg-bay-700 focus-visible:ring-saffron focus-visible:ring-offset-bay-900"
-      :class="voice.isListening.value && 'text-saffron motion-safe:animate-pulse'"
-      :aria-pressed="voice.isListening.value"
-      @click="voice.toggle()"
-    >
-      <Mic class="h-4 w-4" aria-hidden="true" />
-      <span class="sr-only">Search by voice</span>
-    </button>
-    <button
-      type="submit"
-      class="ms-2 rounded-xl bg-orange-700 p-3 text-white hover:bg-orange-600 focus-visible:ring-saffron focus-visible:ring-offset-bay-900"
-    >
-      <Search class="h-4 w-4" aria-hidden="true" />
-      <span class="sr-only">Search</span>
-    </button>
   </form>
 </template>
 
 <script setup lang="ts">
-import { Mic, Search, X } from '@lucide/vue';
+import { Mic, Search, TextSearch, X } from '@lucide/vue';
 import type { MealIndexEntry } from '@/utils/mealIndex';
 
 const emit = defineEmits<{ search: [query: string] }>();
@@ -104,6 +110,10 @@ const router = useRouter();
 const input = ref('');
 const inputEl = useTemplateRef<HTMLInputElement>('inputEl');
 const form = useTemplateRef<HTMLFormElement>('form');
+
+const inlineButtonClass = 'flex shrink-0 rounded-lg p-2 hover:text-ink';
+const openPalette = useCommandPalette();
+const shortcutHint = /Mac|iPhone|iPad/.test(navigator.userAgent) ? '⌘K' : 'Ctrl K';
 
 // The box always shows the search that is in the URL, and empties when leaving the results.
 watch(

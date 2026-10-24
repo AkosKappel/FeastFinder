@@ -9,37 +9,44 @@
       <SearchBar class="order-last w-full md:order-none md:w-auto md:max-w-md md:flex-1" @search="search" />
 
       <div class="flex items-center gap-1">
-        <button
-          type="button"
-          class="flex items-center gap-2 rounded-lg p-2 text-bay-100 transition-colors hover:bg-bay-800 hover:text-white"
-          aria-keyshortcuts="Control+K Meta+K"
-          title="Quick find"
-          @click="openPalette = true"
-        >
-          <TextSearch class="h-5 w-5" aria-hidden="true" />
-          <span class="sr-only">Quick find</span>
-          <kbd class="hidden rounded-sm border border-bay-700 px-1.5 font-sans text-xs md:inline" aria-hidden="true">
-            {{ shortcutHint }}
-          </kbd>
-        </button>
-        <ThemeToggle />
-        <div ref="menu" class="relative xl:hidden" @keydown.esc="showDropdown = false">
+        <nav class="hidden lg:block" aria-label="Main">
+          <ul class="flex items-center gap-1">
+            <li v-for="link in mainLinks" :key="link.to">
+              <nuxt-link
+                :to="link.to"
+                class="block rounded-lg px-3 py-2 font-medium transition-colors hover:bg-bay-800 hover:text-white"
+                :class="isActive(link.to) ? 'text-saffron' : 'text-bay-100'"
+              >
+                {{ link.label }}
+              </nuxt-link>
+            </li>
+          </ul>
+        </nav>
+        <!-- Phones get every page here ("Menu"); wider screens only the pages not in the bar ("More"). -->
+        <div ref="menu" class="relative" @keydown.esc="showDropdown = false">
           <button
             type="button"
-            class="flex items-center gap-2 rounded-lg border border-bay-700 px-3 py-2 font-medium text-bay-50 hover:bg-bay-800"
-            aria-controls="mobile-menu"
+            class="flex items-center gap-1.5 rounded-lg border border-bay-700 p-2 font-medium sm:px-3 hover:bg-bay-800 lg:border-0"
+            :class="moreLinks.some(link => isActive(link.to)) ? 'lg:text-saffron' : 'text-bay-100'"
+            aria-controls="site-menu"
             :aria-expanded="showDropdown"
             @click="showDropdown = !showDropdown"
           >
-            Menu
-            <MenuIcon class="h-5 w-5" aria-hidden="true" />
+            <span class="sr-only sm:not-sr-only lg:hidden">Menu</span>
+            <span class="hidden lg:inline">More</span>
+            <MenuIcon class="h-5 w-5 lg:hidden" aria-hidden="true" />
+            <ChevronDown class="hidden h-4 w-4 lg:block" aria-hidden="true" />
           </button>
           <ul
             v-show="showDropdown"
-            id="mobile-menu"
+            id="site-menu"
             class="absolute right-0 z-40 mt-2 w-56 overflow-hidden rounded-xl bg-bay-950 py-2 shadow-xl ring-1 ring-bay-800"
           >
-            <li v-for="link in allLinks" :key="link.to">
+            <li
+              v-for="link in [...mainLinks, ...moreLinks]"
+              :key="link.to"
+              :class="mainLinks.includes(link) && 'lg:hidden'"
+            >
               <nuxt-link
                 :to="link.to"
                 class="flex items-center gap-3 px-4 py-2.5 hover:bg-bay-800"
@@ -51,60 +58,23 @@
             </li>
           </ul>
         </div>
-
-        <nav class="hidden xl:block" aria-label="Main">
-          <ul class="flex items-center gap-1">
-            <li v-for="link in links" :key="link.to">
-              <nuxt-link
-                :to="link.to"
-                class="block rounded-lg px-3 py-2 font-medium transition-colors hover:bg-bay-800 hover:text-white"
-                :class="isActive(link.to) ? 'text-saffron' : 'text-bay-100'"
-              >
-                {{ link.label }}
-              </nuxt-link>
-            </li>
-            <li>
-              <nuxt-link
-                to="/random"
-                title="Surprise me"
-                class="flex rounded-lg p-2 transition-colors hover:bg-bay-800 hover:text-white"
-                :class="isActive('/random') ? 'text-saffron' : 'text-bay-100'"
-              >
-                <Shuffle class="h-5 w-5" aria-hidden="true" />
-                <span class="sr-only">Surprise me</span>
-              </nuxt-link>
-            </li>
-            <li>
-              <nuxt-link
-                to="/planner"
-                title="Meal planner"
-                class="flex rounded-lg p-2 transition-colors hover:bg-bay-800 hover:text-white"
-                :class="isActive('/planner') ? 'text-saffron' : 'text-bay-100'"
-              >
-                <CalendarDays class="h-5 w-5" aria-hidden="true" />
-                <span class="sr-only">Meal planner</span>
-              </nuxt-link>
-            </li>
-            <li>
-              <nuxt-link
-                to="/shopping-list"
-                title="Shopping list"
-                class="relative flex rounded-lg p-2 transition-colors hover:bg-bay-800 hover:text-white"
-                :class="isActive('/shopping-list') ? 'text-saffron' : 'text-bay-100'"
-              >
-                <ShoppingBasket class="h-5 w-5" aria-hidden="true" />
-                <span class="sr-only">Shopping list, {{ countLabel(toBuy, 'item') }} to buy</span>
-                <span
-                  v-if="toBuy"
-                  class="absolute -top-1 -right-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-saffron px-1 text-xs font-bold text-bay-950"
-                  aria-hidden="true"
-                >
-                  {{ toBuy }}
-                </span>
-              </nuxt-link>
-            </li>
-          </ul>
-        </nav>
+        <nuxt-link
+          to="/shopping-list"
+          title="Shopping list"
+          class="relative flex rounded-lg p-2 transition-colors hover:bg-bay-800 hover:text-white"
+          :class="isActive('/shopping-list') ? 'text-saffron' : 'text-bay-100'"
+        >
+          <ShoppingBasket class="h-5 w-5" aria-hidden="true" />
+          <span class="sr-only">Shopping list, {{ countLabel(toBuy, 'item') }} to buy</span>
+          <span
+            v-if="toBuy"
+            class="absolute -top-1 -right-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-saffron px-1 text-xs font-bold text-bay-950"
+            aria-hidden="true"
+          >
+            {{ toBuy }}
+          </span>
+        </nuxt-link>
+        <ThemeToggle />
       </div>
     </div>
   </header>
@@ -114,14 +84,15 @@
 import {
   CalendarDays,
   Carrot,
+  ChevronDown,
   Globe,
   Heart,
   Info,
   LayoutGrid,
   Menu as MenuIcon,
+  Refrigerator,
   ShoppingBasket,
   Shuffle,
-  TextSearch,
   UtensilsCrossed,
 } from '@lucide/vue';
 
@@ -131,26 +102,22 @@ const showDropdown = ref(false);
 const menu = useTemplateRef<HTMLElement>('menu');
 onClickOutside(menu, () => (showDropdown.value = false));
 
-const links = [
+// The pages used most stay in the bar; the rest go under More. The shopping list has its own icon.
+const mainLinks = [
   { to: '/meals', label: 'Meals', icon: UtensilsCrossed },
+  { to: '/planner', label: 'Planner', icon: CalendarDays },
+  { to: '/favourites', label: 'Favourites', icon: Heart },
+];
+const moreLinks = [
   { to: '/ingredients', label: 'Ingredients', icon: Carrot },
   { to: '/categories', label: 'Categories', icon: LayoutGrid },
   { to: '/cuisines', label: 'Cuisines', icon: Globe },
-  { to: '/favourites', label: 'Favourites', icon: Heart },
-  { to: '/about', label: 'About', icon: Info },
-];
-const allLinks = [
-  ...links.slice(0, 5),
-  { to: '/planner', label: 'Meal planner', icon: CalendarDays },
-  { to: '/shopping-list', label: 'Shopping list', icon: ShoppingBasket },
+  { to: '/fridge', label: "What's in my fridge?", icon: Refrigerator },
   { to: '/random', label: 'Surprise me', icon: Shuffle },
-  links[5]!,
+  { to: '/about', label: 'About', icon: Info },
 ];
 
 const { toBuy } = useShoppingList();
-
-const openPalette = useCommandPalette();
-const shortcutHint = /Mac|iPhone|iPad/.test(navigator.userAgent) ? '⌘K' : 'Ctrl K';
 
 watch(
   () => route.fullPath,

@@ -25,6 +25,7 @@ Feast Finder is a web application for finding recipes by meal name, ingredient, 
 - Timers from the cooking times in the steps, with sound (Web Audio API), vibration and a notification (Notifications API) when done
 - Read aloud (Web Speech API) with the current step highlighted, jumps to the next or previous step, or start from any step
 - Cooking checklist for ingredients and steps, and a shopping list that merges ingredients from several meals, to copy or share
+- Weekly meal planner: lunch and dinner for each day, filled from the meal page, a search or your favourites, with the whole week added to the shopping list in one go, links into cooking mode, share and print
 - Measures as written, in metric or in US units
 - Favourites saved in the browser, sharing via the Web Share API or the clipboard, print-friendly recipes
 - Animated page changes where the meal photo morphs from the card into the meal page (View Transitions API, off with reduced motion)
@@ -79,7 +80,7 @@ npm run dev
 ## Testing
 
 - **Unit tests** (`test/unit`, Vitest): helpers, the API client with mocked responses, the meal index search, the quick find options and the SEO data.
-- **End-to-end tests** (`test/e2e`, Playwright): run on the generated site, served the way GitHub Pages serves it, in a desktop and a phone browser. TheMealDB is mocked, so the tests are fast and stable. They cover search, quick find, meal pages, favourites, the fridge, paging, timers (with a fake clock), read aloud (with a fake speech engine), cooking mode, units, the shopping list, error and 404 states, and run axe accessibility checks in the light and dark theme.
+- **End-to-end tests** (`test/e2e`, Playwright): run on the generated site, served the way GitHub Pages serves it, in a desktop and a phone browser. TheMealDB is mocked, so the tests are fast and stable. They cover search, quick find, meal pages, favourites, the fridge, paging, timers (with a fake clock), read aloud (with a fake speech engine), cooking mode, units, the shopping list, the meal planner, error and 404 states, and run axe accessibility checks in the light and dark theme.
 - **Lighthouse** (`lighthouserc.json`, Lighthouse CI): desktop runs on five pages of the generated site. CI fails below 100 for accessibility and SEO, 95 for best practices and 70 for performance (the home page waits for random meals and photos from TheMealDB, so its score varies); the reports are kept as a workflow artifact.
 
 ```bash

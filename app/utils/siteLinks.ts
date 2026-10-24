@@ -1,4 +1,5 @@
 import {
+  CalendarDays,
   Carrot,
   Globe,
   Heart,
@@ -19,6 +20,7 @@ export const exploreLinks = [
   { label: "What's in my fridge?", to: '/fridge', icon: Refrigerator },
   { label: 'Surprise me', to: '/random', icon: Shuffle },
   { label: 'Favourites', to: '/favourites', icon: Heart },
+  { label: 'Meal planner', to: '/planner', icon: CalendarDays },
   { label: 'Shopping list', to: '/shopping-list', icon: ShoppingBasket },
 ];
 

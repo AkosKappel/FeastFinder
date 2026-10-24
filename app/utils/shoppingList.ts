@@ -22,6 +22,12 @@ export const addToShoppingList = (list: ShoppingItem[], meal: string, ingredient
   return items;
 };
 
+/** Adds several meals at once, e.g. a week from the meal planner. */
+export const addMealsToShoppingList = (
+  list: ShoppingItem[],
+  meals: { meal: string; ingredients: MealIngredient[] }[],
+) => meals.reduce((items, { meal, ingredients }) => addToShoppingList(items, meal, ingredients), list);
+
 /** Plain text for copying or sharing: what is still to buy. */
 export const shoppingListText = (list: ShoppingItem[]) =>
   list

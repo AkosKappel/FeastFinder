@@ -36,6 +36,10 @@
 
       <div class="mt-4 flex flex-wrap gap-2 print:hidden">
         <FavouriteButton :meal="meal" with-label :class="actionClass" />
+        <button type="button" :class="actionClass" @click="planning = true">
+          <CalendarPlus class="h-5 w-5" :class="isPlanned(meal.idMeal) && 'text-accent'" aria-hidden="true" />
+          {{ isPlanned(meal.idMeal) ? 'In your plan' : 'Add to plan' }}
+        </button>
         <button type="button" :class="actionClass" @click="share">
           <component :is="copied ? Check : Share2" class="h-5 w-5" aria-hidden="true" />
           {{ copied ? 'Link copied' : 'Share' }}
@@ -106,6 +110,8 @@
       :read-aloud="readAloud"
     />
 
+    <AddToPlanDialog v-model:open="planning" :meal="meal" />
+
     <section v-if="videoId" class="mt-10 print:hidden" aria-labelledby="video-heading">
       <h2 id="video-heading" class="mb-4 flex items-center gap-2 text-2xl font-semibold">
         <CirclePlay class="h-6 w-6 text-accent" aria-hidden="true" />
@@ -134,7 +140,7 @@
 </template>
 
 <script setup lang="ts">
-import { ArrowLeft, Check, CirclePlay, ExternalLink, Hash, Printer, Share2, Sun, Tag } from '@lucide/vue';
+import { ArrowLeft, CalendarPlus, Check, CirclePlay, ExternalLink, Hash, Printer, Share2, Sun, Tag } from '@lucide/vue';
 import type { Meal } from '@/types/Meal';
 
 const props = defineProps<{ meal: Meal }>();
@@ -167,7 +173,18 @@ watch(
   },
 );
 
+const planning = ref(false);
+const { isPlanned } = useMealPlan();
+
+const route = useRoute();
 const router = useRouter();
+
+// "Cook" in the meal planner links here with ?cook to open cooking mode right away.
+onMounted(() => {
+  if (route.query.cook === undefined) return;
+  router.replace({ query: {} });
+  if (steps.value.length) cooking.value = true;
+});
 const goBack = () => (window.history.state?.back ? router.back() : router.push('/meals'));
 
 // Native share sheet where available (mostly phones), otherwise copy the link.

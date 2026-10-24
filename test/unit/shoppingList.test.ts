@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { addToShoppingList, shoppingListText } from '../../app/utils/shoppingList';
+import { addMealsToShoppingList, addToShoppingList, shoppingListText } from '../../app/utils/shoppingList';
 
 const teriyaki = [
   { name: 'Soy sauce', measure: '3/4 cup' },
@@ -35,6 +35,17 @@ describe('addToShoppingList', () => {
     const snapshot = structuredClone(list);
     addToShoppingList(list, 'Pasta', pasta);
     expect(list).toEqual(snapshot);
+  });
+});
+
+describe('addMealsToShoppingList', () => {
+  it('merges a week of meals into the existing list', () => {
+    const existing = addToShoppingList([], 'Teriyaki', teriyaki);
+    const list = addMealsToShoppingList(existing, [
+      { meal: 'Teriyaki', ingredients: teriyaki },
+      { meal: 'Pasta', ingredients: pasta },
+    ]);
+    expect(list).toEqual(addToShoppingList(existing, 'Pasta', pasta));
   });
 });
 

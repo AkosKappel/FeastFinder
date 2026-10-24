@@ -76,6 +76,17 @@
             </li>
             <li>
               <nuxt-link
+                to="/planner"
+                title="Meal planner"
+                class="flex rounded-lg p-2 transition-colors hover:bg-bay-800 hover:text-white"
+                :class="isActive('/planner') ? 'text-saffron' : 'text-bay-100'"
+              >
+                <CalendarDays class="h-5 w-5" aria-hidden="true" />
+                <span class="sr-only">Meal planner</span>
+              </nuxt-link>
+            </li>
+            <li>
+              <nuxt-link
                 to="/shopping-list"
                 title="Shopping list"
                 class="relative flex rounded-lg p-2 transition-colors hover:bg-bay-800 hover:text-white"
@@ -101,6 +112,7 @@
 
 <script setup lang="ts">
 import {
+  CalendarDays,
   Carrot,
   Globe,
   Heart,
@@ -129,6 +141,7 @@ const links = [
 ];
 const allLinks = [
   ...links.slice(0, 5),
+  { to: '/planner', label: 'Meal planner', icon: CalendarDays },
   { to: '/shopping-list', label: 'Shopping list', icon: ShoppingBasket },
   { to: '/random', label: 'Surprise me', icon: Shuffle },
   links[5]!,

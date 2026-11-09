@@ -58,24 +58,24 @@ Feast Finder is a web application for finding recipes by meal name, ingredient, 
 
 ## Getting started
 
-Requires Node.js 22 or 24.
+Requires Node.js 22 or 24 and pnpm.
 
 ```bash
-npm install
-npm run dev
+pnpm install
+pnpm dev
 ```
 
-| Script                | What it does                                                         |
-| --------------------- | -------------------------------------------------------------------- |
-| `npm run dev`         | Start the development server on http://localhost:3000/FeastFinder/   |
-| `npm run lint`        | Lint the code with ESLint                                            |
-| `npm run typecheck`   | Type-check the project                                               |
-| `npm test`            | Run the unit tests                                                   |
-| `npm run test:e2e`    | Run the end-to-end tests against the generated site                  |
-| `npm run lighthouse`  | Run Lighthouse on the generated site and check the score budget      |
-| `npm run format`      | Format the code with Prettier (`format:check` only checks)           |
-| `npm run generate`    | Build the meal index, the sitemap and the static site into `.output` |
-| `npm run data:update` | Rebuild the meal index and the sitemap                               |
+| Script             | What it does                                                         |
+| ------------------ | -------------------------------------------------------------------- |
+| `pnpm dev`         | Start the development server on http://localhost:3000/FeastFinder/   |
+| `pnpm lint`        | Lint the code with ESLint                                            |
+| `pnpm typecheck`   | Type-check the project                                               |
+| `pnpm test`        | Run the unit tests                                                   |
+| `pnpm test:e2e`    | Run the end-to-end tests against the generated site                  |
+| `pnpm lighthouse`  | Run Lighthouse on the generated site and check the score budget      |
+| `pnpm format`      | Format the code with Prettier (`format:check` only checks)           |
+| `pnpm generate`    | Build the meal index, the sitemap and the static site into `.output` |
+| `pnpm data:update` | Rebuild the meal index and the sitemap                               |
 
 ## Testing
 
@@ -84,9 +84,9 @@ npm run dev
 - **Lighthouse** (`lighthouserc.json`, Lighthouse CI): desktop runs on five pages of the generated site. CI fails below 100 for accessibility and SEO, 95 for best practices and 70 for performance (the home page waits for random meals and photos from TheMealDB, so its score varies); the reports are kept as a workflow artifact.
 
 ```bash
-npm run generate
-npx playwright install chromium
-npm run test:e2e
+pnpm generate
+pnpm exec playwright install chromium
+pnpm test:e2e
 ```
 
 ## Deployment

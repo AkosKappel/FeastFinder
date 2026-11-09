@@ -1,6 +1,6 @@
 import { defineConfig, devices } from '@playwright/test';
 
-// End-to-end tests run against the generated static site (`npm run generate` first),
+// End-to-end tests run against the generated static site (`pnpm generate` first),
 // with TheMealDB and the meal index mocked in test/e2e/mocks.ts.
 export default defineConfig({
   testDir: 'test/e2e',

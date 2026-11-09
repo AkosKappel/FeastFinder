@@ -1,0 +1,4 @@
+# Both install scripts only fetch or verify native binaries that already come as prebuilt packages.
+allowBuilds:
+  esbuild: false
+  unrs-resolver: false

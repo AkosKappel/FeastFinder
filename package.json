@@ -15,7 +15,7 @@
     "format:check": "prettier --check .",
     "data:update": "node scripts/build-meal-index.mjs",
     "predev": "node scripts/build-meal-index.mjs --if-missing",
-    "pregenerate": "npm run data:update",
+    "pregenerate": "pnpm data:update",
     "test:e2e": "playwright test",
     "lighthouse": "lhci autorun"
   },

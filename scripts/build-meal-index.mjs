@@ -2,7 +2,7 @@
 // ingredient names). The free API cannot list meals by country reliably (many meals have no area)
 // or filter by several ingredients, so those features work on this index instead.
 // Also writes public/sitemap.xml with the main pages and every meal, category and cuisine.
-// Runs before `npm run dev` (only when the file is missing) and before `npm run generate`.
+// Runs before `pnpm dev` (only when the file is missing) and before `pnpm generate`.
 import { access, mkdir, writeFile } from 'node:fs/promises';
 import { sitePaths } from './site-routes.mjs';
 import { countryCodeOf } from '../app/utils/countryCode.ts';

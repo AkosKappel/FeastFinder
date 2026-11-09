@@ -25,16 +25,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+        with:
+          version: 12
       - uses: actions/setup-node@v7
         with:
           node-version: 24
-          cache: npm
-      - run: npm ci
-      - run: npm run format:check
-      - run: npm run lint
-      - run: npm run typecheck
-      - run: npm test
-      - run: npm run generate
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm format:check
+      - run: pnpm lint
+      - run: pnpm typecheck
+      - run: pnpm test
+      - run: pnpm generate
         env:
           NITRO_PRESET: github_pages
       - uses: actions/upload-pages-artifact@v5
@@ -45,16 +48,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+        with:
+          version: 12
       - uses: actions/setup-node@v7
         with:
           node-version: 24
-          cache: npm
-      - run: npm ci
-      - run: npm run generate
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm generate
         env:
           NITRO_PRESET: github_pages
-      - run: npx playwright install --with-deps chromium
-      - run: npm run test:e2e
+      - run: pnpm exec playwright install --with-deps chromium
+      - run: pnpm test:e2e
 
   # Desktop Lighthouse on the generated site: accessibility and SEO 100, best practices 95, and
   # performance 70 (below the live score: the home page waits for random meals and photos from TheMealDB).
@@ -62,15 +68,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+        with:
+          version: 12
       - uses: actions/setup-node@v7
         with:
           node-version: 24
-          cache: npm
-      - run: npm ci
-      - run: npm run generate
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm generate
         env:
           NITRO_PRESET: github_pages
-      - run: npm run lighthouse
+      - run: pnpm lighthouse
       - if: ${{ !cancelled() }}
         uses: actions/upload-artifact@v7
         with:

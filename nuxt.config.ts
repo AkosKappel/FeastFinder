@@ -3,8 +3,8 @@ import { readFileSync } from 'node:fs';
 import tailwindcss from '@tailwindcss/vite';
 import { indexPaths } from './scripts/site-routes.mjs';
 
-const baseURL = '/FeastFinder/';
-const siteUrl = `https://akoskappel.github.io${baseURL}`;
+const baseURL = '/';
+const siteUrl = `https://feastfinder.akoskappel.dev${baseURL}`;
 
 // Each meal, category and cuisine gets its own copy of the app shell, so GitHub Pages answers those
 // links with 200 instead of the 404 fallback and search engines index them. The meal index is built

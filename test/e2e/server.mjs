@@ -1,4 +1,4 @@
-// Serves the generated site like GitHub Pages does: under /FeastFinder/, with 404.html for unknown paths
+// Serves the generated site like GitHub Pages does: at the root, with 404.html for unknown paths
 // and gzip for text files, so Lighthouse measures what visitors get.
 import { createReadStream } from 'node:fs';
 import { stat } from 'node:fs/promises';
@@ -7,7 +7,7 @@ import { extname, join, normalize, relative } from 'node:path';
 import { createGzip } from 'node:zlib';
 
 const ROOT = new URL('../../.output/public/', import.meta.url).pathname;
-const BASE = '/FeastFinder/';
+const BASE = '/';
 const PORT = Number(process.env.PORT ?? 4173);
 const TYPES = {
   '.html': 'text/html',

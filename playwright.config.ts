@@ -12,7 +12,7 @@ export default defineConfig({
   retries: process.env.CI ? 1 : 0,
   reporter: process.env.CI ? 'github' : 'list',
   use: {
-    baseURL: 'http://localhost:4173/FeastFinder/',
+    baseURL: 'http://localhost:4173/',
     trace: 'retain-on-failure',
     // Requests from the service worker would skip the API mocks.
     serviceWorkers: 'block',
@@ -23,7 +23,7 @@ export default defineConfig({
   ],
   webServer: {
     command: 'node test/e2e/server.mjs',
-    url: 'http://localhost:4173/FeastFinder/',
+    url: 'http://localhost:4173/',
     reuseExistingServer: !process.env.CI,
   },
 });

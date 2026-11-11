@@ -10,7 +10,7 @@ import { countryCodeOf } from '../app/utils/countryCode.ts';
 const API = 'https://www.themealdb.com/api/json/v1/1/';
 const OUTPUT = new URL('../public/data/meals.json', import.meta.url);
 const SITEMAP = new URL('../public/sitemap.xml', import.meta.url);
-const SITE_URL = 'https://akoskappel.github.io/FeastFinder/';
+const SITE_URL = 'https://feastfinder.akoskappel.dev/';
 
 const fetchJson = async path => {
   // Retries network errors, HTTP errors and the occasional malformed body under load.

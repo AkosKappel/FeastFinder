@@ -10,7 +10,7 @@
 
 Feast Finder is a web application for finding recipes by meal name, ingredient, food category or cuisine. Each meal shows its ingredients, step-by-step instructions and a video when available. Recipe data comes from [TheMealDB API](https://www.themealdb.com/api.php).
 
-**Live demo:** https://akoskappel.github.io/FeastFinder/
+**Live demo:** https://feastfinder.akoskappel.dev/
 
 ![Home page](./screenshots/home.webp)
 
@@ -67,7 +67,7 @@ pnpm dev
 
 | Script             | What it does                                                         |
 | ------------------ | -------------------------------------------------------------------- |
-| `pnpm dev`         | Start the development server on http://localhost:3000/FeastFinder/   |
+| `pnpm dev`         | Start the development server on http://localhost:3000/               |
 | `pnpm lint`        | Lint the code with ESLint                                            |
 | `pnpm typecheck`   | Type-check the project                                               |
 | `pnpm test`        | Run the unit tests                                                   |

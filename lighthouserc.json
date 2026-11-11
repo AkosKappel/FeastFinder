@@ -4,11 +4,11 @@
       "startServerCommand": "node test/e2e/server.mjs",
       "startServerReadyPattern": "Serving",
       "url": [
-        "http://localhost:4173/FeastFinder/",
-        "http://localhost:4173/FeastFinder/meals/52772/",
-        "http://localhost:4173/FeastFinder/categories/",
-        "http://localhost:4173/FeastFinder/fridge/",
-        "http://localhost:4173/FeastFinder/about/"
+        "http://localhost:4173/",
+        "http://localhost:4173/meals/52772/",
+        "http://localhost:4173/categories/",
+        "http://localhost:4173/fridge/",
+        "http://localhost:4173/about/"
       ],
       "numberOfRuns": 3,
       "settings": { "preset": "desktop", "chromeFlags": "--no-sandbox --headless=new" }

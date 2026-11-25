@@ -1,10 +1,13 @@
 <template>
-  <!-- closedby gives light dismiss where supported; the click on the backdrop covers Safari. -->
+  <!-- closedby gives light dismiss where supported; the click on the backdrop covers Safari.
+       cancel fires as Escape or light dismiss starts, so `open` is false before the dialog hides;
+       the close event only arrives a task later, and a quick Ctrl+K in between toggled the stale state. -->
   <dialog
     ref="dialog"
     aria-label="Quick find"
     closedby="any"
     class="mx-auto mt-[12vh] w-[calc(100%-2rem)] max-w-lg overflow-hidden rounded-xl bg-surface p-0 text-ink shadow-2xl backdrop:bg-black/50"
+    @cancel="open = false"
     @close="open = false"
     @click.self="open = false"
   >

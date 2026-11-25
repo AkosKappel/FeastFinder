@@ -12,6 +12,8 @@ Feast Finder is a web application for finding recipes by meal name, ingredient, 
 
 **Live demo:** https://feastfinder.akoskappel.dev/
 
+**Case study:** [akoskappel.dev/projects/feast-finder](https://akoskappel.dev/projects/feast-finder)
+
 ![Home page](./screenshots/home.webp)
 
 ## Features
